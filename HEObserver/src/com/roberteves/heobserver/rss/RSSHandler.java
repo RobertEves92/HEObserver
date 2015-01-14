@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 import org.xml.sax.SAXException;
 
-import android.util.Log;
-
 import com.roberteves.heobserver.Global;
 import com.roberteves.heobserver.R;
 
@@ -22,15 +20,18 @@ public class RSSHandler {
 		try {
 			url = new URL(Global.APP_CONTEXT.getString(R.string.URL));
 		} catch (MalformedURLException e) {
-			Log.e("RSS-URL", e.getMessage());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		RssFeed feed = null;
 		try {
 			feed = RssReader.read(url);
 		} catch (SAXException e) {
-			Log.e("RSS-SAX", e.getMessage());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
-			Log.e("RSS-IO", e.getMessage());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		return feed.getRssItems();
