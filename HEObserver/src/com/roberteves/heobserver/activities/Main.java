@@ -8,6 +8,7 @@ import com.roberteves.heobserver.rss.RSSHandler;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class Main extends Activity {
@@ -17,17 +18,20 @@ public class Main extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		Global.APP_CONTEXT = getApplicationContext();
-		
+
 		tv = (TextView) findViewById(R.id.textView1);
+		try {
+			String s = "";
 
-		String s = "";
+			for (RssItem item : RSSHandler.GetFeedItems()) {
+				s = s + item.getTitle() + "\r\n";
+			}
 
-		for (RssItem item : RSSHandler.GetFeedItems()) {
-			s = s + item.getTitle() + "\r\n";
+			tv.setText(s);
+		} catch (Exception e) {
+			Log.e("MAIN", e.getMessage());
 		}
-
-		tv.setText(s);
 	}
 }
