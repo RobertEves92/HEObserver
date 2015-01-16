@@ -13,15 +13,16 @@ import com.roberteves.heobserver.Global;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.rss.RSSHandler;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class Main extends Activity {
+//TODO 1.1 convert to activity and add pull to refresh
+public class Main extends ActionBarActivity {
 	private static ListView lv;
 
 	@Override
@@ -31,7 +32,7 @@ public class Main extends Activity {
 		Global.APP_CONTEXT = getApplicationContext();
 		lv = (ListView) findViewById(R.id.listView);
 
-		// TODO Removed and setup async feed methods
+		// TODO 1.2 Removed and setup async feed methods
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(policy);
