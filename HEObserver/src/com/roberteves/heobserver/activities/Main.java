@@ -2,7 +2,6 @@ package com.roberteves.heobserver.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.unbescape.html.HtmlEscape;
@@ -10,6 +9,7 @@ import org.unbescape.html.HtmlEscape;
 import nl.matshofman.saxrssreader.RssItem;
 
 import com.roberteves.heobserver.Global;
+import com.roberteves.heobserver.Lists;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.rss.RSSHandler;
 
@@ -44,15 +44,15 @@ public class Main extends ActionBarActivity {
 		StrictMode.setThreadPolicy(policy);
 
 		// Stores all Rss Items from news feed
-		ArrayList<RssItem> RssItems = RSSHandler.GetFeedItems();
-		List<Map<String, String>> storyList = new ArrayList<Map<String, String>>();
+		Lists.RssItems = RSSHandler.GetFeedItems();
+		Lists.storyList = new ArrayList<Map<String, String>>();
 
 		// Add all story items to hashmap array
-		for (RssItem item : RssItems) {
-			storyList.add(createStory("story", formatTitle(item.getTitle())));
+		for (RssItem item : Lists.RssItems) {
+			Lists.storyList.add(createStory("story", formatTitle(item.getTitle())));
 		}
 
-		SimpleAdapter simpleAdpt = new SimpleAdapter(this, storyList,
+		SimpleAdapter simpleAdpt = new SimpleAdapter(this, Lists.storyList,
 				android.R.layout.simple_list_item_1, new String[] { "story" },
 				new int[] { android.R.id.text1 });
 
