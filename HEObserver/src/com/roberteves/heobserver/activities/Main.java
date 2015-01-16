@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.unbescape.html.HtmlEscape;
+
 import nl.matshofman.saxrssreader.RssItem;
 
 import com.roberteves.heobserver.Global;
@@ -18,7 +20,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 public class Main extends Activity {
-private static ListView lv;
+	private static ListView lv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,26 +33,31 @@ private static ListView lv;
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(policy);
-		
-		//Stores all Rss Items from news feed
-		ArrayList<RssItem> RssItems = RSSHandler.GetFeedItems();
-		List<Map<String,String>> storyList = new ArrayList<Map<String,String>>();
-		
-		//Add all story items to hashmap array
-		for(RssItem item : RssItems)
-		{
-			storyList.add(createStory("story",item.getTitle()));
-		}
-		
-	    SimpleAdapter simpleAdpt = new SimpleAdapter(this, storyList, android.R.layout.simple_list_item_1, new String[] {"story"}, new int[] {android.R.id.text1});
 
-	    lv.setAdapter(simpleAdpt);
+		// Stores all Rss Items from news feed
+		ArrayList<RssItem> RssItems = RSSHandler.GetFeedItems();
+		List<Map<String, String>> storyList = new ArrayList<Map<String, String>>();
+
+		// Add all story items to hashmap array
+		for (RssItem item : RssItems) {
+			storyList.add(createStory("story", formatTitle(item.getTitle())));
+		}
+
+		SimpleAdapter simpleAdpt = new SimpleAdapter(this, storyList,
+				android.R.layout.simple_list_item_1, new String[] { "story" },
+				new int[] { android.R.id.text1 });
+
+		lv.setAdapter(simpleAdpt);
 	}
-	
-	private HashMap<String,String> createStory(String key,String title){
-		HashMap<String,String> story = new HashMap<String,String>();
-		story.put(key,title);
-		
+
+	private HashMap<String, String> createStory(String key, String title) {
+		HashMap<String, String> story = new HashMap<String, String>();
+		story.put(key, title);
+
 		return story;
+	}
+
+	private String formatTitle(String title) {
+		return HtmlEscape.unescapeHtml(title);
 	}
 }
