@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 public class Main extends Activity {
 private static ListView lv;
@@ -40,6 +41,10 @@ private static ListView lv;
 		{
 			storyList.add(createStory("story",item.getTitle()));
 		}
+		
+	    SimpleAdapter simpleAdpt = new SimpleAdapter(this, storyList, android.R.layout.simple_list_item_1, new String[] {"story"}, new int[] {android.R.id.text1});
+
+	    lv.setAdapter(simpleAdpt);
 	}
 	
 	private HashMap<String,String> createStory(String key,String title){
