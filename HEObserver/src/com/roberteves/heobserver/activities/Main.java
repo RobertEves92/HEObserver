@@ -19,8 +19,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 //TODO 1.1 convert to activity and add pull to refresh
 public class Main extends ActionBarActivity {
@@ -49,7 +53,8 @@ public class Main extends ActionBarActivity {
 
 		// Add all story items to hashmap array
 		for (RssItem item : Lists.RssItems) {
-			Lists.storyList.add(createStory("story", formatTitle(item.getTitle())));
+			Lists.storyList.add(createStory("story",
+					formatTitle(item.getTitle())));
 		}
 
 		SimpleAdapter simpleAdpt = new SimpleAdapter(this, Lists.storyList,
@@ -57,26 +62,60 @@ public class Main extends ActionBarActivity {
 				new int[] { android.R.id.text1 });
 
 		lv.setAdapter(simpleAdpt);
+
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				TextView clickedView = (TextView) view;
+
+				Toast.makeText(
+						Main.this,
+						"Clicked Item with id [" + id + "] - Position ["
+								+ position + "] - Planet ["
+								+ clickedView.getText() + "]",
+						Toast.LENGTH_SHORT).show();
+			}
+		});
+
+		lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				TextView clickedView = (TextView) view;
+
+				Toast.makeText(
+						Main.this,
+						"Long Clicked Item with id [" + id + "] - Position ["
+								+ position + "] - Planet ["
+								+ clickedView.getText() + "]",
+						Toast.LENGTH_SHORT).show();
+
+				return true;
+			}
+		});
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_activity_menu, menu);
-	    return super.onCreateOptionsMenu(menu);
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_activity_menu, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_bar_refresh:
-	        	updateList();
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_bar_refresh:
+			updateList();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	private HashMap<String, String> createStory(String key, String title) {
