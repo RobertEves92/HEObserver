@@ -23,8 +23,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 //TODO 1.1 convert to activity and add pull to refresh
 public class Main extends ActionBarActivity {
@@ -68,14 +66,16 @@ public class Main extends ActionBarActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				TextView clickedView = (TextView) view;
-
-				Toast.makeText(
-						Main.this,
-						"Clicked Item with id [" + id + "] - Position ["
-								+ position + "] - Planet ["
-								+ clickedView.getText() + "]",
-						Toast.LENGTH_SHORT).show();
+				// TextView clickedView = (TextView) view;
+				//
+				// Toast.makeText(
+				// Main.this,
+				// "Clicked Item with id [" + id + "] - Position ["
+				// + position + "] - Planet ["
+				// + clickedView.getText() + "]",
+				// Toast.LENGTH_SHORT).show();
+				
+				// TODO 1.0 Open Article
 			}
 		});
 
@@ -84,14 +84,16 @@ public class Main extends ActionBarActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				TextView clickedView = (TextView) view;
-
-				Toast.makeText(
-						Main.this,
-						"Long Clicked Item with id [" + id + "] - Position ["
-								+ position + "] - Planet ["
-								+ clickedView.getText() + "]",
-						Toast.LENGTH_SHORT).show();
+				// TextView clickedView = (TextView) view;
+				//
+				// Toast.makeText(
+				// Main.this,
+				// "Long Clicked Item with id [" + id + "] - Position ["
+				// + position + "] - Planet ["
+				// + clickedView.getText() + "]",
+				// Toast.LENGTH_SHORT).show();
+				
+				// TODO 1.0 Open published date/description
 
 				return true;
 			}
