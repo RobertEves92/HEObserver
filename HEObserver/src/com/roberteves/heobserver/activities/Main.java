@@ -1,5 +1,12 @@
 package com.roberteves.heobserver.activities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.unbescape.html.HtmlEscape;
+
 import nl.matshofman.saxrssreader.RssItem;
 
 import com.roberteves.heobserver.Global;
@@ -9,29 +16,48 @@ import com.roberteves.heobserver.rss.RSSHandler;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 public class Main extends Activity {
-	TextView tv;
+	private static ListView lv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Global.APP_CONTEXT = getApplicationContext();
-		
-		//TODO Removed and setup async feed methods
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy); 
+		lv = (ListView) findViewById(R.id.listView);
 
-		tv = (TextView) findViewById(R.id.textView1);
-		
-		String s = "";
+		// TODO Removed and setup async feed methods
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
 
-		for (RssItem item : RSSHandler.GetFeedItems()) {
-			s = s + item.getTitle() + "\r\n";
+		// Stores all Rss Items from news feed
+		ArrayList<RssItem> RssItems = RSSHandler.GetFeedItems();
+		List<Map<String, String>> storyList = new ArrayList<Map<String, String>>();
+
+		// Add all story items to hashmap array
+		for (RssItem item : RssItems) {
+			storyList.add(createStory("story", formatTitle(item.getTitle())));
 		}
 
-		tv.setText(s);
+		SimpleAdapter simpleAdpt = new SimpleAdapter(this, storyList,
+				android.R.layout.simple_list_item_1, new String[] { "story" },
+				new int[] { android.R.id.text1 });
+
+		lv.setAdapter(simpleAdpt);
+	}
+
+	private HashMap<String, String> createStory(String key, String title) {
+		HashMap<String, String> story = new HashMap<String, String>();
+		story.put(key, title);
+
+		return story;
+	}
+
+	private String formatTitle(String title) {
+		return HtmlEscape.unescapeHtml(title);
 	}
 }
