@@ -9,6 +9,7 @@ import org.unbescape.html.HtmlEscape;
 import nl.matshofman.saxrssreader.RssItem;
 
 import com.roberteves.heobserver.Global;
+import com.roberteves.heobserver.Dialogs;
 import com.roberteves.heobserver.Lists;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.rss.RSSHandler;
@@ -74,7 +75,7 @@ public class Main extends ActionBarActivity {
 				// + position + "] - Planet ["
 				// + clickedView.getText() + "]",
 				// Toast.LENGTH_SHORT).show();
-				
+
 				// TODO 1.0 Open Article
 			}
 		});
@@ -92,9 +93,18 @@ public class Main extends ActionBarActivity {
 				// + position + "] - Planet ["
 				// + clickedView.getText() + "]",
 				// Toast.LENGTH_SHORT).show();
-				
-				// TODO 1.0 Open published date/description
 
+				// TODO 1.0 Open published date/description
+				Global.APP_CONTEXT = getApplicationContext();
+
+				// TODO 1.0 Un-capitalise first description word
+				Dialogs.DisplayInfoAlert(
+						"Article Info",
+						"Published: "
+								+ Lists.RssItems.get(position).getPubDate()
+								+ "\r\nPreview:\r\n"
+								+ HtmlEscape.unescapeHtml(Lists.RssItems.get(
+										position).getDescription()), Main.this);
 				return true;
 			}
 		});
