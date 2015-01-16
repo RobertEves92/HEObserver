@@ -13,13 +13,17 @@ import com.roberteves.heobserver.Global;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.rss.RSSHandler;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class Main extends Activity {
+//TODO 1.1 convert to activity and add pull to refresh
+public class Main extends ActionBarActivity {
 	private static ListView lv;
 
 	@Override
@@ -29,7 +33,12 @@ public class Main extends Activity {
 		Global.APP_CONTEXT = getApplicationContext();
 		lv = (ListView) findViewById(R.id.listView);
 
-		// TODO Removed and setup async feed methods
+		updateList();
+	}
+
+	private void updateList() {
+		// TODO 1.0 Add please wait dialog
+		// TODO 1.2 Removed and setup async feed methods
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(policy);
@@ -48,6 +57,26 @@ public class Main extends Activity {
 				new int[] { android.R.id.text1 });
 
 		lv.setAdapter(simpleAdpt);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_activity_menu, menu);
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.action_bar_refresh:
+	        	updateList();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	private HashMap<String, String> createStory(String key, String title) {

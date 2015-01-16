@@ -3,7 +3,7 @@
     android:versionCode="1"
     android:versionName="0.1" >
 
-    <!-- TODO revert min version to 8 when asyn methods created -->
+    <!-- TODO 1.2 revert min version to 8 when asyn methods created -->
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="21" />
