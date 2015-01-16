@@ -16,6 +16,8 @@ import com.roberteves.heobserver.rss.RSSHandler;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -48,6 +50,14 @@ public class Main extends Activity {
 				new int[] { android.R.id.text1 });
 
 		lv.setAdapter(simpleAdpt);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_activity_menu, menu);
+	    return super.onCreateOptionsMenu(menu);
 	}
 
 	private HashMap<String, String> createStory(String key, String title) {
