@@ -1,7 +1,15 @@
 package com.roberteves.heobserver.activities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import nl.matshofman.saxrssreader.RssItem;
+
 import com.roberteves.heobserver.Global;
 import com.roberteves.heobserver.R;
+import com.roberteves.heobserver.rss.RSSHandler;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -22,5 +30,22 @@ private static ListView lv;
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(policy);
+		
+		//Stores all Rss Items from news feed
+		ArrayList<RssItem> RssItems = RSSHandler.GetFeedItems();
+		List<Map<String,String>> storyList = new ArrayList<Map<String,String>>();
+		
+		//Add all story items to hashmap array
+		for(RssItem item : RssItems)
+		{
+			storyList.add(createStory("story",item.getTitle()));
+		}
+	}
+	
+	private HashMap<String,String> createStory(String key,String title){
+		HashMap<String,String> story = new HashMap<String,String>();
+		story.put(key,title);
+		
+		return story;
 	}
 }
