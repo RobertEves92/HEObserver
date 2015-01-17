@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.unbescape.html.HtmlEscape;
-
 import nl.matshofman.saxrssreader.RssItem;
 
 import com.roberteves.heobserver.Global;
 import com.roberteves.heobserver.Dialogs;
 import com.roberteves.heobserver.Lists;
+import com.roberteves.heobserver.Text;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.rss.RSSHandler;
 
@@ -56,7 +55,7 @@ public class Main extends ActionBarActivity {
 			// If the article is a picture slideshow, dont add it to the list
 			if (!item.getTitle().toUpperCase().contains("PICTURES:")) {
 				Lists.storyList.add(createStory("story",
-						formatTitle(item.getTitle())));
+						Text.unescapeHtml(item.getTitle())));
 			}
 		}
 
@@ -107,7 +106,7 @@ public class Main extends ActionBarActivity {
 						"Published: "
 								+ Lists.RssItems.get(position).getPubDate()
 								+ "\r\nPreview:\r\n"
-								+ HtmlEscape.unescapeHtml(Lists.RssItems.get(
+								+ Text.processArticle(Lists.RssItems.get(
 										position).getDescription()), Main.this);
 				return true;
 			}
@@ -139,9 +138,5 @@ public class Main extends ActionBarActivity {
 		story.put(key, title);
 
 		return story;
-	}
-
-	private String formatTitle(String title) {
-		return HtmlEscape.unescapeHtml(title);
 	}
 }
