@@ -52,8 +52,12 @@ public class Main extends ActionBarActivity {
 
 		// Add all story items to hashmap array
 		for (RssItem item : Lists.RssItems) {
-			Lists.storyList.add(createStory("story",
-					formatTitle(item.getTitle())));
+			// TODO 2.0 Add support for slideshows
+			// If the article is a picture slideshow, dont add it to the list
+			if (!item.getTitle().toUpperCase().contains("PICTURES:")) {
+				Lists.storyList.add(createStory("story",
+						formatTitle(item.getTitle())));
+			}
 		}
 
 		SimpleAdapter simpleAdpt = new SimpleAdapter(this, Lists.storyList,
