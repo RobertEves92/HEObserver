@@ -97,16 +97,17 @@ public class Main extends ActionBarActivity {
 				// + clickedView.getText() + "]",
 				// Toast.LENGTH_SHORT).show();
 
-				// TODO 1.0 Open published date/description
+				// TODO 1.0 Open article summary
 				Global.APP_CONTEXT = getApplicationContext();
 
 				Dialogs.DisplayInfoAlert(
-						"Article Info",
-						"Published: "
-								+ Text.processPubDate(Lists.RssItems.get(position).getPubDate())
-								+ "\r\nPreview:\r\n"
-								+ Text.processArticle(Lists.RssItems.get(
-										position).getDescription()), Main.this);
+						"Article Summary",
+						Text.processArticle(Lists.RssItems.get(position)
+								.getDescription())
+								+ "\r\n(Published: "
+								+ Text.processPubDate(Lists.RssItems.get(
+										position).getPubDate()) + ")",
+						Main.this);
 				return true;
 			}
 		});
