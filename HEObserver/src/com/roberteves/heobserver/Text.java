@@ -11,6 +11,8 @@ public class Text {
 	
 	public static String processArticle(String text)
 	{
+		// TODO 1.0 Un-capitalise first description word
+		
 		String t = text;
 		t = unescapeHtml(t);
 		t=t.replaceAll("</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>", ""); //remove any remaining html tags

@@ -100,7 +100,6 @@ public class Main extends ActionBarActivity {
 				// TODO 1.0 Open published date/description
 				Global.APP_CONTEXT = getApplicationContext();
 
-				// TODO 1.0 Un-capitalise first description word
 				Dialogs.DisplayInfoAlert(
 						"Article Info",
 						"Published: "
