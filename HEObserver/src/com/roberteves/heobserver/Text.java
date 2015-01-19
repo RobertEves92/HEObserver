@@ -22,6 +22,6 @@ public class Text {
 	public static String processPubDate(Date pubDate) {
 		String p = pubDate.toString();
 		p=p.replaceAll("((:00)( GMT\\+)([0-9]+)(\\:)([0-9]+)( )([0-9]+))", ""); //remove seconds, time zone and year
-		return null;
+		return p;
 	}
 }
