@@ -104,7 +104,7 @@ public class Main extends ActionBarActivity {
 				Dialogs.DisplayInfoAlert(
 						"Article Info",
 						"Published: "
-								+ Lists.RssItems.get(position).getPubDate()
+								+ Text.processPubDate(Lists.RssItems.get(position).getPubDate())
 								+ "\r\nPreview:\r\n"
 								+ Text.processArticle(Lists.RssItems.get(
 										position).getDescription()), Main.this);
