@@ -20,6 +20,7 @@ public class Text {
 	}
 
 	public static String processPubDate(Date pubDate) {
+		//FIXME 0.1 Utilise Date class like a normal person!!!
 		//TODO 1.0 Process full day and month names, reorder to day date/month hour:min
 		String p = pubDate.toString();
 		p=p.replaceAll("((:00)( GMT\\+)([0-9]+)(\\:)([0-9]+)( )([0-9]+))", ""); //remove seconds, time zone and year
