@@ -16,6 +16,7 @@ public class Text {
 	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
 	private static String regexParagraph = "(</p>)";
 	private static String regexXmlComment = "<!--.*?-->";
+	private static String regexUserComment ="Comments\\s\\(\\d\\)";
 
 	public static String unescapeHtml(String title) {
 		return HtmlEscape.unescapeHtml(title);
@@ -35,6 +36,8 @@ public class Text {
 		t = t.replaceAll(regexParagraph, "\r\n");// add new lines
 		t = t.replaceAll(regexHtml, "");// remove any remaining html tags
 		t = t.replaceAll(regexXmlComment, "");// remove any remaining xml comments
+		t=unescapeHtml(t);
+		t=t.replaceAll(regexUserComment, "");//remove user comments count
 		return t;
 	}
 
