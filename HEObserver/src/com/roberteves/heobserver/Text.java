@@ -8,6 +8,9 @@ import java.util.GregorianCalendar;
 import org.unbescape.html.HtmlEscape;
 
 public class Text {
+	private static String regexArticle = "(<!-- Article Start -->)([\\w\\d\\s\\W\\D\\S]+)(<!-- Article End -->)";
+	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+	
 	public static String unescapeHtml(String title) {
 		return HtmlEscape.unescapeHtml(title);
 	}
