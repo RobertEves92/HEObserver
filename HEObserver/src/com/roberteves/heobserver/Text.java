@@ -18,6 +18,7 @@ public class Text {
 	private static String regexXmlComment = "<!--.*?-->";
 	private static String regexUserComment ="Comments\\s\\(\\d\\)";
 	private static String regexExcessWhitespace = "(\\s{2,})";
+	private static String regexRelatedContent = "(Related content)(.*)";
 
 	public static String unescapeHtml(String title) {
 		return HtmlEscape.unescapeHtml(title);
@@ -40,6 +41,7 @@ public class Text {
 		t=unescapeHtml(t);
 		t=t.replaceAll(regexUserComment, "");//remove user comments count
 		t=t.replaceAll(regexExcessWhitespace, "");//remove excess whitespace
+		t=t.replaceAll(regexRelatedContent, "");//remove related content text
 		return t;
 	}
 
