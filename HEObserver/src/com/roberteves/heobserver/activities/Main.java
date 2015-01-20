@@ -1,5 +1,6 @@
 package com.roberteves.heobserver.activities;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,7 @@ import com.roberteves.heobserver.Dialogs;
 import com.roberteves.heobserver.Lists;
 import com.roberteves.heobserver.Text;
 import com.roberteves.heobserver.R;
+import com.roberteves.heobserver.WebPage;
 import com.roberteves.heobserver.rss.RSSHandler;
 
 import android.os.Bundle;
@@ -80,6 +82,19 @@ public class Main extends ActionBarActivity {
 				// Toast.LENGTH_SHORT).show();
 
 				// TODO 1.0 Open Article
+				Global.APP_CONTEXT = getApplicationContext();
+
+				try {
+					String s = WebPage.getWebSource(Lists.RssItems
+							.get(position).getLink());
+
+					// TODO 1.0 Change to separate activity
+					Dialogs.DisplayInfoAlert("Article", Text.processArticle(s),
+							Main.this);
+				} catch (IOException e) {
+					// TODO 1.0 Display error message
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -102,7 +117,7 @@ public class Main extends ActionBarActivity {
 
 				Dialogs.DisplayInfoAlert(
 						"Article Summary",
-						Text.processArticle(Lists.RssItems.get(position)
+						Text.processArticlePreview(Lists.RssItems.get(position)
 								.getDescription())
 								+ "\r\n(Published: "
 								+ Text.processPubDate(Lists.RssItems.get(
