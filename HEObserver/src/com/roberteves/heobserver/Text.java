@@ -15,7 +15,7 @@ public class Text {
 		return HtmlEscape.unescapeHtml(title);
 	}
 	
-	public static String processArticle(String text)
+	public static String processArticlePreview(String text)
 	{
 		// TODO 1.0 Un-capitalise first description word
 		

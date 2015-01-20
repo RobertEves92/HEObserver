@@ -102,7 +102,7 @@ public class Main extends ActionBarActivity {
 
 				Dialogs.DisplayInfoAlert(
 						"Article Summary",
-						Text.processArticle(Lists.RssItems.get(position)
+						Text.processArticlePreview(Lists.RssItems.get(position)
 								.getDescription())
 								+ "\r\n(Published: "
 								+ Text.processPubDate(Lists.RssItems.get(
