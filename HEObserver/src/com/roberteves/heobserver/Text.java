@@ -24,6 +24,13 @@ public class Text {
 		t=t.replaceAll(regexHtml, ""); //remove any remaining html tags
 		return t;
 	}
+	
+	public static String processArticle(String text)
+	{
+		String t = text;
+		//TODO 1.0 Insert processing here
+		return t;
+	}
 
 	public static String processPubDate(Date pubDate) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");	
