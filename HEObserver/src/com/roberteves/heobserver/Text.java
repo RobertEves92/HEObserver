@@ -15,6 +15,7 @@ public class Text {
 	private static String regexArticle = "(<!-- Article Start -->)([\\w\\d\\s\\W\\D\\S]+)(<!-- Article End -->)";
 	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
 	private static String regexParagraph = "(</p>)";
+	private static String regexXmlComment = "<!--.*?-->";
 
 	public static String unescapeHtml(String title) {
 		return HtmlEscape.unescapeHtml(title);
@@ -33,6 +34,7 @@ public class Text {
 		String t = selectStringFromRegex(text, regexArticle);
 		t = t.replaceAll(regexParagraph, "\r\n");// add new lines
 		t = t.replaceAll(regexHtml, "");// remove any remaining html tags
+		t = t.replaceAll(regexXmlComment, "");// remove any remaining xml comments
 		return t;
 	}
 
