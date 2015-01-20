@@ -16,7 +16,7 @@ public class Text {
 	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
 	private static String regexParagraph = "(</p>)";
 	private static String regexXmlComment = "<!--.*?-->";
-	private static String regexUserComment ="Comments\\s\\(\\d\\)";
+	private static String regexUserComment = "Comments\\s\\(\\d\\)";
 	private static String regexExcessWhitespace = "(\\s{2,})";
 	private static String regexRelatedContent = "(Related content)(.*)";
 
@@ -37,21 +37,21 @@ public class Text {
 		String t = selectStringFromRegex(text, regexArticle);
 		t = t.replaceAll(regexParagraph, "\r\n");// add new lines
 		t = t.replaceAll(regexHtml, "");// remove any remaining html tags
-		t = t.replaceAll(regexXmlComment, "");// remove any remaining xml comments
-		t=unescapeHtml(t);
-		t=t.replaceAll(regexUserComment, "");//remove user comments count
-		t=t.replaceAll(regexExcessWhitespace, "");//remove excess whitespace
-		t=t.replaceAll(regexRelatedContent, "");//remove related content text
+		t = t.replaceAll(regexXmlComment, "");// remove any xml comments
+		t = unescapeHtml(t);// unescape remaining html
+		t = t.replaceAll(regexUserComment, "");// remove user comments count
+		t = t.replaceAll(regexExcessWhitespace, "");// remove excess whitespace
+		t = t.replaceAll(regexRelatedContent, "");// remove related content text
 		return t;
 	}
 
 	public static String processPubDate(Date pubDate) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");	
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(pubDate);
 		return sdf.format(calendar.getTime());
 	}
-	
+
 	private static String selectStringFromRegex(String text, String regex) {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(text);
