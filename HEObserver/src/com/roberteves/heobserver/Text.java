@@ -21,7 +21,7 @@ public class Text {
 		
 		String t = text;
 		t = unescapeHtml(t);
-		t=t.replaceAll("</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>", ""); //remove any remaining html tags
+		t=t.replaceAll(regexHtml, ""); //remove any remaining html tags
 		return t;
 	}
 
