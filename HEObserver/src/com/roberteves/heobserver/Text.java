@@ -19,6 +19,7 @@ public class Text {
 	private static String regexUserComment = "Comments\\s\\(\\d\\)";
 	private static String regexExcessWhitespace = "(\\s{2,})";
 	private static String regexRelatedContent = "(Related content)(.*)";
+	private static String regexFullStop="(\\.)(?=\\w)";
 
 	public static String unescapeHtml(String title) {
 		return HtmlEscape.unescapeHtml(title);
@@ -44,6 +45,7 @@ public class Text {
 		t = t.replaceAll(regexUserComment, "");// remove user comments count
 		t = t.replaceAll(regexExcessWhitespace, "");// remove excess whitespace
 		t = t.replaceAll(regexRelatedContent, "");// remove related content text
+		t=t.replaceAll(regexFullStop, ". ");//adds missing spaces after full stops
 		return t;
 	}
 
