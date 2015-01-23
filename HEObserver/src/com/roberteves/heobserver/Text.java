@@ -19,21 +19,21 @@ public class Text {
 	private static String regexUserComment = "Comments\\s\\(\\d\\)";
 	private static String regexExcessWhitespace = "(\\s{2,})";
 	private static String regexRelatedContent = "(Related content)(.*)";
-	private static String regexFullStop="(\\.)(?=\\w)";
+	private static String regexFullStop = "(\\.)(?=\\w)";
 
 	public static String unescapeHtml(String title) {
 		return HtmlEscape.unescapeHtml(title);
 	}
 
 	public static String processArticlePreview(String text) {
-String t = text;
+		String t = text;
 		t = unescapeHtml(t);
 		t = t.replaceAll(regexHtml, ""); // remove any remaining html tags
 		return t;
 	}
 
 	public static String processArticle(String text) {
-String t = selectStringFromRegex(text, regexArticle);
+		String t = selectStringFromRegex(text, regexArticle);
 		t = t.replaceAll(regexParagraph, "\r\n");// add new lines
 		t = t.replaceAll(regexHtml, "");// remove any remaining html tags
 		t = t.replaceAll(regexXmlComment, "");// remove any xml comments
@@ -41,7 +41,7 @@ String t = selectStringFromRegex(text, regexArticle);
 		t = t.replaceAll(regexUserComment, "");// remove user comments count
 		t = t.replaceAll(regexExcessWhitespace, "");// remove excess whitespace
 		t = t.replaceAll(regexRelatedContent, "");// remove related content text
-		t=t.replaceAll(regexFullStop, ". ");//adds missing spaces after full stops
+		t = t.replaceAll(regexFullStop, ". ");// adds missing spaces
 		return t;
 	}
 
