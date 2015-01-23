@@ -97,7 +97,6 @@ public class Main extends ActionBarActivity {
 					b.putString("BODY", body);
 					i.putExtras(b);
 					startActivity(i);
-					finish();
 				} catch (IOException e) {
 					// TODO 1.0 Display error message
 					e.printStackTrace();
