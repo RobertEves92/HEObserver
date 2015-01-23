@@ -16,7 +16,7 @@ public class Dialogs {
 		alertDialog.setMessage(text);
 
 		// Setting Icon to Dialog
-		alertDialog.setIcon(R.drawable.ic_alert_info); //TODO 1.0 reduce icon size
+		alertDialog.setIcon(R.drawable.ic_alert_info);
 
 		// Setting OK Button
 		alertDialog.setButton(activity.getString(R.string.ok),

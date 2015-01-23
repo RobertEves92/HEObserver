@@ -27,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-//TODO 1.1 convert to activity and add pull to refresh
 public class Main extends ActionBarActivity {
 	private static ListView lv;
 
@@ -42,8 +41,6 @@ public class Main extends ActionBarActivity {
 	}
 
 	private void updateList() {
-		// TODO 1.0 Add please wait dialog
-		// TODO 1.2 Removed and setup async feed methods
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(policy);
@@ -54,7 +51,6 @@ public class Main extends ActionBarActivity {
 
 		// Add all story items to hashmap array
 		for (RssItem item : Lists.RssItems) {
-			// TODO 2.0 Add support for slideshows
 			// If the article is a picture slideshow, dont add it to the list
 			if (!item.getTitle().toUpperCase().contains("PICTURES:")) {
 				Lists.storyList.add(createStory("story",
@@ -73,16 +69,6 @@ public class Main extends ActionBarActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TextView clickedView = (TextView) view;
-				//
-				// Toast.makeText(
-				// Main.this,
-				// "Clicked Item with id [" + id + "] - Position ["
-				// + position + "] - Planet ["
-				// + clickedView.getText() + "]",
-				// Toast.LENGTH_SHORT).show();
-
-				// TODO 1.0 Open Article
 				Global.APP_CONTEXT = getApplicationContext();
 
 				try {
@@ -98,7 +84,6 @@ public class Main extends ActionBarActivity {
 					i.putExtras(b);
 					startActivity(i);
 				} catch (IOException e) {
-					// TODO 1.0 Display error message
 					e.printStackTrace();
 				}
 			}
@@ -109,16 +94,6 @@ public class Main extends ActionBarActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TextView clickedView = (TextView) view;
-				//
-				// Toast.makeText(
-				// Main.this,
-				// "Long Clicked Item with id [" + id + "] - Position ["
-				// + position + "] - Planet ["
-				// + clickedView.getText() + "]",
-				// Toast.LENGTH_SHORT).show();
-
-				// TODO 1.0 Open article summary
 				Global.APP_CONTEXT = getApplicationContext();
 
 				Dialogs.DisplayInfoAlert(

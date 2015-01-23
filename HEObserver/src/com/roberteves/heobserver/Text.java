@@ -26,18 +26,14 @@ public class Text {
 	}
 
 	public static String processArticlePreview(String text) {
-		// TODO 1.0 Un-capitalise first description word
-
-		String t = text;
+String t = text;
 		t = unescapeHtml(t);
 		t = t.replaceAll(regexHtml, ""); // remove any remaining html tags
 		return t;
 	}
 
 	public static String processArticle(String text) {
-		// TODO 1.0 Un-capitalise first description word
-
-		String t = selectStringFromRegex(text, regexArticle);
+String t = selectStringFromRegex(text, regexArticle);
 		t = t.replaceAll(regexParagraph, "\r\n");// add new lines
 		t = t.replaceAll(regexHtml, "");// remove any remaining html tags
 		t = t.replaceAll(regexXmlComment, "");// remove any xml comments
