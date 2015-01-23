@@ -15,6 +15,7 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.WebPage;
 import com.roberteves.heobserver.rss.RSSHandler;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -85,12 +86,18 @@ public class Main extends ActionBarActivity {
 				Global.APP_CONTEXT = getApplicationContext();
 
 				try {
-					String s = WebPage.getWebSource(Lists.RssItems
-							.get(position).getLink());
+					String body = Text.processArticle(WebPage
+							.getWebSource(Lists.RssItems.get(position)
+									.getLink()));
+					String title = Lists.RssItems.get(position).getTitle();
 
-					// TODO 1.0 Change to separate activity
-					Dialogs.DisplayInfoAlert("Article", Text.processArticle(s),
-							Main.this);
+					Intent i = new Intent(Main.this, Article.class);
+					Bundle b = new Bundle();
+					b.putString("TITLE", title);
+					b.putString("BODY", body);
+					i.putExtras(b);
+					startActivity(i);
+					finish();
 				} catch (IOException e) {
 					// TODO 1.0 Display error message
 					e.printStackTrace();
