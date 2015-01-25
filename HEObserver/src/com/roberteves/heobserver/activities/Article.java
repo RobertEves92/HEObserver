@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class Article extends Activity {
-	TextView txtTitle, txtBody;
+	TextView txtTitle, txtBody, txtPubDate;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -16,6 +16,7 @@ public class Article extends Activity {
 
 		txtTitle = (TextView) findViewById(R.id.txtTitle);
 		txtBody = (TextView) findViewById(R.id.txtBody);
+		txtPubDate = (TextView) findViewById(R.id.txtPubDate);
 
 		Bundle b = getIntent().getExtras();
 		txtTitle.setText(b.getString("TITLE"));
