@@ -21,6 +21,7 @@ public class Article extends Activity {
 		Bundle b = getIntent().getExtras();
 		txtTitle.setText(b.getString("TITLE"));
 		txtBody.setText(b.getString("BODY"));
+		txtPubDate.setText("Published: " + b.getString("DATE"));
 	}
 
 }
