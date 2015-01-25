@@ -76,11 +76,14 @@ public class Main extends ActionBarActivity {
 							.getWebSource(Lists.RssItems.get(position)
 									.getLink()));
 					String title = Lists.RssItems.get(position).getTitle();
+					String date = Text.processPubDate(Lists.RssItems.get(
+							position).getPubDate());
 
 					Intent i = new Intent(Main.this, Article.class);
 					Bundle b = new Bundle();
 					b.putString("TITLE", title);
 					b.putString("BODY", body);
+					b.putString("DATE", date);
 					i.putExtras(b);
 					startActivity(i);
 				} catch (IOException e) {
