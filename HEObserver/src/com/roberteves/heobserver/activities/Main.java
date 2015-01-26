@@ -1,5 +1,7 @@
 package com.roberteves.heobserver.activities;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +35,7 @@ public class Main extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Fabric.with(this, new Crashlytics());
 		setContentView(R.layout.activity_main);
 		Global.APP_CONTEXT = getApplicationContext();
 		lv = (ListView) findViewById(R.id.listView);
