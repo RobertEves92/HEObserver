@@ -15,6 +15,9 @@ public class Text {
 	private static String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
 	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
 	private static String regexArticleBody = "<p>.*</p>";
+	private static String regexArticleRelated = "<div.*?<\\/div>";
+	private static String regexXmlComment = "<!--.*?-->";
+	private static String regexExcessWhitespace="\\s+";
 
 	public static String unescapeHtml(String title) {
 		return HtmlEscape.unescapeHtml(title);
@@ -30,6 +33,9 @@ public class Text {
 	public static String processArticle(String text) {
 		String t = selectStringFromRegex(text, regexArticle);
 		t=selectStringFromRegex(t,regexArticleBody);
+		t=t.replaceAll(regexArticleRelated, "");
+		t=t.replaceAll(regexXmlComment, "");
+		t=t.replaceAll(regexExcessWhitespace, " ");
 		return t;
 	}
 
