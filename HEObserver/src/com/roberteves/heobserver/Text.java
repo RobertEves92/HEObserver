@@ -14,12 +14,10 @@ import org.unbescape.html.HtmlEscape;
 public class Text {
 	private static String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
 	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
-	private static String regexParagraph = "(</p>)";
+	private static String regexArticleBody = "<p>.*</p>";
+	private static String regexArticleRelated = "<div.*?<\\/div>";
 	private static String regexXmlComment = "<!--.*?-->";
-	private static String regexUserComment = "Comments\\s\\(\\d\\)";
-	private static String regexExcessWhitespace = "(\\s{2,})";
-	private static String regexRelatedContent = "(Related content)(.*)";
-	private static String regexFullStop = "(\\.)(?=\\w)";
+	private static String regexExcessWhitespace="\\s+";
 
 	public static String unescapeHtml(String title) {
 		return HtmlEscape.unescapeHtml(title);
@@ -34,14 +32,10 @@ public class Text {
 
 	public static String processArticle(String text) {
 		String t = selectStringFromRegex(text, regexArticle);
-		t = t.replaceAll(regexParagraph, "\r\n");// add new lines
-		t = t.replaceAll(regexHtml, "");// remove any remaining html tags
-		t = t.replaceAll(regexXmlComment, "");// remove any xml comments
-		t = unescapeHtml(t);// unescape remaining html
-		t = t.replaceAll(regexUserComment, "");// remove user comments count
-		t = t.replaceAll(regexExcessWhitespace, "");// remove excess whitespace
-		t = t.replaceAll(regexRelatedContent, "");// remove related content text
-		t = t.replaceAll(regexFullStop, ". ");// adds missing spaces
+		t=selectStringFromRegex(t,regexArticleBody);
+		t=t.replaceAll(regexArticleRelated, "");
+		t=t.replaceAll(regexXmlComment, "");
+		t=t.replaceAll(regexExcessWhitespace, " ");
 		return t;
 	}
 

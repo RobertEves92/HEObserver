@@ -4,6 +4,7 @@ import com.roberteves.heobserver.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TextView;
 
 public class Article extends Activity {
@@ -20,7 +21,7 @@ public class Article extends Activity {
 
 		Bundle b = getIntent().getExtras();
 		txtTitle.setText(b.getString("TITLE"));
-		txtBody.setText(b.getString("BODY"));
+		txtBody.setText(Html.fromHtml(b.getString("BODY")));
 		txtPubDate.setText(String.format(getString(R.string.published),
 				b.getString("DATE")));
 	}
