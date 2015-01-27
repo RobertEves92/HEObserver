@@ -29,7 +29,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class Main extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity {
 	private static ListView lv;
 
 	@Override
@@ -82,7 +82,7 @@ public class Main extends ActionBarActivity {
 					String date = Text.processPubDate(Lists.RssItems.get(
 							position).getPubDate());
 
-					Intent i = new Intent(Main.this, Article.class);
+					Intent i = new Intent(MainActivity.this, ArticleActivity.class);
 					Bundle b = new Bundle();
 					b.putString("TITLE", title);
 					b.putString("BODY", body);
@@ -111,7 +111,7 @@ public class Main extends ActionBarActivity {
 										getString(R.string.published),
 										Text.processPubDate(Lists.RssItems.get(
 												position).getPubDate())),
-						Main.this);
+						MainActivity.this);
 				return true;
 			}
 		});
