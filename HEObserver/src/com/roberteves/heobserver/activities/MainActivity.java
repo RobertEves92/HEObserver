@@ -92,8 +92,8 @@ public class MainActivity extends ActionBarActivity {
 					i.putExtras(b);
 					startActivity(i);
 				} catch (IOException e) {
-					Dialogs.DisplayInfoAlert("Failed to get article",
-							"Failed to get article from source\r\nTechnical: "
+					Dialogs.DisplayInfoAlert(getString(R.string.articleGetFailTitle),
+							getString(R.string.articleGetFailBody)
 									+ e.getMessage(), Dialogs.TYPE_WARNING,
 							MainActivity.this);
 				}
