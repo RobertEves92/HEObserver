@@ -14,6 +14,7 @@ import org.unbescape.html.HtmlEscape;
 public class Text {
 	private static String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
 	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+	private static String regexArticleBody = "<p>.*</p>";
 
 	public static String unescapeHtml(String title) {
 		return HtmlEscape.unescapeHtml(title);
@@ -28,6 +29,7 @@ public class Text {
 
 	public static String processArticle(String text) {
 		String t = selectStringFromRegex(text, regexArticle);
+		t=selectStringFromRegex(t,regexArticleBody);
 		return t;
 	}
 
