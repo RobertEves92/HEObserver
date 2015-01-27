@@ -106,9 +106,11 @@ public class Main extends ActionBarActivity {
 						"Article Summary",
 						Text.processArticlePreview(Lists.RssItems.get(position)
 								.getDescription())
-								+ "\r\n(Published: "
-								+ Text.processPubDate(Lists.RssItems.get(
-										position).getPubDate()) + ")",
+								+ "\r\n"
+								+ String.format(
+										getString(R.string.published),
+										Text.processPubDate(Lists.RssItems.get(
+												position).getPubDate())),
 						Main.this);
 				return true;
 			}

@@ -4,5 +4,6 @@
     <string name="URL">http://www.hertsandessexobserver.co.uk/news.rss</string>
     <string name="refresh">Refresh</string>
     <string name="ok">OK</string>
+    <string name="published">Published: %s</string>
 
 </resources>
