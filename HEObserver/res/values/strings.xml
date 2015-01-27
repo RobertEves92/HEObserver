@@ -6,6 +6,8 @@
     <string name="ok">OK</string>
     <string name="published">Published: %s</string>
     <string name="articleGetFailTitle">Failed to get article</string>
-    <string name="articleGetFailBody">"Failed to get article from source\r\n\r\nTechnical: "</string>
+    <string name="articleGetFailBody">Failed to get article from source\r\n\r\nTechnical: </string>
+    <string name="articleListGetFailTitle">Failed to update article list</string>
+    <string name="articleListGetFailBody">"Failed to update article list\r\n\r\nTechnical: "</string>
 
 </resources>
