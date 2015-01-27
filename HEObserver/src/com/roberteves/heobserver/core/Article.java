@@ -29,7 +29,8 @@ public class Article {
 	private static String regexTitleStart = "<title>\\s+";
 	private static String regexTitleEnd = "\\s\\|.*";
 
-	public Article(String link, String summary, Date published) throws IOException {
+	public Article(String link, String summary, Date published)
+			throws IOException {
 		String source = getWebSource(link);
 		// Set Title
 		String t = selectStringFromRegex(source, regexTitle);
@@ -79,7 +80,7 @@ public class Article {
 		t = t.replaceAll(regexHtml, ""); // remove any remaining html tags
 		return t;
 	}
-	
+
 	private static String getWebSource(String Url) throws IOException {
 		URL url = new URL(Url);
 		URLConnection urlConnection = url.openConnection();
