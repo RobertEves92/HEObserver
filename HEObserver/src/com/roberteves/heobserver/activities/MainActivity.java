@@ -10,10 +10,9 @@ import java.util.Map;
 import nl.matshofman.saxrssreader.RssItem;
 
 import com.roberteves.heobserver.R;
-import com.roberteves.heobserver.core.Dialogs;
+import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Global;
 import com.roberteves.heobserver.core.Lists;
-import com.roberteves.heobserver.core.Text;
 import com.roberteves.heobserver.core.WebPage;
 import com.roberteves.heobserver.rss.RSSHandler;
 
@@ -56,8 +55,7 @@ public class MainActivity extends ActionBarActivity {
 		for (RssItem item : Lists.RssItems) {
 			// If the article is a picture slideshow, dont add it to the list
 			if (!item.getTitle().toUpperCase().contains("PICTURES:")) {
-				Lists.storyList.add(createStory("story",
-						Text.unescapeHtml(item.getTitle())));
+				Lists.storyList.add(createStory("story", item.getTitle()));
 			}
 		}
 
@@ -75,18 +73,19 @@ public class MainActivity extends ActionBarActivity {
 				Global.APP_CONTEXT = getApplicationContext();
 
 				try {
-					String body = Text.processArticle(WebPage
+					Article article = new Article(WebPage
 							.getWebSource(Lists.RssItems.get(position)
-									.getLink()));
-					String title = Lists.RssItems.get(position).getTitle();
-					String date = Text.processPubDate(Lists.RssItems.get(
-							position).getPubDate());
+									.getLink()), Lists.RssItems.get(position)
+							.getDescription(), Lists.RssItems.get(position)
+							.getPubDate());
 
-					Intent i = new Intent(MainActivity.this, ArticleActivity.class);
+					Intent i = new Intent(MainActivity.this,
+							ArticleActivity.class);
 					Bundle b = new Bundle();
-					b.putString("TITLE", title);
-					b.putString("BODY", body);
-					b.putString("DATE", date);
+					b.putString("TITLE", article.getTitle());
+					b.putString("BODY", article.getBody());
+					b.putString("DATE", article.getPublishedDate());
+
 					i.putExtras(b);
 					startActivity(i);
 				} catch (IOException e) {
@@ -95,26 +94,27 @@ public class MainActivity extends ActionBarActivity {
 			}
 		});
 
-		lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Global.APP_CONTEXT = getApplicationContext();
-
-				Dialogs.DisplayInfoAlert(
-						"Article Summary",
-						Text.processArticlePreview(Lists.RssItems.get(position)
-								.getDescription())
-								+ "\r\n"
-								+ String.format(
-										getString(R.string.published),
-										Text.processPubDate(Lists.RssItems.get(
-												position).getPubDate())),
-						MainActivity.this);
-				return true;
-			}
-		});
+		// lv.setOnItemLongClickListener(new
+		// AdapterView.OnItemLongClickListener() {
+		//
+		// @Override
+		// public boolean onItemLongClick(AdapterView<?> parent, View view,
+		// int position, long id) {
+		// Global.APP_CONTEXT = getApplicationContext();
+		//
+		// Dialogs.DisplayInfoAlert(
+		// "Article Summary",
+		// Text.processArticlePreview(Lists.RssItems.get(position)
+		// .getDescription())
+		// + "\r\n"
+		// + String.format(
+		// getString(R.string.published),
+		// Text.processPubDate(Lists.RssItems.get(
+		// position).getPubDate())),
+		// MainActivity.this);
+		// return true;
+		// }
+		// });
 	}
 
 	@Override
