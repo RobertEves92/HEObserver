@@ -5,5 +5,7 @@
     <string name="refresh">Refresh</string>
     <string name="ok">OK</string>
     <string name="published">Published: %s</string>
+    <string name="articleGetFailTitle">Failed to get article</string>
+    <string name="articleGetFailBody">"Failed to get article from source\r\n\r\nTechnical: "</string>
 
 </resources>

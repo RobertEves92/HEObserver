@@ -7,8 +7,10 @@ import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 
 public class Dialogs {
+	public static final int TYPE_INFO = 0, TYPE_WARNING = 1;
+
 	public static void DisplayInfoAlert(String title, String text,
-			ActionBarActivity activity) {
+			int alertType, ActionBarActivity activity) {
 		AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
 
 		// Setting Dialog Title
@@ -18,7 +20,14 @@ public class Dialogs {
 		alertDialog.setMessage(text);
 
 		// Setting Icon to Dialog
-		alertDialog.setIcon(R.drawable.ic_alert_info);
+		switch (alertType) {
+		case TYPE_INFO:
+			alertDialog.setIcon(R.drawable.ic_alert_info);
+			break;
+		case TYPE_WARNING:
+			alertDialog.setIcon(R.drawable.ic_alert_warning);
+			break;
+		}
 
 		// Setting OK Button
 		alertDialog.setButton(activity.getString(R.string.ok),
