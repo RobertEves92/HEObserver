@@ -1,4 +1,4 @@
-package com.roberteves.heobserver;
+package com.roberteves.heobserver.core;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -9,12 +9,12 @@ import java.util.Map;
 
 import nl.matshofman.saxrssreader.RssItem;
 
-import com.roberteves.heobserver.Global;
-import com.roberteves.heobserver.Dialogs;
-import com.roberteves.heobserver.Lists;
-import com.roberteves.heobserver.Text;
 import com.roberteves.heobserver.R;
-import com.roberteves.heobserver.WebPage;
+import com.roberteves.heobserver.core.Dialogs;
+import com.roberteves.heobserver.core.Global;
+import com.roberteves.heobserver.core.Lists;
+import com.roberteves.heobserver.core.Text;
+import com.roberteves.heobserver.core.WebPage;
 import com.roberteves.heobserver.rss.RSSHandler;
 
 import android.content.Intent;

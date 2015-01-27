@@ -1,4 +1,4 @@
-package com.roberteves.heobserver;
+package com.roberteves.heobserver.core;
 
 import java.io.BufferedReader;
 import java.io.IOException;

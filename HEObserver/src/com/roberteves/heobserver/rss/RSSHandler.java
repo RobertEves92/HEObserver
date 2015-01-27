@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import org.xml.sax.SAXException;
 
-import com.roberteves.heobserver.Global;
 import com.roberteves.heobserver.R;
+import com.roberteves.heobserver.core.Global;
 
 import nl.matshofman.saxrssreader.RssFeed;
 import nl.matshofman.saxrssreader.RssItem;

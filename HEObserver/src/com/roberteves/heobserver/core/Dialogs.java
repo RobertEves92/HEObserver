@@ -1,4 +1,6 @@
-package com.roberteves.heobserver;
+package com.roberteves.heobserver.core;
+
+import com.roberteves.heobserver.R;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
