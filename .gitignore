@@ -43,3 +43,6 @@ hs_err_pid*
 #Eclipse Ignores
 .metadata/
 .settings/
+HEObserver/crashlytics.properties
+HEObserver/assets/crashlytics-build.properties
+HEObserver/res/values/com_crashlytics_export_strings.xml
