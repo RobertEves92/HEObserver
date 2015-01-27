@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
 
-public class Article extends Activity {
+public class ArticleActivity extends Activity {
 	TextView txtTitle, txtBody, txtPubDate;
 
 	@Override
