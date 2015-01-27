@@ -1,5 +1,10 @@
 package com.roberteves.heobserver.core;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,7 +29,8 @@ public class Article {
 	private static String regexTitleStart = "<title>\\s+";
 	private static String regexTitleEnd = "\\s\\|.*";
 
-	public Article(String source, String summary, Date published) {
+	public Article(String link, String summary, Date published) throws IOException {
+		String source = getWebSource(link);
 		// Set Title
 		String t = selectStringFromRegex(source, regexTitle);
 		t = t.replaceAll(regexTitleStart, "");
@@ -72,6 +78,20 @@ public class Article {
 		t = HtmlEscape.unescapeHtml(t);
 		t = t.replaceAll(regexHtml, ""); // remove any remaining html tags
 		return t;
+	}
+	
+	private static String getWebSource(String Url) throws IOException {
+		URL url = new URL(Url);
+		URLConnection urlConnection = url.openConnection();
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				urlConnection.getInputStream(), "UTF-8"));
+		String inputLine;
+		StringBuilder sb = new StringBuilder();
+		while ((inputLine = br.readLine()) != null)
+			sb.append(inputLine);
+		br.close();
+
+		return sb.toString();
 	}
 
 	public String getTitle() {

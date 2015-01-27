@@ -11,9 +11,9 @@ import nl.matshofman.saxrssreader.RssItem;
 
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
+import com.roberteves.heobserver.core.Dialogs;
 import com.roberteves.heobserver.core.Global;
 import com.roberteves.heobserver.core.Lists;
-import com.roberteves.heobserver.core.WebPage;
 import com.roberteves.heobserver.rss.RSSHandler;
 
 import android.content.Intent;
@@ -72,10 +72,10 @@ public class MainActivity extends ActionBarActivity {
 					int position, long id) {
 				Global.APP_CONTEXT = getApplicationContext();
 
+				Article article;
 				try {
-					Article article = new Article(WebPage
-							.getWebSource(Lists.RssItems.get(position)
-									.getLink()), Lists.RssItems.get(position)
+					article = new Article(Lists.RssItems.get(position)
+							.getLink(), Lists.RssItems.get(position)
 							.getDescription(), Lists.RssItems.get(position)
 							.getPubDate());
 
@@ -89,7 +89,9 @@ public class MainActivity extends ActionBarActivity {
 					i.putExtras(b);
 					startActivity(i);
 				} catch (IOException e) {
-					e.printStackTrace();
+					Dialogs.DisplayInfoAlert("Failed to get article",
+							"Failed to get article from source\r\nTechnical: "
+									+ e.getMessage(), MainActivity.this);
 				}
 			}
 		});
