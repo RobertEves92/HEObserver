@@ -20,10 +20,16 @@ public class Article {
 	private static String regexExcessWhitespace = "\\s+";
 	private static String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
 	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+	private static String regexTitle = "<title>.*?<\\/title>";
+	private static String regexTitleStart = "<title>\\s+";
+	private static String regexTitleEnd = "\\s\\|.*";
 
 	public Article(String source, String summary, Date published) {
 		// Set Title
-		setTitle("title");
+		String t = selectStringFromRegex(source, regexTitle);
+		t = t.replaceAll(regexTitleStart, "");
+		t = t.replaceAll(regexTitleEnd, "");
+		setTitle(t);
 
 		// Set Body
 		String b = selectStringFromRegex(source, regexArticle);
