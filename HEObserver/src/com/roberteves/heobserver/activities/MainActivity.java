@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.unbescape.html.HtmlEscape;
+
 import nl.matshofman.saxrssreader.RssItem;
 
 import com.roberteves.heobserver.R;
@@ -55,7 +57,8 @@ public class MainActivity extends ActionBarActivity {
 		for (RssItem item : Lists.RssItems) {
 			// If the article is a picture slideshow, dont add it to the list
 			if (!item.getTitle().toUpperCase().contains("PICTURES:")) {
-				Lists.storyList.add(createStory("story", item.getTitle()));
+				Lists.storyList.add(createStory("story",
+						HtmlEscape.unescapeHtml(item.getTitle())));
 			}
 		}
 
