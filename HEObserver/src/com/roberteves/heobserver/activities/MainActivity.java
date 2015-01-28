@@ -2,15 +2,20 @@ package com.roberteves.heobserver.activities;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.unbescape.html.HtmlEscape;
 import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlPullParserException;
 
 import nl.matshofman.saxrssreader.RssItem;
 import nl.matshofman.saxrssreader.RssReader;
@@ -54,9 +59,7 @@ public class MainActivity extends ActionBarActivity {
 
 		// Stores all Rss Items from news feed
 		try {
-			Lists.RssItems = RssReader.read(
-					new URL(Global.APP_CONTEXT.getString(R.string.URL)))
-					.getRssItems();
+			Lists.RssItems = getFeeds();
 			Lists.storyList = new ArrayList<Map<String, String>>();
 
 			// Add all story items to hashmap array
@@ -135,6 +138,44 @@ public class MainActivity extends ActionBarActivity {
 					getString(R.string.articleListGetFailBody) + "\r\n"
 							+ e.getMessage(), Dialogs.TYPE_WARNING,
 					MainActivity.this);
+		}
+	}
+
+	private ArrayList<RssItem> getFeeds() throws SAXException, IOException,
+			MalformedURLException, XmlPullParserException {
+		ArrayList<String> feeds = new ArrayList<String>();
+		ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
+		ArrayList<RssItem> feedItems = new ArrayList<RssItem>();
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(this
+				.getResources().openRawResource(R.raw.feeds)));
+		String line;
+		while ((line = in.readLine()) != null) {
+			feeds.add(line);
+		}
+
+		for (String s : feeds) {
+			feedItems = RssReader.read(new URL(s)).getRssItems();
+			checkDuplicates(rssItems, feedItems);
+		}
+
+		Collections.sort(rssItems);// sorts into reverse date order
+		Collections.reverse(rssItems);// flip to correct order
+		return rssItems;
+	}
+
+	private void checkDuplicates(ArrayList<RssItem> rssItems,
+			ArrayList<RssItem> feedItems) {
+		for (RssItem y : feedItems) {
+			Boolean exists = false;
+			for (RssItem z : rssItems) {
+				if (z.getTitle().equalsIgnoreCase(y.getTitle())) {
+					exists = true;
+				}
+			}
+
+			if (!exists)
+				rssItems.add(y);
 		}
 	}
 
