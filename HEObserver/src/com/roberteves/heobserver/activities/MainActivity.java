@@ -54,9 +54,7 @@ public class MainActivity extends ActionBarActivity {
 
 		// Stores all Rss Items from news feed
 		try {
-			Lists.RssItems = RssReader.read(
-					new URL(Global.APP_CONTEXT.getString(R.string.URL)))
-					.getRssItems();
+			Lists.RssItems = getFeeds();
 			Lists.storyList = new ArrayList<Map<String, String>>();
 
 			// Add all story items to hashmap array
@@ -135,6 +133,39 @@ public class MainActivity extends ActionBarActivity {
 					getString(R.string.articleListGetFailBody) + "\r\n"
 							+ e.getMessage(), Dialogs.TYPE_WARNING,
 					MainActivity.this);
+		}
+	}
+
+	private ArrayList<RssItem> getFeeds() throws SAXException, IOException,
+			MalformedURLException {
+		ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
+		ArrayList<RssItem> feedItems = new ArrayList<RssItem>();
+
+		// News Feed
+		feedItems = RssReader.read(new URL(getString(R.string.news)))
+				.getRssItems();
+		checkDuplicates(rssItems, feedItems);
+
+		// Stortford Feed
+		feedItems = RssReader.read(new URL(getString(R.string.stortford)))
+				.getRssItems();
+		checkDuplicates(rssItems, feedItems);
+
+		return rssItems;
+	}
+
+	private void checkDuplicates(ArrayList<RssItem> rssItems,
+			ArrayList<RssItem> feedItems) {
+		for (RssItem y : feedItems) {
+			Boolean exists = false;
+			for (RssItem z : rssItems) {
+				if (z.getTitle().equalsIgnoreCase(y.getTitle())) {
+					exists = true;
+				}
+			}
+
+			if (!exists)
+				rssItems.add(y);
 		}
 	}
 
