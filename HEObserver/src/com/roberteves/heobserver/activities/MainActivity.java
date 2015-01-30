@@ -94,12 +94,8 @@ public class MainActivity extends ActionBarActivity {
 
 						Intent i = new Intent(MainActivity.this,
 								ArticleActivity.class);
-						Bundle b = new Bundle();
-						b.putString("TITLE", article.getTitle());
-						b.putString("BODY", article.getBody());
-						b.putString("DATE", article.getPublishedDate());
-
-						i.putExtras(b);
+						
+						i.putExtra("article", article);
 						startActivity(i);
 					} catch (IOException e) {
 						Dialogs.DisplayInfoAlert(

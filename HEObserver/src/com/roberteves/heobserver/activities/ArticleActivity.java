@@ -1,6 +1,7 @@
 package com.roberteves.heobserver.activities;
 
 import com.roberteves.heobserver.R;
+import com.roberteves.heobserver.core.Article;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.text.Html;
 import android.widget.TextView;
 
 public class ArticleActivity extends Activity {
+	private static Article article;
 	TextView txtTitle, txtBody, txtPubDate;
 
 	@Override
@@ -15,15 +17,16 @@ public class ArticleActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_article);
 
+		article = (Article) getIntent().getSerializableExtra("article");
+
 		txtTitle = (TextView) findViewById(R.id.txtTitle);
 		txtBody = (TextView) findViewById(R.id.txtBody);
 		txtPubDate = (TextView) findViewById(R.id.txtPubDate);
 
-		Bundle b = getIntent().getExtras();
-		txtTitle.setText(b.getString("TITLE"));
-		txtBody.setText(Html.fromHtml(b.getString("BODY")));
+		txtTitle.setText(article.getTitle());
+		txtBody.setText(Html.fromHtml(article.getBody()));
 		txtPubDate.setText(String.format(getString(R.string.published),
-				b.getString("DATE")));
+				article.getPublishedDate()));
 	}
 
 }

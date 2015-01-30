@@ -3,6 +3,7 @@ package com.roberteves.heobserver.core;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -16,7 +17,8 @@ import java.util.regex.Pattern;
 
 import org.unbescape.html.HtmlEscape;
 
-public class Article {
+@SuppressWarnings("serial")
+public class Article implements Serializable{
 	private String title, body, description, publishedDate;
 
 	private static String regexArticleBody = "<p>.*</p>";
