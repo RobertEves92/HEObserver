@@ -35,6 +35,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	private static ListView lv;
@@ -94,7 +95,11 @@ public class MainActivity extends Activity {
 						i.putExtra("article", article);
 						startActivity(i);
 					} catch (IOException e) {
-						//TODO Handle Exception
+						Crashlytics.logException(e); // Send caught exception to
+														// crashlytics
+						Toast.makeText(getApplicationContext(),
+								"Error retrieving article from source",
+								Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
@@ -121,7 +126,9 @@ public class MainActivity extends Activity {
 			// }
 			// });
 		} catch (Exception e) {
-			//TODO handle exception
+			Crashlytics.logException(e); // Send caught exception to crashlytics
+			Toast.makeText(getApplicationContext(),
+					"Error updating article list", Toast.LENGTH_SHORT).show();
 		}
 	}
 
