@@ -10,5 +10,8 @@
     <string name="articleListGetFailBody">"Failed to update article list\r\n\r\nTechnical: "</string>
     <string name="Share">Share</string>
     <string name="share_via">Share via</string>
+    <string name="error_retreive_article_source">Error retrieving article from source</string>
+    <string name="error_update_article_list">Error updating article list</string>
+    <string name="error_no_internet">No internet connection avaliable</string>
 
 </resources>
