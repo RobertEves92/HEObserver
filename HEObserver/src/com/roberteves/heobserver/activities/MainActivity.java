@@ -22,8 +22,6 @@ import nl.matshofman.saxrssreader.RssReader;
 
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
-import com.roberteves.heobserver.core.Dialogs;
-import com.roberteves.heobserver.core.Global;
 import com.roberteves.heobserver.core.Lists;
 
 import android.app.Activity;
@@ -46,7 +44,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Fabric.with(this, new Crashlytics());
 		setContentView(R.layout.activity_main);
-		Global.APP_CONTEXT = getApplicationContext();
 		lv = (ListView) findViewById(R.id.listView);
 
 		updateList();
@@ -83,7 +80,6 @@ public class MainActivity extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					Global.APP_CONTEXT = getApplicationContext();
 
 					Article article;
 					try {
@@ -98,11 +94,7 @@ public class MainActivity extends Activity {
 						i.putExtra("article", article);
 						startActivity(i);
 					} catch (IOException e) {
-						Dialogs.DisplayInfoAlert(
-								getString(R.string.articleGetFailTitle),
-								getString(R.string.articleGetFailBody)
-										+ e.getMessage(), Dialogs.TYPE_WARNING,
-								MainActivity.this);
+						//TODO Handle Exception
 					}
 				}
 			});
@@ -129,11 +121,7 @@ public class MainActivity extends Activity {
 			// }
 			// });
 		} catch (Exception e) {
-			Dialogs.DisplayInfoAlert(
-					getString(R.string.articleListGetFailTitle),
-					getString(R.string.articleListGetFailBody) + "\r\n"
-							+ e.getMessage(), Dialogs.TYPE_WARNING,
-					MainActivity.this);
+			//TODO handle exception
 		}
 	}
 
