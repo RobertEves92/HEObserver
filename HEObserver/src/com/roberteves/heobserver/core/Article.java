@@ -18,8 +18,8 @@ import java.util.regex.Pattern;
 import org.unbescape.html.HtmlEscape;
 
 @SuppressWarnings("serial")
-public class Article implements Serializable{
-	private String title, body, description, publishedDate;
+public class Article implements Serializable {
+	private String title, body, description, publishedDate, link;
 
 	private static String regexArticleBody = "<p>.*</p>";
 	private static String regexArticleRelated = "<div.*?<\\/div>";
@@ -31,7 +31,7 @@ public class Article implements Serializable{
 	private static String regexTitleStart = "<title>\\s+";
 	private static String regexTitleEnd = "\\s\\|.*";
 
-	public Article(String link, String summary, Date published)
+	public Article(String link, String description, Date published)
 			throws IOException {
 		String source = getWebSource(link);
 		// Set Title
@@ -49,10 +49,13 @@ public class Article implements Serializable{
 		setBody(b);
 
 		// Set Summary/Description
-		setDescription(processArticlePreview(summary));
+		setDescription(processArticlePreview(description));
 
 		// Set Date
 		setPublishedDate(processPubDate(published));
+
+		// Set Link
+		setLink(link);
 	}
 
 	private static String selectStringFromRegex(String text, String regex) {
@@ -127,6 +130,14 @@ public class Article implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 }

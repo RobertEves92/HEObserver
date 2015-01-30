@@ -9,5 +9,6 @@
     <string name="articleListGetFailTitle">Failed to update article list</string>
     <string name="articleListGetFailBody">"Failed to update article list\r\n\r\nTechnical: "</string>
     <string name="Share">Share</string>
+    <string name="share_via">Share via</string>
 
 </resources>
