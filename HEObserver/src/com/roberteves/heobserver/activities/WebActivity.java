@@ -29,9 +29,8 @@ public class WebActivity extends Activity {
 			// is article - open in article activity
 			try {
 				Article article = new Article(intent.getDataString());
-				//TODO Filter photo/video articles (Implement Article.getType)
-				Intent i = new Intent(WebActivity.this,
-						ArticleActivity.class);
+				// TODO Filter photo/video articles (Implement Article.getType)
+				Intent i = new Intent(WebActivity.this, ArticleActivity.class);
 
 				i.putExtra("article", article);
 				startActivity(i);
@@ -50,5 +49,11 @@ public class WebActivity extends Activity {
 			webView.getSettings().setJavaScriptEnabled(true);
 			webView.loadUrl(intent.getDataString());
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		finish(); // close when resumed
 	}
 }
