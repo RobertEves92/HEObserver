@@ -8,5 +8,6 @@
     <string name="articleGetFailBody">Failed to get article from source\r\n\r\nTechnical: </string>
     <string name="articleListGetFailTitle">Failed to update article list</string>
     <string name="articleListGetFailBody">"Failed to update article list\r\n\r\nTechnical: "</string>
+    <string name="Share">Share</string>
 
 </resources>

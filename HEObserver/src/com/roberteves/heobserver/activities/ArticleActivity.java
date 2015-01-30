@@ -6,6 +6,9 @@ import com.roberteves.heobserver.core.Article;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class ArticleActivity extends Activity {
@@ -29,4 +32,11 @@ public class ArticleActivity extends Activity {
 				article.getPublishedDate()));
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.article_activity_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
 }
