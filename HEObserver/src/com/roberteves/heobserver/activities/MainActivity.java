@@ -26,10 +26,10 @@ import com.roberteves.heobserver.core.Dialogs;
 import com.roberteves.heobserver.core.Global;
 import com.roberteves.heobserver.core.Lists;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,7 +38,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 	private static ListView lv;
 
 	@Override
@@ -94,12 +94,8 @@ public class MainActivity extends ActionBarActivity {
 
 						Intent i = new Intent(MainActivity.this,
 								ArticleActivity.class);
-						Bundle b = new Bundle();
-						b.putString("TITLE", article.getTitle());
-						b.putString("BODY", article.getBody());
-						b.putString("DATE", article.getPublishedDate());
-
-						i.putExtras(b);
+						
+						i.putExtra("article", article);
 						startActivity(i);
 					} catch (IOException e) {
 						Dialogs.DisplayInfoAlert(

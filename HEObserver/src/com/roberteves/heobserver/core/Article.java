@@ -3,6 +3,7 @@ package com.roberteves.heobserver.core;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -16,8 +17,9 @@ import java.util.regex.Pattern;
 
 import org.unbescape.html.HtmlEscape;
 
-public class Article {
-	private String title, body, description, publishedDate;
+@SuppressWarnings("serial")
+public class Article implements Serializable {
+	private String title, body, description, publishedDate, link;
 
 	private static String regexArticleBody = "<p>.*</p>";
 	private static String regexArticleRelated = "<div.*?<\\/div>";
@@ -29,7 +31,7 @@ public class Article {
 	private static String regexTitleStart = "<title>\\s+";
 	private static String regexTitleEnd = "\\s\\|.*";
 
-	public Article(String link, String summary, Date published)
+	public Article(String link, String description, Date published)
 			throws IOException {
 		String source = getWebSource(link);
 		// Set Title
@@ -47,10 +49,13 @@ public class Article {
 		setBody(b);
 
 		// Set Summary/Description
-		setDescription(processArticlePreview(summary));
+		setDescription(processArticlePreview(description));
 
 		// Set Date
 		setPublishedDate(processPubDate(published));
+
+		// Set Link
+		setLink(link);
 	}
 
 	private static String selectStringFromRegex(String text, String regex) {
@@ -125,6 +130,14 @@ public class Article {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 }
