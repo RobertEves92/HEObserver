@@ -2,15 +2,15 @@ package com.roberteves.heobserver.core;
 
 import com.roberteves.heobserver.R;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.v7.app.ActionBarActivity;
 
 public class Dialogs {
 	public static final int TYPE_INFO = 0, TYPE_WARNING = 1;
 
 	public static void DisplayInfoAlert(String title, String text,
-			int alertType, ActionBarActivity activity) {
+			int alertType, Activity activity) {
 		AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
 
 		// Setting Dialog Title
