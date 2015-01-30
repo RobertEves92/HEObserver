@@ -58,6 +58,30 @@ public class Article implements Serializable {
 		setLink(link);
 	}
 
+	public Article(String link) throws IOException {
+		String source = getWebSource(link);
+		// Set Title
+		String t = selectStringFromRegex(source, regexTitle);
+		t = t.replaceAll(regexTitleStart, "");
+		t = t.replaceAll(regexTitleEnd, "");
+		setTitle(t);
+
+		// Set Body
+		String b = selectStringFromRegex(source, regexArticle);
+		b = selectStringFromRegex(b, regexArticleBody);
+		b = b.replaceAll(regexArticleRelated, "");
+		b = b.replaceAll(regexXmlComment, "");
+		b = b.replaceAll(regexExcessWhitespace, " ");
+		setBody(b);
+
+		// Set Summary/Description and published date to null
+		setDescription(null);
+		setPublishedDate(null);
+
+		// Set Link
+		setLink(link);
+	}
+
 	private static String selectStringFromRegex(String text, String regex) {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(text);
