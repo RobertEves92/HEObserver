@@ -13,18 +13,24 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class WebActivity extends Activity {
 	private static WebView webView;
+	private boolean finishOnResume = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Fabric.with(this, new Crashlytics());
 		Util.setupThreadPolicy();
+
+		setContentView(R.layout.activity_web);
+		webView = (WebView) findViewById(R.id.webView);
+
 		Intent intent = getIntent();
 
 		if (intent
@@ -38,6 +44,10 @@ public class WebActivity extends Activity {
 				Intent i = new Intent(WebActivity.this, ArticleActivity.class);
 
 				i.putExtra("article", article);
+				Log.i("WebActivity",
+						"Loading Article Activity from "
+								+ intent.getDataString());
+				finishOnResume = true;
 				startActivity(i);
 			} catch (IOException e) {
 				Crashlytics.logException(e); // Send caught exception to
@@ -48,9 +58,8 @@ public class WebActivity extends Activity {
 			}
 		} else {
 			// is not article - open in web view
-			setContentView(R.layout.activity_web);
-
-			webView = (WebView) findViewById(R.id.webView);
+			Log.i("WebActivity",
+					"Loading Web Activity from " + intent.getDataString());
 			webView.getSettings().setJavaScriptEnabled(true);
 			webView.loadUrl(intent.getDataString());
 		}
@@ -59,6 +68,9 @@ public class WebActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		finish(); // close when resumed
+		if (finishOnResume) {
+			Log.i("WebActivity", "Finishing Activity - onResume");
+			finish(); // close when resumed
+		}
 	}
 }
