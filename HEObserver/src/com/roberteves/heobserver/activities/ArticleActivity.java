@@ -29,8 +29,13 @@ public class ArticleActivity extends Activity {
 
 		txtTitle.setText(article.getTitle());
 		txtBody.setText(Html.fromHtml(article.getBody()));
-		txtPubDate.setText(String.format(getString(R.string.published),
-				article.getPublishedDate()));
+
+		if (article.getPublishedDate() != null) {
+			txtPubDate.setText(String.format(getString(R.string.published),
+					article.getPublishedDate()));
+		} else {
+			txtPubDate.setText("");
+		}
 	}
 
 	@Override

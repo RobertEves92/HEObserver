@@ -23,6 +23,7 @@ import nl.matshofman.saxrssreader.RssReader;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
+import com.roberteves.heobserver.core.Util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -55,24 +56,27 @@ public class MainActivity extends Activity {
 
 	private void updateList() {
 		if (isOnline()) {
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-					.permitAll().build();
-			StrictMode.setThreadPolicy(policy);
+			Util.setupThreadPolicy();
 
 			// Stores all Rss Items from news feed
 			try {
 				Lists.RssItems = getFeeds();
 				Lists.storyList = new ArrayList<Map<String, String>>();
+				ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
 
 				// Add all story items to hashmap array
 				for (RssItem item : Lists.RssItems) {
-					// If the article is a picture slideshow, dont add it to the
-					// list
-					if (!item.getTitle().toUpperCase().contains("PICTURES:")) {
+					// If the article has unsupported features/media, dont add
+					// it
+					if (!Article.hasMedia(item.getTitle())) {
 						Lists.storyList.add(createStory("story",
 								HtmlEscape.unescapeHtml(item.getTitle())));
+						rssItems.add(item);
 					}
 				}
+
+				Lists.RssItems = rssItems; // Update with new list (filtered
+											// results)
 
 				SimpleAdapter simpleAdpt = new SimpleAdapter(this,
 						Lists.storyList, android.R.layout.simple_list_item_1,

@@ -21,15 +21,18 @@ import org.unbescape.html.HtmlEscape;
 public class Article implements Serializable {
 	private String title, body, description, publishedDate, link;
 
-	private static String regexArticleBody = "<p>.*</p>";
-	private static String regexArticleRelated = "<div.*?<\\/div>";
-	private static String regexXmlComment = "<!--.*?-->";
-	private static String regexExcessWhitespace = "\\s+";
-	private static String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
-	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
-	private static String regexTitle = "<title>.*?<\\/title>";
-	private static String regexTitleStart = "<title>\\s+";
-	private static String regexTitleEnd = "\\s\\|.*";
+	private static final String[] mediaTags = new String[] { "PHOTOS", "PHOTO",
+			"VIDEO", "VIDEOS", "PICTURES", "POLL" };
+
+	private static final String regexArticleBody = "<p>.*</p>";
+	private static final String regexArticleRelated = "<div.*?<\\/div>";
+	private static final String regexXmlComment = "<!--.*?-->";
+	private static final String regexExcessWhitespace = "\\s+";
+	private static final String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
+	private static final String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+	private static final String regexTitle = "<title>.*?<\\/title>";
+	private static final String regexTitleStart = "<title>\\s+";
+	private static final String regexTitleEnd = "\\s\\|.*";
 
 	public Article(String link, String description, Date published)
 			throws IOException {
@@ -53,6 +56,30 @@ public class Article implements Serializable {
 
 		// Set Date
 		setPublishedDate(processPubDate(published));
+
+		// Set Link
+		setLink(link);
+	}
+
+	public Article(String link) throws IOException {
+		String source = getWebSource(link);
+		// Set Title
+		String t = selectStringFromRegex(source, regexTitle);
+		t = t.replaceAll(regexTitleStart, "");
+		t = t.replaceAll(regexTitleEnd, "");
+		setTitle(t);
+
+		// Set Body
+		String b = selectStringFromRegex(source, regexArticle);
+		b = selectStringFromRegex(b, regexArticleBody);
+		b = b.replaceAll(regexArticleRelated, "");
+		b = b.replaceAll(regexXmlComment, "");
+		b = b.replaceAll(regexExcessWhitespace, " ");
+		setBody(b);
+
+		// Set Summary/Description and published date to null
+		setDescription(null);
+		setPublishedDate(null);
 
 		// Set Link
 		setLink(link);
@@ -84,6 +111,22 @@ public class Article implements Serializable {
 		t = HtmlEscape.unescapeHtml(t);
 		t = t.replaceAll(regexHtml, ""); // remove any remaining html tags
 		return t;
+	}
+
+	public boolean hasMedia() {
+		for (String s : mediaTags) {
+			if (getTitle().toUpperCase().startsWith(s.toUpperCase()))
+				return true;
+		}
+		return false;
+	}
+
+	public static boolean hasMedia(String title) {
+		for (String s : mediaTags) {
+			if (title.toUpperCase().startsWith(s.toUpperCase()))
+				return true;
+		}
+		return false;
 	}
 
 	private static String getWebSource(String Url) throws IOException {
