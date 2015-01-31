@@ -24,15 +24,15 @@ public class Article implements Serializable {
 	private static final String[] mediaTags = new String[] { "PHOTOS", "PHOTO",
 			"VIDEO", "VIDEOS", "PICTURES" };
 
-	private static String regexArticleBody = "<p>.*</p>";
-	private static String regexArticleRelated = "<div.*?<\\/div>";
-	private static String regexXmlComment = "<!--.*?-->";
-	private static String regexExcessWhitespace = "\\s+";
-	private static String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
-	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
-	private static String regexTitle = "<title>.*?<\\/title>";
-	private static String regexTitleStart = "<title>\\s+";
-	private static String regexTitleEnd = "\\s\\|.*";
+	private static final String regexArticleBody = "<p>.*</p>";
+	private static final String regexArticleRelated = "<div.*?<\\/div>";
+	private static final String regexXmlComment = "<!--.*?-->";
+	private static final String regexExcessWhitespace = "\\s+";
+	private static final String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
+	private static final String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+	private static final String regexTitle = "<title>.*?<\\/title>";
+	private static final String regexTitleStart = "<title>\\s+";
+	private static final String regexTitleEnd = "\\s\\|.*";
 
 	public Article(String link, String description, Date published)
 			throws IOException {
