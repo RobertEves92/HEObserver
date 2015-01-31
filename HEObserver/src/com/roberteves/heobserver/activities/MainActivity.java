@@ -23,6 +23,7 @@ import nl.matshofman.saxrssreader.RssReader;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
+import com.roberteves.heobserver.core.Util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -55,9 +56,7 @@ public class MainActivity extends Activity {
 
 	private void updateList() {
 		if (isOnline()) {
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-					.permitAll().build();
-			StrictMode.setThreadPolicy(policy);
+			Util.setupThreadPolicy();
 
 			// Stores all Rss Items from news feed
 			try {
