@@ -20,7 +20,6 @@ import org.unbescape.html.HtmlEscape;
 @SuppressWarnings("serial")
 public class Article implements Serializable {
 	private String title, body, description, publishedDate, link;
-	private Boolean media;
 
 	private static final String[] mediaTags = new String[] { "PHOTOS", "PHOTO",
 			"VIDEO", "VIDEOS", "PICTURES" };
@@ -60,9 +59,6 @@ public class Article implements Serializable {
 
 		// Set Link
 		setLink(link);
-
-		// Set Media
-		setMedia(processMedia(title));
 	}
 
 	public Article(String link) throws IOException {
@@ -87,9 +83,6 @@ public class Article implements Serializable {
 
 		// Set Link
 		setLink(link);
-
-		// Set Media
-		setMedia(processMedia(title));
 	}
 
 	private static String selectStringFromRegex(String text, String regex) {
@@ -120,9 +113,9 @@ public class Article implements Serializable {
 		return t;
 	}
 
-	private static boolean processMedia(String title) {
+	public boolean hasMedia() {
 		for (String s : mediaTags) {
-			if (title.toUpperCase().startsWith(s.toUpperCase()))
+			if (getTitle().toUpperCase().startsWith(s.toUpperCase()))
 				return true;
 		}
 		return false;
@@ -182,11 +175,4 @@ public class Article implements Serializable {
 		this.link = link;
 	}
 
-	public Boolean getMedia() {
-		return media;
-	}
-
-	public void setMedia(Boolean media) {
-		this.media = media;
-	}
 }
