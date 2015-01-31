@@ -22,7 +22,7 @@ public class Article implements Serializable {
 	private String title, body, description, publishedDate, link;
 
 	private static final String[] mediaTags = new String[] { "PHOTOS", "PHOTO",
-			"VIDEO", "VIDEOS", "PICTURES" };
+			"VIDEO", "VIDEOS", "PICTURES", "POLL" };
 
 	private static final String regexArticleBody = "<p>.*</p>";
 	private static final String regexArticleRelated = "<div.*?<\\/div>";
@@ -116,6 +116,14 @@ public class Article implements Serializable {
 	public boolean hasMedia() {
 		for (String s : mediaTags) {
 			if (getTitle().toUpperCase().startsWith(s.toUpperCase()))
+				return true;
+		}
+		return false;
+	}
+
+	public static boolean hasMedia(String title) {
+		for (String s : mediaTags) {
+			if (title.toUpperCase().startsWith(s.toUpperCase()))
 				return true;
 		}
 		return false;

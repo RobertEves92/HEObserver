@@ -65,9 +65,8 @@ public class MainActivity extends Activity {
 
 				// Add all story items to hashmap array
 				for (RssItem item : Lists.RssItems) {
-					// If the article is a picture slideshow, dont add it to the
-					// list
-					if (!item.getTitle().toUpperCase().contains("PICTURES:")) {
+					// If the article has unsupported features/media, dont add it
+					if (!Article.hasMedia(item.getTitle())) {
 						Lists.storyList.add(createStory("story",
 								HtmlEscape.unescapeHtml(item.getTitle())));
 					}
