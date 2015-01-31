@@ -21,6 +21,7 @@ import android.widget.Toast;
 public class WebActivity extends Activity {
 	private static WebView webView;
 	private boolean finishOnResume = false;
+	private String dataString;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,14 +33,13 @@ public class WebActivity extends Activity {
 		webView = (WebView) findViewById(R.id.webView);
 
 		Intent intent = getIntent();
+		dataString = formatDataString(intent.getDataString());
 
-		if (intent
-				.getDataString()
-				.matches(
-						"http:\\/\\/((www.)?)hertsandessexobserver.co.uk\\/.*story.html")) {
+		if (dataString
+				.matches("http:\\/\\/((www.)?)hertsandessexobserver.co.uk\\/.*story.html")) {
 			// is article - open in article activity
 			try {
-				Article article = new Article(intent.getDataString());
+				Article article = new Article(dataString);
 				if (article.hasMedia()) // load in web view
 				{
 					loadWebView(intent);
@@ -49,7 +49,7 @@ public class WebActivity extends Activity {
 
 					i.putExtra("article", article);
 					Log.i("WebActivity", "Loading Article Activity from "
-							+ intent.getDataString());
+							+ dataString);
 					finishOnResume = true;
 					startActivity(i);
 				}
@@ -75,10 +75,15 @@ public class WebActivity extends Activity {
 	}
 
 	private void loadWebView(Intent intent) {
-		Log.i("WebActivity",
-				"Loading Web Activity from " + intent.getDataString());
-		Toast.makeText(getApplicationContext(), "Article not supported, opening in web view",Toast.LENGTH_SHORT).show();
-		//webView.getSettings().setJavaScriptEnabled(true);
-		webView.loadUrl(intent.getDataString());
+		Log.i("WebActivity", "Loading Web Activity from " + dataString);
+		Toast.makeText(getApplicationContext(),
+				"Article not supported, opening in web view",
+				Toast.LENGTH_SHORT).show();
+		// webView.getSettings().setJavaScriptEnabled(true);
+		webView.loadUrl(dataString);
+	}
+
+	private String formatDataString(String dataString) {
+		return dataString.replaceAll("\\/story.html#.*", "/story.html");
 	}
 }
