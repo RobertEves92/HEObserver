@@ -1,10 +1,13 @@
 package com.roberteves.heobserver.activities;
 
+import io.fabric.sdk.android.Fabric;
+
 import java.io.IOException;
 
 import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
+import com.roberteves.heobserver.core.Util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -20,6 +23,8 @@ public class WebActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Fabric.with(this, new Crashlytics());
+		Util.setupThreadPolicy();
 		Intent intent = getIntent();
 
 		if (intent
