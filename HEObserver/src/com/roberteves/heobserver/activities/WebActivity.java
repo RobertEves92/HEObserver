@@ -9,7 +9,6 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Util;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-@SuppressLint("SetJavaScriptEnabled")
 public class WebActivity extends Activity {
 	private static WebView webView;
 	private boolean finishOnResume = false;
@@ -79,6 +77,7 @@ public class WebActivity extends Activity {
 		Toast.makeText(getApplicationContext(),
 				"Article not supported, opening in web view",
 				Toast.LENGTH_SHORT).show();
+		// TODO prompt to enable javascript - warn about ads
 		// webView.getSettings().setJavaScriptEnabled(true);
 		webView.loadUrl(dataString);
 	}
