@@ -62,15 +62,21 @@ public class MainActivity extends Activity {
 			try {
 				Lists.RssItems = getFeeds();
 				Lists.storyList = new ArrayList<Map<String, String>>();
+				ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
 
 				// Add all story items to hashmap array
 				for (RssItem item : Lists.RssItems) {
-					// If the article has unsupported features/media, dont add it
+					// If the article has unsupported features/media, dont add
+					// it
 					if (!Article.hasMedia(item.getTitle())) {
 						Lists.storyList.add(createStory("story",
 								HtmlEscape.unescapeHtml(item.getTitle())));
+						rssItems.add(item);
 					}
 				}
+
+				Lists.RssItems = rssItems; // Update with new list (filtered
+											// results)
 
 				SimpleAdapter simpleAdpt = new SimpleAdapter(this,
 						Lists.storyList, android.R.layout.simple_list_item_1,
