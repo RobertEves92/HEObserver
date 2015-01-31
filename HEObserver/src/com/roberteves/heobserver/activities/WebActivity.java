@@ -40,15 +40,19 @@ public class WebActivity extends Activity {
 			// is article - open in article activity
 			try {
 				Article article = new Article(intent.getDataString());
-				// TODO Filter photo/video articles (Implement Article.getType)
-				Intent i = new Intent(WebActivity.this, ArticleActivity.class);
+				if (article.hasMedia()) // load in web view
+				{
+					loadWebView(intent);
+				} else { // load in article activity
+					Intent i = new Intent(WebActivity.this,
+							ArticleActivity.class);
 
-				i.putExtra("article", article);
-				Log.i("WebActivity",
-						"Loading Article Activity from "
-								+ intent.getDataString());
-				finishOnResume = true;
-				startActivity(i);
+					i.putExtra("article", article);
+					Log.i("WebActivity", "Loading Article Activity from "
+							+ intent.getDataString());
+					finishOnResume = true;
+					startActivity(i);
+				}
 			} catch (IOException e) {
 				Crashlytics.logException(e); // Send caught exception to
 												// crashlytics
@@ -57,11 +61,7 @@ public class WebActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 			}
 		} else {
-			// is not article - open in web view
-			Log.i("WebActivity",
-					"Loading Web Activity from " + intent.getDataString());
-			webView.getSettings().setJavaScriptEnabled(true);
-			webView.loadUrl(intent.getDataString());
+			loadWebView(intent);
 		}
 	}
 
@@ -72,5 +72,12 @@ public class WebActivity extends Activity {
 			Log.i("WebActivity", "Finishing Activity - onResume");
 			finish(); // close when resumed
 		}
+	}
+
+	private void loadWebView(Intent intent) {
+		Log.i("WebActivity",
+				"Loading Web Activity from " + intent.getDataString());
+		webView.getSettings().setJavaScriptEnabled(true);
+		webView.loadUrl(intent.getDataString());
 	}
 }
