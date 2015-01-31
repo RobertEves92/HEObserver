@@ -3,6 +3,7 @@ package com.roberteves.heobserver.core;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -16,20 +17,24 @@ import java.util.regex.Pattern;
 
 import org.unbescape.html.HtmlEscape;
 
-public class Article {
-	private String title, body, description, publishedDate;
+@SuppressWarnings("serial")
+public class Article implements Serializable {
+	private String title, body, description, publishedDate, link;
 
-	private static String regexArticleBody = "<p>.*</p>";
-	private static String regexArticleRelated = "<div.*?<\\/div>";
-	private static String regexXmlComment = "<!--.*?-->";
-	private static String regexExcessWhitespace = "\\s+";
-	private static String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
-	private static String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
-	private static String regexTitle = "<title>.*?<\\/title>";
-	private static String regexTitleStart = "<title>\\s+";
-	private static String regexTitleEnd = "\\s\\|.*";
+	private static final String[] mediaTags = new String[] { "PHOTOS", "PHOTO",
+			"VIDEO", "VIDEOS", "PICTURES", "POLL" };
 
-	public Article(String link, String summary, Date published)
+	private static final String regexArticleBody = "<p>.*</p>";
+	private static final String regexArticleRelated = "<div.*?<\\/div>";
+	private static final String regexXmlComment = "<!--.*?-->";
+	private static final String regexExcessWhitespace = "\\s+";
+	private static final String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
+	private static final String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+	private static final String regexTitle = "<title>.*?<\\/title>";
+	private static final String regexTitleStart = "<title>\\s+";
+	private static final String regexTitleEnd = "\\s\\|.*";
+
+	public Article(String link, String description, Date published)
 			throws IOException {
 		String source = getWebSource(link);
 		// Set Title
@@ -47,10 +52,37 @@ public class Article {
 		setBody(b);
 
 		// Set Summary/Description
-		setDescription(processArticlePreview(summary));
+		setDescription(processArticlePreview(description));
 
 		// Set Date
 		setPublishedDate(processPubDate(published));
+
+		// Set Link
+		setLink(link);
+	}
+
+	public Article(String link) throws IOException {
+		String source = getWebSource(link);
+		// Set Title
+		String t = selectStringFromRegex(source, regexTitle);
+		t = t.replaceAll(regexTitleStart, "");
+		t = t.replaceAll(regexTitleEnd, "");
+		setTitle(t);
+
+		// Set Body
+		String b = selectStringFromRegex(source, regexArticle);
+		b = selectStringFromRegex(b, regexArticleBody);
+		b = b.replaceAll(regexArticleRelated, "");
+		b = b.replaceAll(regexXmlComment, "");
+		b = b.replaceAll(regexExcessWhitespace, " ");
+		setBody(b);
+
+		// Set Summary/Description and published date to null
+		setDescription(null);
+		setPublishedDate(null);
+
+		// Set Link
+		setLink(link);
 	}
 
 	private static String selectStringFromRegex(String text, String regex) {
@@ -79,6 +111,22 @@ public class Article {
 		t = HtmlEscape.unescapeHtml(t);
 		t = t.replaceAll(regexHtml, ""); // remove any remaining html tags
 		return t;
+	}
+
+	public boolean hasMedia() {
+		for (String s : mediaTags) {
+			if (getTitle().toUpperCase().startsWith(s.toUpperCase()))
+				return true;
+		}
+		return false;
+	}
+
+	public static boolean hasMedia(String title) {
+		for (String s : mediaTags) {
+			if (title.toUpperCase().startsWith(s.toUpperCase()))
+				return true;
+		}
+		return false;
 	}
 
 	private static String getWebSource(String Url) throws IOException {
@@ -125,6 +173,14 @@ public class Article {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 }

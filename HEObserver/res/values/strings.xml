@@ -1,7 +1,6 @@
 <resources>
 
     <string name="app_name">H&amp;EObserver</string>
-    <string name="URL">http://www.hertsandessexobserver.co.uk/news.rss</string>
     <string name="refresh">Refresh</string>
     <string name="ok">OK</string>
     <string name="published">Published: %s</string>
@@ -9,5 +8,10 @@
     <string name="articleGetFailBody">Failed to get article from source\r\n\r\nTechnical: </string>
     <string name="articleListGetFailTitle">Failed to update article list</string>
     <string name="articleListGetFailBody">"Failed to update article list\r\n\r\nTechnical: "</string>
+    <string name="Share">Share</string>
+    <string name="share_via">Share via</string>
+    <string name="error_retreive_article_source">Error retrieving article from source</string>
+    <string name="error_update_article_list">Error updating article list</string>
+    <string name="error_no_internet">No internet connection avaliable</string>
 
 </resources>
