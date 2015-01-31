@@ -77,7 +77,8 @@ public class WebActivity extends Activity {
 	private void loadWebView(Intent intent) {
 		Log.i("WebActivity",
 				"Loading Web Activity from " + intent.getDataString());
-		webView.getSettings().setJavaScriptEnabled(true);
+		Toast.makeText(getApplicationContext(), "Article not supported, opening in web view",Toast.LENGTH_SHORT).show();
+		//webView.getSettings().setJavaScriptEnabled(true);
 		webView.loadUrl(intent.getDataString());
 	}
 }
