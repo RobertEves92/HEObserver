@@ -21,6 +21,8 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
         transitive = true;
     }
+    compile project(':unbescape')
+    compile project(':android-rss-reader-library')
 }
 
 android {

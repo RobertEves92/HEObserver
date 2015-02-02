@@ -86,6 +86,8 @@
     <orderEntry type="library" exported="" name="beta-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="crashlytics-2.2.0" level="project" />
     <orderEntry type="library" exported="" name="fabric-1.1.0" level="project" />
+    <orderEntry type="module" module-name="unbescape" exported="" />
+    <orderEntry type="module" module-name="android-rss-reader-library" exported="" />
     <orderEntry type="module" module-name="appcompat_v7" exported="" />
   </component>
 </module>
