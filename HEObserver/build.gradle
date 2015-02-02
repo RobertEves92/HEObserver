@@ -22,6 +22,7 @@ dependencies {
         transitive = true;
     }
     compile project(':unbescape')
+    compile project(':android-rss-reader-library')
 }
 
 android {
