@@ -2,6 +2,7 @@ package com.roberteves.heobserver.activities;
 
 import java.io.IOException;
 
+import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Util;
@@ -49,7 +50,7 @@ public class WebActivity extends Activity {
 					startActivity(i);
 				}
 			} catch (IOException e) {
-				//Crashlytics.logException(e); // Send caught exception to
+				Crashlytics.logException(e); // Send caught exception to
 												// crashlytics
 				Toast.makeText(getApplicationContext(),
 						R.string.error_retreive_article_source,
