@@ -10,11 +10,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/HEObserver" />
-            <option value="$PROJECT_DIR$/HEObserver/kit-libs" />
-            <option value="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_answers" />
-            <option value="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_beta" />
-            <option value="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_crashlytics" />
-            <option value="$PROJECT_DIR$/HEObserver/kit-libs/io-fabric-sdk-android_fabric" />
             <option value="$PROJECT_DIR$/appcompat_v7" />
           </set>
         </option>

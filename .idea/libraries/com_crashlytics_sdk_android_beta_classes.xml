@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="com-crashlytics-sdk-android_beta-classes">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_beta/libs/com-crashlytics-sdk-android_beta-classes.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

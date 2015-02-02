@@ -1,13 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="name" value="app: com.roberteves.heobserver" />
+        <option name="packageNamePattern" value="com.roberteves.heobserver" />
+      </filter>
+    </filters>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="INFO" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.roberteves.heobserver" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="adbe646b-d0d1-4ba1-b9f9-a279ccf719d2" name="Default" comment="">
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\.idea\libraries\answers_1_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\.idea\libraries\beta_1_1_0.xml" afterPath="" />
       <change type="DELETED" beforePath="F:\HEObserverApp\source\.idea\libraries\com_crashlytics_sdk_android_answers_classes.xml" afterPath="" />
       <change type="DELETED" beforePath="F:\HEObserverApp\source\.idea\libraries\com_crashlytics_sdk_android_beta_classes.xml" afterPath="" />
       <change type="DELETED" beforePath="F:\HEObserverApp\source\.idea\libraries\com_crashlytics_sdk_android_crashlytics_classes.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\.idea\libraries\crashlytics_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\.idea\libraries\fabric_1_1_0.xml" afterPath="" />
       <change type="DELETED" beforePath="F:\HEObserverApp\source\.idea\libraries\io_fabric_sdk_android_fabric_classes.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_answers\.classpath" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_answers\.project" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_answers\AndroidManifest.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_answers\build.gradle" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_answers\build.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_answers\kit-version.properties" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_answers\project.properties" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_beta\.classpath" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_beta\.project" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_beta\AndroidManifest.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_beta\build.gradle" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_beta\build.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_beta\kit-version.properties" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_beta\project.properties" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_crashlytics\.classpath" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_crashlytics\.project" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_crashlytics\AndroidManifest.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_crashlytics\build.gradle" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_crashlytics\build.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_crashlytics\kit-version.properties" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\com-crashlytics-sdk-android_crashlytics\project.properties" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\io-fabric-sdk-android_fabric\.classpath" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\io-fabric-sdk-android_fabric\.project" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\io-fabric-sdk-android_fabric\AndroidManifest.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\io-fabric-sdk-android_fabric\build.gradle" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\io-fabric-sdk-android_fabric\build.xml" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\io-fabric-sdk-android_fabric\kit-version.properties" afterPath="" />
+      <change type="DELETED" beforePath="F:\HEObserverApp\source\HEObserver\kit-libs\io-fabric-sdk-android_fabric\project.properties" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HEObserver/HEObserver.iml" afterPath="$PROJECT_DIR$/HEObserver/HEObserver.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HEObserver/src/com/roberteves/heobserver/activities/MainActivity.java" afterPath="$PROJECT_DIR$/HEObserver/src/com/roberteves/heobserver/activities/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HEObserver/src/com/roberteves/heobserver/activities/WebActivity.java" afterPath="$PROJECT_DIR$/HEObserver/src/com/roberteves/heobserver/activities/WebActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HEObserver/build.gradle" afterPath="$PROJECT_DIR$/HEObserver/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="source.iws" />
@@ -30,7 +80,52 @@
     <favorites_list name="source" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="settings.gradle" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="136">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HEObserver/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="132" max-vertical-offset="952">
+              <caret line="19" column="36" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HEObserver/src/com/roberteves/heobserver/activities/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1887" max-vertical-offset="3723">
+              <caret line="136" column="18" selection-start-line="136" selection-start-column="18" selection-end-line="136" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WebActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/HEObserver/src/com/roberteves/heobserver/activities/WebActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6208696" vertical-offset="510" max-vertical-offset="1547">
+              <caret line="51" column="18" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -58,36 +153,16 @@
           <value>
             <list>
               <ExternalProjectPojo>
-                <option name="name" value=":HEObserver:kit-libs:com-crashlytics-sdk-android_answers" />
-                <option name="path" value="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_answers" />
-              </ExternalProjectPojo>
-              <ExternalProjectPojo>
                 <option name="name" value=":HEObserver" />
                 <option name="path" value="$PROJECT_DIR$/HEObserver" />
-              </ExternalProjectPojo>
-              <ExternalProjectPojo>
-                <option name="name" value=":HEObserver:kit-libs:com-crashlytics-sdk-android_crashlytics" />
-                <option name="path" value="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_crashlytics" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
                 <option name="name" value="source" />
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
-                <option name="name" value=":HEObserver:kit-libs:com-crashlytics-sdk-android_beta" />
-                <option name="path" value="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_beta" />
-              </ExternalProjectPojo>
-              <ExternalProjectPojo>
                 <option name="name" value=":appcompat_v7" />
                 <option name="path" value="$PROJECT_DIR$/appcompat_v7" />
-              </ExternalProjectPojo>
-              <ExternalProjectPojo>
-                <option name="name" value=":HEObserver:kit-libs:io-fabric-sdk-android_fabric" />
-                <option name="path" value="$PROJECT_DIR$/HEObserver/kit-libs/io-fabric-sdk-android_fabric" />
-              </ExternalProjectPojo>
-              <ExternalProjectPojo>
-                <option name="name" value=":HEObserver:kit-libs" />
-                <option name="path" value="$PROJECT_DIR$/HEObserver/kit-libs" />
               </ExternalProjectPojo>
             </list>
           </value>
@@ -461,32 +536,12 @@
                 <option name="name" value="preReleaseBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.crashlytics.sdk.android:answers:1.1.0" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
-                <option name="name" value="prepareComCrashlyticsSdkAndroidAnswers110Library" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare com.crashlytics.sdk.android:beta:1.1.0" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
-                <option name="name" value="prepareComCrashlyticsSdkAndroidBeta110Library" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare com.crashlytics.sdk.android:crashlytics:2.2.0" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
-                <option name="name" value="prepareComCrashlyticsSdkAndroidCrashlytics220Library" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
                 <option name="name" value="prepareDebugDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
                 <option name="name" value="prepareDebugTestDependencies" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare io.fabric.sdk.android:fabric:1.1.0" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
-                <option name="name" value="prepareIoFabricSdkAndroidFabric110Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
@@ -496,26 +551,6 @@
                 <option name="description" value="Prepare source:appcompat_v7:unspecified" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
                 <option name="name" value="prepareSourceAppcompat_v7UnspecifiedLibrary" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare source.HEObserver.kit-libs:com-crashlytics-sdk-android_answers:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
-                <option name="name" value="prepareSourceHEObserverKitLibsComCrashlyticsSdkAndroid_answersUnspecifiedLibrary" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare source.HEObserver.kit-libs:com-crashlytics-sdk-android_beta:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
-                <option name="name" value="prepareSourceHEObserverKitLibsComCrashlyticsSdkAndroid_betaUnspecifiedLibrary" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare source.HEObserver.kit-libs:com-crashlytics-sdk-android_crashlytics:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
-                <option name="name" value="prepareSourceHEObserverKitLibsComCrashlyticsSdkAndroid_crashlyticsUnspecifiedLibrary" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare source.HEObserver.kit-libs:io-fabric-sdk-android_fabric:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
-                <option name="name" value="prepareSourceHEObserverKitLibsIoFabricSdkAndroid_fabricUnspecifiedLibrary" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/HEObserver" />
@@ -2662,7 +2697,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="11383047328367" />
+        <entry key="$PROJECT_DIR$" value="5691535845476" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2876,6 +2911,17 @@
       </map>
     </option>
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/settings.gradle" />
+        <option value="$PROJECT_DIR$/.idea/gradle.xml" />
+        <option value="$PROJECT_DIR$/HEObserver/build.gradle" />
+        <option value="$PROJECT_DIR$/HEObserver/src/com/roberteves/heobserver/activities/MainActivity.java" />
+        <option value="$PROJECT_DIR$/HEObserver/src/com/roberteves/heobserver/activities/WebActivity.java" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
@@ -2896,7 +2942,7 @@
     <option name="STATE" value="2" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="AndroidView" proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -2933,13 +2979,112 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="HEObserver" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.NonAndroidModuleNode" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="ProjectPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HEObserver" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HEObserver" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="heobserver" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HEObserver" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="heobserver" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="activities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HEObserver" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -2953,8 +3098,40 @@
     <property name="last_opened_file_path" value="$USER_HOME$/AndroidProjects" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="5aab9aea" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="tablet" />
   </component>
   <component name="RunManager" selected="Android Application.HEObserver">
+    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workDir" value="file://$PROJECT_DIR$" />
+      <setting name="debug" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -3111,7 +3288,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -3149,19 +3326,127 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/HEObserver/build.gradle">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="872">
+        <state vertical-scroll-proportion="0.26608697" vertical-offset="0" max-vertical-offset="575">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/local.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="575">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
+    <entry file="file://$PROJECT_DIR$/gradlew.bat">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17545871" vertical-offset="0" max-vertical-offset="872">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1632">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradlew">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.2545457" vertical-offset="2340" max-vertical-offset="2890">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HEObserver/assets/crashlytics-build.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34" vertical-offset="0" max-vertical-offset="550">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="575">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/gradle.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34" vertical-offset="0" max-vertical-offset="550">
+          <caret line="11" column="55" selection-start-line="11" selection-start-column="55" selection-end-line="11" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="575">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="575">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/scopes/scope_settings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="170">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="550">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HEObserver/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="132" max-vertical-offset="952">
+          <caret line="19" column="36" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HEObserver/src/com/roberteves/heobserver/activities/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1887" max-vertical-offset="3723">
+          <caret line="136" column="18" selection-start-line="136" selection-start-column="18" selection-end-line="136" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HEObserver/src/com/roberteves/heobserver/activities/WebActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6208696" vertical-offset="510" max-vertical-offset="1547">
+          <caret line="51" column="18" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

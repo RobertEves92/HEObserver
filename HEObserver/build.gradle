@@ -18,10 +18,6 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':appcompat_v7')
-    compile project(':HEObserver:kit-libs:com-crashlytics-sdk-android_crashlytics')
-    compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
-        transitive = true;
-    }
 }
 
 android {

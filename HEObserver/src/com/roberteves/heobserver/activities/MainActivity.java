@@ -1,8 +1,5 @@
 package com.roberteves.heobserver.activities;
 
-import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -47,7 +44,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Fabric.with(this, new Crashlytics());
+		//Fabric.with(this, new Crashlytics());
 		setContentView(R.layout.activity_main);
 		lv = (ListView) findViewById(R.id.listView);
 
@@ -104,7 +101,7 @@ public class MainActivity extends Activity {
 							i.putExtra("article", article);
 							startActivity(i);
 						} catch (IOException e) {
-							Crashlytics.logException(e); // Send caught
+							//Crashlytics.logException(e); // Send caught
 															// exception to
 															// crashlytics
 							Toast.makeText(getApplicationContext(),
@@ -137,7 +134,7 @@ public class MainActivity extends Activity {
 				// }
 				// });
 			} catch (Exception e) {
-				Crashlytics.logException(e); // Send caught exception to
+				//Crashlytics.logException(e); // Send caught exception to
 												// crashlytics
 				Toast.makeText(getApplicationContext(),
 						R.string.error_update_article_list, Toast.LENGTH_SHORT)
