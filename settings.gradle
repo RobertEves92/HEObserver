@@ -1,0 +1,6 @@
+include ':HEObserver:kit-libs:com-crashlytics-sdk-android_beta'
+include ':HEObserver:kit-libs:io-fabric-sdk-android_fabric'
+include ':HEObserver'
+include ':HEObserver:kit-libs:com-crashlytics-sdk-android_answers'
+include ':appcompat_v7'
+include ':HEObserver:kit-libs:com-crashlytics-sdk-android_crashlytics'

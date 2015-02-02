@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="C:\Android Development\android-studio\gradle\gradle-2.2.1" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/HEObserver" />
+            <option value="$PROJECT_DIR$/HEObserver/kit-libs" />
+            <option value="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_answers" />
+            <option value="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_beta" />
+            <option value="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_crashlytics" />
+            <option value="$PROJECT_DIR$/HEObserver/kit-libs/io-fabric-sdk-android_fabric" />
+            <option value="$PROJECT_DIR$/appcompat_v7" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
+

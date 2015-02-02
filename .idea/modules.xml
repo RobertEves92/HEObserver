@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HEObserver/HEObserver.iml" filepath="$PROJECT_DIR$/HEObserver/HEObserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appcompat_v7/appcompat_v7.iml" filepath="$PROJECT_DIR$/appcompat_v7/appcompat_v7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_answers/com-crashlytics-sdk-android_answers.iml" filepath="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_answers/com-crashlytics-sdk-android_answers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_beta/com-crashlytics-sdk-android_beta.iml" filepath="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_beta/com-crashlytics-sdk-android_beta.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_crashlytics/com-crashlytics-sdk-android_crashlytics.iml" filepath="$PROJECT_DIR$/HEObserver/kit-libs/com-crashlytics-sdk-android_crashlytics/com-crashlytics-sdk-android_crashlytics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HEObserver/kit-libs/io-fabric-sdk-android_fabric/io-fabric-sdk-android_fabric.iml" filepath="$PROJECT_DIR$/HEObserver/kit-libs/io-fabric-sdk-android_fabric/io-fabric-sdk-android_fabric.iml" />
+      <module fileurl="file://$PROJECT_DIR$/source.iml" filepath="$PROJECT_DIR$/source.iml" />
+    </modules>
+  </component>
+</project>
+
