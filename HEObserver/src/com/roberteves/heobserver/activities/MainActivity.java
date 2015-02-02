@@ -2,7 +2,6 @@ package com.roberteves.heobserver.activities;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

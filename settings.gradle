@@ -1,0 +1,2 @@
+include ':HEObserver'
+include ':appcompat_v7'
