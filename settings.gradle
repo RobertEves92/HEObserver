@@ -1,2 +1,2 @@
-include ':HEObserver'
+include ':HEObserver', ':unbescape'
 include ':appcompat_v7'

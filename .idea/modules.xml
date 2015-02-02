@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/HEObserver/HEObserver.iml" filepath="$PROJECT_DIR$/HEObserver/HEObserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/appcompat_v7/appcompat_v7.iml" filepath="$PROJECT_DIR$/appcompat_v7/appcompat_v7.iml" />
       <module fileurl="file://$PROJECT_DIR$/source.iml" filepath="$PROJECT_DIR$/source.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unbescape/unbescape.iml" filepath="$PROJECT_DIR$/unbescape/unbescape.iml" />
     </modules>
   </component>
 </project>

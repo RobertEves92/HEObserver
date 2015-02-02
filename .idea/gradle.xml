@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/HEObserver" />
             <option value="$PROJECT_DIR$/appcompat_v7" />
+            <option value="$PROJECT_DIR$/unbescape" />
           </set>
         </option>
       </GradleProjectSettings>

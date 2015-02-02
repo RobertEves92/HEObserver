@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.unbescape.html.HtmlEscape;
+import unbescape.html.HtmlEscape;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParserException;
 
