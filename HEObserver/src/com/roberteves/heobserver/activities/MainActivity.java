@@ -1,29 +1,5 @@
 package com.roberteves.heobserver.activities;
 
-import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import unbescape.html.HtmlEscape;
-import org.xml.sax.SAXException;
-import org.xmlpull.v1.XmlPullParserException;
-
-import nl.matshofman.saxrssreader.RssItem;
-import nl.matshofman.saxrssreader.RssReader;
-
-import com.roberteves.heobserver.R;
-import com.roberteves.heobserver.core.Article;
-import com.roberteves.heobserver.core.Lists;
-import com.roberteves.heobserver.core.Util;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -42,20 +18,44 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
-	private static ListView lv;
+import com.crashlytics.android.Crashlytics;
+import com.roberteves.heobserver.R;
+import com.roberteves.heobserver.core.Article;
+import com.roberteves.heobserver.core.Lists;
+import com.roberteves.heobserver.core.Util;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Fabric.with(this, new Crashlytics());
+import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.fabric.sdk.android.Fabric;
+import nl.matshofman.saxrssreader.RssItem;
+import nl.matshofman.saxrssreader.RssReader;
+import unbescape.html.HtmlEscape;
+
+public class MainActivity extends Activity {
+    private static ListView lv;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         Util.setupThreadPolicy();
         setTitle(getString(R.string.app_name_long));
-		setContentView(R.layout.activity_main);
-		lv = (ListView) findViewById(R.id.listView);
+        setContentView(R.layout.activity_main);
+        lv = (ListView) findViewById(R.id.listView);
 
         updateList();
-	}
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,32 +100,30 @@ public class MainActivity extends Activity {
         return feeds.toArray(new String[feeds.size()]);
     }
 
-    private class UpdateListViewTask extends AsyncTask<String,Void,Boolean>{
+    private class UpdateListViewTask extends AsyncTask<String, Void, Boolean> {
         private ProgressDialog dialog = new ProgressDialog(MainActivity.this);
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             this.dialog.setMessage("Updating Article List...");
             this.dialog.show();
         }
+
         @Override
-        protected Boolean doInBackground(String... feeds){
-            Log.i("UpdateList","Starting Async Update Task");
-            if(isOnline())
-            {
-                try{
+        protected Boolean doInBackground(String... feeds) {
+            Log.i("UpdateList", "Starting Async Update Task");
+            if (isOnline()) {
+                try {
                     //Set Lists
                     Lists.RssItems = getDataFromFeeds(feeds);
-                    Lists.storyList = new ArrayList<Map<String,String>>();
+                    Lists.storyList = new ArrayList<Map<String, String>>();
                     ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
 
                     // Add Story Items to HashMap Array
-                    for(RssItem item : Lists.RssItems)
-                    {
+                    for (RssItem item : Lists.RssItems) {
                         //If item has unsupported media, don't add
-                        if(!Article.hasMedia(item.getTitle()))
-                        {
-                            Lists.storyList.add(createStory(HtmlEscape.unescapeHtml(item.getTitle()),Article.processPubDate(item.getPubDate())));
+                        if (!Article.hasMedia(item.getTitle())) {
+                            Lists.storyList.add(createStory(HtmlEscape.unescapeHtml(item.getTitle()), Article.processPubDate(item.getPubDate())));
                             rssItems.add(item);
                         }
                     }
@@ -134,36 +132,31 @@ public class MainActivity extends Activity {
                     Lists.RssItems = rssItems;
 
                     return true;
-                }catch (Exception e) {
+                } catch (Exception e) {
                     Crashlytics.logException(e); // Send caught exception to
                     // crashlytics
 
                     return false;
                 }
-            }
-            else
-            {
+            } else {
                 Toast.makeText(getApplicationContext(), R.string.error_no_internet,
                         Toast.LENGTH_SHORT).show();
 
                 return false;
             }
         }
+
         @Override
         protected void onPostExecute(Boolean result) {
-            if(dialog.isShowing())
-            {
+            if (dialog.isShowing()) {
                 dialog.dismiss();
             }
 
-            if(result)
-            {
-                Log.i("UpdateList","Async Task Success");
+            if (result) {
+                Log.i("UpdateList", "Async Task Success");
                 UpdateView();
-            }
-            else
-            {
-                Log.i("UpdateList","Async Task Failed");
+            } else {
+                Log.i("UpdateList", "Async Task Failed");
                 Toast.makeText(getApplicationContext(),
                         R.string.error_update_article_list, Toast.LENGTH_SHORT)
                         .show();
@@ -178,8 +171,8 @@ public class MainActivity extends Activity {
 
         private HashMap<String, String> createStory(String title, String publishedDate) {
             HashMap<String, String> story = new HashMap<String, String>();
-            story.put("title",title);
-            story.put("date",publishedDate);
+            story.put("title", title);
+            story.put("date", publishedDate);
 
             return story;
         }
@@ -215,12 +208,12 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void UpdateView(){
+    private void UpdateView() {
         //Create ListView Adapter
         SimpleAdapter simpleAdpt = new SimpleAdapter(this,
                 Lists.storyList, android.R.layout.simple_list_item_2,
-                new String[] { "title","date" },
-                new int[] { android.R.id.text1,android.R.id.text2 });
+                new String[]{"title", "date"},
+                new int[]{android.R.id.text1, android.R.id.text2});
 
         //Set ListView from Adapter
         lv.setAdapter(simpleAdpt);
