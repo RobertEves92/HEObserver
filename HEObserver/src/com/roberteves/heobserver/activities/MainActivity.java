@@ -22,14 +22,15 @@ import nl.matshofman.saxrssreader.RssReader;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
-import com.roberteves.heobserver.core.Util;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -50,104 +51,15 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		lv = (ListView) findViewById(R.id.listView);
 
-		updateList();
+        updateList();
 	}
 
-	private void updateList() {
-		if (isOnline()) {
-			Util.setupThreadPolicy();
+    private void updateList() {
+        UpdateListViewTask updateListViewTask = new UpdateListViewTask();
+        updateListViewTask.execute("");
+    }
 
-			// Stores all Rss Items from news feed
-			try {
-				Lists.RssItems = getFeeds();
-				Lists.storyList = new ArrayList<Map<String, String>>();
-				ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
-
-				// Add all story items to hashmap array
-				for (RssItem item : Lists.RssItems) {
-					// If the article has unsupported features/media, dont add
-					// it
-					if (!Article.hasMedia(item.getTitle())) {
-						Lists.storyList.add(createStory(HtmlEscape.unescapeHtml(item.getTitle()),Article.processPubDate(item.getPubDate())));
-						rssItems.add(item);
-					}
-				}
-
-				Lists.RssItems = rssItems; // Update with new list (filtered
-											// results)
-
-				SimpleAdapter simpleAdpt = new SimpleAdapter(this,
-						Lists.storyList, android.R.layout.simple_list_item_2,
-						new String[] { "title","date" },
-						new int[] { android.R.id.text1,android.R.id.text2 });
-
-				lv.setAdapter(simpleAdpt);
-
-				lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-
-						Article article;
-						try {
-							article = new Article(Lists.RssItems.get(position)
-									.getLink(), Lists.RssItems.get(position)
-									.getDescription(), Lists.RssItems.get(
-									position).getPubDate());
-
-							Intent i = new Intent(MainActivity.this,
-									ArticleActivity.class);
-
-							i.putExtra("article", article);
-							startActivity(i);
-						} catch (IOException e) {
-							Crashlytics.logException(e); // Send caught
-															// exception to
-															// crashlytics
-							Toast.makeText(getApplicationContext(),
-									R.string.error_retrieve_article_source,
-									Toast.LENGTH_SHORT).show();
-						}
-					}
-				});
-
-				// lv.setOnItemLongClickListener(new
-				// AdapterView.OnItemLongClickListener() {
-				//
-				// @Override
-				// public boolean onItemLongClick(AdapterView<?> parent, View
-				// view,
-				// int position, long id) {
-				// Global.APP_CONTEXT = getApplicationContext();
-				//
-				// Dialogs.DisplayInfoAlert(
-				// "Article Summary",
-				// Text.processArticlePreview(Lists.RssItems.get(position)
-				// .getDescription())
-				// + "\r\n"
-				// + String.format(
-				// getString(R.string.published),
-				// Text.processPubDate(Lists.RssItems.get(
-				// position).getPubDate())),
-				// MainActivity.this);
-				// return true;
-				// }
-				// });
-			} catch (Exception e) {
-				Crashlytics.logException(e); // Send caught exception to
-												// crashlytics
-				Toast.makeText(getApplicationContext(),
-						R.string.error_update_article_list, Toast.LENGTH_SHORT)
-						.show();
-			}
-		} else {
-			Toast.makeText(getApplicationContext(), R.string.error_no_internet,
-					Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	private ArrayList<RssItem> getFeeds() throws SAXException, IOException,
+    private ArrayList<RssItem> getFeeds() throws SAXException, IOException,
 			MalformedURLException, XmlPullParserException {
 		ArrayList<String> feeds = new ArrayList<String>();
 		ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
@@ -214,8 +126,109 @@ public class MainActivity extends Activity {
 	}
 
 	private boolean isOnline() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
 		return netInfo != null && netInfo.isConnected();
 	}
+
+    private class UpdateListViewTask extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... feeds){
+            Log.i("UpdateList","Starting Async Update Task");
+            if(isOnline())
+            {
+                try{
+                    //Set Lists
+                    Lists.RssItems = getFeeds();
+                    Lists.storyList = new ArrayList<Map<String,String>>();
+                    ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
+
+                    // Add Story Items to HashMap Array
+                    for(RssItem item : Lists.RssItems)
+                    {
+                        //If item has unsupported media, don't add
+                        if(!Article.hasMedia(item.getTitle()))
+                        {
+                            Lists.storyList.add(createStory(HtmlEscape.unescapeHtml(item.getTitle()),Article.processPubDate(item.getPubDate())));
+                            rssItems.add(item);
+                        }
+                    }
+
+                    //Update with new lists (filtered results)
+                    Lists.RssItems = rssItems;
+
+                    return "Success";
+                }catch (Exception e) {
+                    Crashlytics.logException(e); // Send caught exception to
+                    // crashlytics
+
+                    return "Failed";
+                }
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), R.string.error_no_internet,
+                        Toast.LENGTH_SHORT).show();
+
+                return "Failed";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if(result.contentEquals("Success"))
+            {
+                Log.i("UpdateList","Async Task Success");
+                UpdateView();
+            }
+            else
+            {
+                Log.i("UpdateList","Async Task Failed");
+                Toast.makeText(getApplicationContext(),
+                        R.string.error_update_article_list, Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
+    private void UpdateView(){
+        //Create ListView Adapter
+        SimpleAdapter simpleAdpt = new SimpleAdapter(this,
+                Lists.storyList, android.R.layout.simple_list_item_2,
+                new String[] { "title","date" },
+                new int[] { android.R.id.text1,android.R.id.text2 });
+
+        //Set ListView from Adapter
+        lv.setAdapter(simpleAdpt);
+
+        //Set OnClick Handlers
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Article article;
+                try {
+                    article = new Article(Lists.RssItems.get(position)
+                            .getLink(), Lists.RssItems.get(position)
+                            .getDescription(), Lists.RssItems.get(
+                            position).getPubDate());
+
+                    Intent i = new Intent(MainActivity.this,
+                            ArticleActivity.class);
+
+                    i.putExtra("article", article);
+                    startActivity(i);
+                } catch (IOException e) {
+                    Crashlytics.logException(e); // Send caught
+                    // exception to
+                    // crashlytics
+                    Toast.makeText(getApplicationContext(),
+                            R.string.error_retrieve_article_source,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }
