@@ -30,7 +30,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,6 +46,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Fabric.with(this, new Crashlytics());
+        setTitle(getString(R.string.app_name_long));
 		setContentView(R.layout.activity_main);
 		lv = (ListView) findViewById(R.id.listView);
 
@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 															// exception to
 															// crashlytics
 							Toast.makeText(getApplicationContext(),
-									R.string.error_retreive_article_source,
+									R.string.error_retrieve_article_source,
 									Toast.LENGTH_SHORT).show();
 						}
 					}

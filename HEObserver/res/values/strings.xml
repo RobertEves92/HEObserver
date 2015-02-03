@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">H&amp;EObserver</string>
+    <string name="app_name_long">Herts and Essex Observer</string>
     <string name="refresh">Refresh</string>
     <string name="ok">OK</string>
     <string name="published">Published: %s</string>
@@ -10,8 +11,8 @@
     <string name="articleListGetFailBody">"Failed to update article list\r\n\r\nTechnical: "</string>
     <string name="Share">Share</string>
     <string name="share_via">Share via</string>
-    <string name="error_retreive_article_source">Error retrieving article from source</string>
+    <string name="error_retrieve_article_source">Error retrieving article from source</string>
     <string name="error_update_article_list">Error updating article list</string>
-    <string name="error_no_internet">No internet connection avaliable</string>
+    <string name="error_no_internet">No internet connection available</string>
 
 </resources>
