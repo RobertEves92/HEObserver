@@ -99,7 +99,7 @@ public class Article implements Serializable {
 		return t;
 	}
 
-	private static String processPubDate(Date pubDate) {
+	public static String processPubDate(Date pubDate) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(pubDate);
