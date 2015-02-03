@@ -24,6 +24,7 @@ import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -132,6 +133,13 @@ public class MainActivity extends Activity {
 	}
 
     private class UpdateListViewTask extends AsyncTask<String,Void,String>{
+        private ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            this.dialog.setMessage("Updating Article List...");
+            this.dialog.show();
+        }
         @Override
         protected String doInBackground(String... feeds){
             Log.i("UpdateList","Starting Async Update Task");
@@ -176,6 +184,11 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
+            if(dialog.isShowing())
+            {
+                dialog.dismiss();
+            }
+
             if(result.contentEquals("Success"))
             {
                 Log.i("UpdateList","Async Task Success");
