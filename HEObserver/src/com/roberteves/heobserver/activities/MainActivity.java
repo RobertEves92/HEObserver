@@ -132,7 +132,7 @@ public class MainActivity extends Activity {
 		return netInfo != null && netInfo.isConnected();
 	}
 
-    private class UpdateListViewTask extends AsyncTask<String,Void,String>{
+    private class UpdateListViewTask extends AsyncTask<String,Void,Boolean>{
         private ProgressDialog dialog = new ProgressDialog(MainActivity.this);
 
         @Override
@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
             this.dialog.show();
         }
         @Override
-        protected String doInBackground(String... feeds){
+        protected Boolean doInBackground(String... feeds){
             Log.i("UpdateList","Starting Async Update Task");
             if(isOnline())
             {
@@ -165,12 +165,12 @@ public class MainActivity extends Activity {
                     //Update with new lists (filtered results)
                     Lists.RssItems = rssItems;
 
-                    return "Success";
+                    return true;
                 }catch (Exception e) {
                     Crashlytics.logException(e); // Send caught exception to
                     // crashlytics
 
-                    return "Failed";
+                    return false;
                 }
             }
             else
@@ -178,18 +178,18 @@ public class MainActivity extends Activity {
                 Toast.makeText(getApplicationContext(), R.string.error_no_internet,
                         Toast.LENGTH_SHORT).show();
 
-                return "Failed";
+                return false;
             }
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Boolean result) {
             if(dialog.isShowing())
             {
                 dialog.dismiss();
             }
 
-            if(result.contentEquals("Success"))
+            if(result)
             {
                 Log.i("UpdateList","Async Task Success");
                 UpdateView();
