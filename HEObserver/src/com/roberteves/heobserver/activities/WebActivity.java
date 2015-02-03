@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
+import com.roberteves.heobserver.core.Util;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import io.fabric.sdk.android.Fabric;
 
 public class WebActivity extends Activity {
 	private static WebView webView;
@@ -21,7 +24,8 @@ public class WebActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//Fabric.with(this, new Crashlytics());
+        Util.setupThreadPolicy();
+		Fabric.with(this, new Crashlytics());
 
 		setContentView(R.layout.activity_web);
 		webView = (WebView) findViewById(R.id.webView);

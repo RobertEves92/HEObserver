@@ -22,6 +22,7 @@ import nl.matshofman.saxrssreader.RssReader;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
+import com.roberteves.heobserver.core.Util;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -48,6 +49,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Fabric.with(this, new Crashlytics());
+        Util.setupThreadPolicy();
         setTitle(getString(R.string.app_name_long));
 		setContentView(R.layout.activity_main);
 		lv = (ListView) findViewById(R.id.listView);
