@@ -68,8 +68,7 @@ public class MainActivity extends Activity {
 					// If the article has unsupported features/media, dont add
 					// it
 					if (!Article.hasMedia(item.getTitle())) {
-						Lists.storyList.add(createStory("story",
-								HtmlEscape.unescapeHtml(item.getTitle())));
+						Lists.storyList.add(createStory(HtmlEscape.unescapeHtml(item.getTitle()),Article.processPubDate(item.getPubDate())));
 						rssItems.add(item);
 					}
 				}
@@ -78,9 +77,9 @@ public class MainActivity extends Activity {
 											// results)
 
 				SimpleAdapter simpleAdpt = new SimpleAdapter(this,
-						Lists.storyList, android.R.layout.simple_list_item_1,
-						new String[] { "story" },
-						new int[] { android.R.id.text1 });
+						Lists.storyList, android.R.layout.simple_list_item_2,
+						new String[] { "title","date" },
+						new int[] { android.R.id.text1,android.R.id.text2 });
 
 				lv.setAdapter(simpleAdpt);
 
@@ -206,9 +205,10 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	private HashMap<String, String> createStory(String key, String title) {
+	private HashMap<String, String> createStory(String title, String publishedDate) {
 		HashMap<String, String> story = new HashMap<String, String>();
-		story.put(key, title);
+		story.put("title",title);
+        story.put("date",publishedDate);
 
 		return story;
 	}
