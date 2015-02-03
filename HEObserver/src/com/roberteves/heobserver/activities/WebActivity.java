@@ -53,7 +53,7 @@ public class WebActivity extends Activity {
 				Crashlytics.logException(e); // Send caught exception to
 												// crashlytics
 				Toast.makeText(getApplicationContext(),
-						R.string.error_retreive_article_source,
+						R.string.error_retrieve_article_source,
 						Toast.LENGTH_SHORT).show();
 			}
 		} else {
