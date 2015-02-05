@@ -1,5 +1,7 @@
 package com.roberteves.heobserver.core;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -17,8 +19,8 @@ import unbescape.html.HtmlEscape;
 public class Article implements Serializable {
     private String title, body, description, publishedDate, link;
 
-    private static final String[] mediaTags = new String[]{"PHOTOS", "PHOTO",
-            "VIDEO", "VIDEOS", "PICTURES", "POLL"};
+    private static final String[] mediaTags = new String[]{"PHOTOS:", "PHOTO:",
+            "VIDEO:", "VIDEOS:", "PICTURES:", "POLL:", " - SLIDESHOW"};
 
     private static final String regexArticleBody = "<p>.*</p>";
     private static final String regexArticleRelated = "<div.*?<\\/div>";
@@ -110,17 +112,15 @@ public class Article implements Serializable {
     }
 
     public boolean hasMedia() {
-        for (String s : mediaTags) {
-            if (getTitle().toUpperCase().startsWith(s.toUpperCase()))
-                return true;
-        }
-        return false;
+        return hasMedia(getTitle());
     }
 
     public static boolean hasMedia(String title) {
         for (String s : mediaTags) {
-            if (title.toUpperCase().startsWith(s.toUpperCase()))
+            if (title.toUpperCase().contains(s.toUpperCase())) {
+                Log.i("MediaFilter", "Found tag \"" + s + "\" in title \"" + title + "\"");
                 return true;
+            }
         }
         return false;
     }
