@@ -1,0 +1,2 @@
+include ':HEObserver', ':unbescape', ':android-rss-reader-library'
+include ':appcompat_v7'
