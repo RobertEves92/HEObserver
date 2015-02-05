@@ -18,7 +18,7 @@ public class Article implements Serializable {
     private String title, body, description, publishedDate, link;
 
     private static final String[] mediaTags = new String[]{"PHOTOS", "PHOTO",
-            "VIDEO", "VIDEOS", "PICTURES", "POLL"};
+            "VIDEO", "VIDEOS", "PICTURES", "POLL","SLIDESHOW"};
 
     private static final String regexArticleBody = "<p>.*</p>";
     private static final String regexArticleRelated = "<div.*?<\\/div>";
