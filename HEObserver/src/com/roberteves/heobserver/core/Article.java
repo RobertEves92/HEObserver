@@ -45,7 +45,7 @@ public class Article implements Serializable {
 
 	public Article(String link, String description, Date published)
 			throws IOException {
-		String source = getWebSource(link);
+		String source = Util.getWebSource(link);
 		// Set Title
 		String t = selectStringFromRegex(source, regexTitle);
 		t = t.replaceAll(regexTitleStart, "");
@@ -71,7 +71,7 @@ public class Article implements Serializable {
 	}
 
 	public Article(String link) throws IOException {
-		String source = getWebSource(link);
+		String source = Util.getWebSource(link);
 		// Set Title
 		String t = selectStringFromRegex(source, regexTitle);
 		t = t.replaceAll(regexTitleStart, "");
@@ -136,36 +136,6 @@ public class Article implements Serializable {
 				return true;
 		}
 		return false;
-	}
-
-	private static String getWebSource(String Url) throws IOException {
-        HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
-        HttpGet httpget = new HttpGet(Url); // Set the action you want to do
-        HttpResponse response = httpclient.execute(httpget); // Executeit
-        HttpEntity entity = response.getEntity();
-
-        InputStream is = response.getEntity().getContent();
-        Header contentEncoding = response.getFirstHeader("Content-Encoding");
-
-        BufferedReader reader;
-        if ((contentEncoding != null) && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
-            InputStream gzipIs = new GZIPInputStream(is);
-            reader = new BufferedReader(new InputStreamReader(gzipIs), 8);
-        }
-        else {
-            reader = new BufferedReader(new InputStreamReader(is), 8);
-        }
-
-        StringBuilder sb = new StringBuilder();
-        String line = null;
-        while ((line = reader.readLine()) != null) // Read line by line
-            sb.append(line + "\n");
-
-        String resString = sb.toString(); // Result is here
-
-        is.close(); // Close the stream
-
-        return resString;
 	}
 
 	public String getTitle() {
