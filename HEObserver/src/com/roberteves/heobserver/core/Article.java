@@ -1,5 +1,7 @@
 package com.roberteves.heobserver.core;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -110,17 +112,15 @@ public class Article implements Serializable {
     }
 
     public boolean hasMedia() {
-        for (String s : mediaTags) {
-            if (getTitle().toUpperCase().startsWith(s.toUpperCase()))
-                return true;
-        }
-        return false;
+        return hasMedia(getTitle());
     }
 
     public static boolean hasMedia(String title) {
         for (String s : mediaTags) {
-            if (title.toUpperCase().startsWith(s.toUpperCase()))
+            if (title.toUpperCase().contains(s.toUpperCase())) {
+                Log.i("MediaFilter", "Found tag \"" + s + "\" in title \"" + title + "\"");
                 return true;
+            }
         }
         return false;
     }
