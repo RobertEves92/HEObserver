@@ -35,8 +35,7 @@ public class Util {
         if ((contentEncoding != null) && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
             InputStream gzipIs = new GZIPInputStream(is);
             reader = new BufferedReader(new InputStreamReader(gzipIs), 8);
-        }
-        else {
+        } else {
             reader = new BufferedReader(new InputStreamReader(is), 8);
         }
 
