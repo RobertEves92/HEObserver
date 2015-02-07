@@ -3,7 +3,6 @@ package com.roberteves.heobserver.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
 
@@ -46,8 +45,6 @@ public class WebActivity extends Activity {
                             ArticleActivity.class);
 
                     i.putExtra("article", article);
-                    Log.i("WebActivity", "Loading Article Activity from "
-                            + dataString);
                     finishOnResume = true;
                     startActivity(i);
                 }
@@ -67,13 +64,11 @@ public class WebActivity extends Activity {
     public void onResume() {
         super.onResume();
         if (finishOnResume) {
-            Log.i("WebActivity", "Finishing Activity - onResume");
             finish(); // close when resumed
         }
     }
 
     private void loadWebView(Intent intent) {
-        Log.i("WebActivity", "Loading Web Activity from " + dataString);
         Toast.makeText(getApplicationContext(),
                 "Article not supported, opening in web view",
                 Toast.LENGTH_SHORT).show();

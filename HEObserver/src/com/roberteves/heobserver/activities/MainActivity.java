@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -110,7 +109,6 @@ public class MainActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(String... feeds) {
-            Log.i("UpdateList", "Starting Async Update Task");
             if (isOnline()) {
                 try {
                     //Set Lists
@@ -152,10 +150,8 @@ public class MainActivity extends Activity {
             }
 
             if (result) {
-                Log.i("UpdateList", "Async Task Success");
                 UpdateView();
             } else {
-                Log.i("UpdateList", "Async Task Failed");
                 Toast.makeText(getApplicationContext(),
                         R.string.error_update_article_list, Toast.LENGTH_SHORT)
                         .show();
