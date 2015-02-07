@@ -39,7 +39,7 @@ public class WebActivity extends Activity {
                 Article article = new Article(dataString);
                 if (article.hasMedia()) // load in web view
                 {
-                    loadWebView(intent);
+                    loadWebView();
                 } else { // load in article activity
                     Intent i = new Intent(WebActivity.this,
                             ArticleActivity.class);
@@ -49,14 +49,11 @@ public class WebActivity extends Activity {
                     startActivity(i);
                 }
             } catch (IOException e) {
-                Crashlytics.logException(e); // Send caught exception to
-                // crashlytics
-                Toast.makeText(getApplicationContext(),
-                        R.string.error_retrieve_article_source,
-                        Toast.LENGTH_SHORT).show();
+                Crashlytics.logException(e);
+                loadWebView();
             }
         } else {
-            loadWebView(intent);
+            loadWebView();
         }
     }
 
@@ -68,12 +65,10 @@ public class WebActivity extends Activity {
         }
     }
 
-    private void loadWebView(Intent intent) {
+    private void loadWebView() {
         Toast.makeText(getApplicationContext(),
                 "Article not supported, opening in web view",
                 Toast.LENGTH_SHORT).show();
-        // TODO prompt to enable javascript - warn about ads
-        // webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(dataString);
     }
 
