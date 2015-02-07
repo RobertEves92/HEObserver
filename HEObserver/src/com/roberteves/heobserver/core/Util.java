@@ -28,7 +28,7 @@ public class Util {
         HttpResponse response = httpclient.execute(httpget); // Executeit
         HttpEntity entity = response.getEntity();
 
-        InputStream is = response.getEntity().getContent();
+        InputStream is = entity.getContent();
         Header contentEncoding = response.getFirstHeader("Content-Encoding");
 
         BufferedReader reader;
