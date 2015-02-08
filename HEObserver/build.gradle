@@ -23,6 +23,7 @@ dependencies {
     }
     compile project(':unbescape')
     compile project(':android-rss-reader-library')
+    compile files('kit-libs/markdownview/markdownview-1.2.jar')
 }
 
 android {
