@@ -1,7 +1,10 @@
 package com.roberteves.heobserver.core;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,6 +32,8 @@ public class Article implements Serializable {
     private static final String regexTitle = "<title>\\s*.*?<\\/title>";
     private static final String regexTitleStart = "<title>\\s+";
     private static final String regexTitleEnd = "\\s\\|.*";
+    public static final String regexDate = "\\d{4}\\-\\d{2}\\-\\d{2}";
+    public static final String regexTime = "\\d{2}\\:\\d{2}\\:\\d{2}";
 
     public Article(String link, String description, Date published)
             throws IOException {
@@ -75,7 +80,11 @@ public class Article implements Serializable {
 
         // Set Summary/Description and published date to null
         setDescription(null);
-        setPublishedDate(null);
+
+        String date = selectStringFromRegex(source, regexDate).substring(0, 10);
+        String time = selectStringFromRegex(source, regexTime).substring(0, 8);
+
+        setPublishedDate(processPubDate(date + time, "yyyy-MM-ddHH:mm:ss"));
 
         // Set Link
         setLink(link);
@@ -100,6 +109,17 @@ public class Article implements Serializable {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(pubDate);
         return sdf.format(calendar.getTime());
+    }
+
+    public static String processPubDate(String date, String format) {
+        try {
+            DateFormat df = new SimpleDateFormat(format);
+            Date d = df.parse(date);
+            return processPubDate(d);
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+            return "";
+        }
     }
 
     private static String processArticlePreview(String text) {

@@ -17,7 +17,6 @@ import io.fabric.sdk.android.Fabric;
 
 public class WebActivity extends Activity {
     private static WebView webView;
-    private boolean finishOnResume = false;
     private String dataString;
 
     @Override
@@ -39,41 +38,39 @@ public class WebActivity extends Activity {
                 Article article = new Article(dataString);
                 if (article.hasMedia()) // load in web view
                 {
-                    loadWebView(intent);
+                    Toast.makeText(getApplicationContext(),
+                            R.string.error_not_supported,
+                            Toast.LENGTH_SHORT).show();
+                    loadWebView();
                 } else { // load in article activity
                     Intent i = new Intent(WebActivity.this,
                             ArticleActivity.class);
 
                     i.putExtra("article", article);
-                    finishOnResume = true;
                     startActivity(i);
                 }
             } catch (IOException e) {
-                Crashlytics.logException(e); // Send caught exception to
-                // crashlytics
+                Crashlytics.logException(e);
                 Toast.makeText(getApplicationContext(),
                         R.string.error_retrieve_article_source,
                         Toast.LENGTH_SHORT).show();
+                loadWebView();
             }
         } else {
-            loadWebView(intent);
+            Toast.makeText(getApplicationContext(),
+                    R.string.error_not_supported,
+                    Toast.LENGTH_SHORT).show();
+            loadWebView();
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (finishOnResume) {
             finish(); // close when resumed
-        }
     }
 
-    private void loadWebView(Intent intent) {
-        Toast.makeText(getApplicationContext(),
-                "Article not supported, opening in web view",
-                Toast.LENGTH_SHORT).show();
-        // TODO prompt to enable javascript - warn about ads
-        // webView.getSettings().setJavaScriptEnabled(true);
+    private void loadWebView() {
         webView.loadUrl(dataString);
     }
 
