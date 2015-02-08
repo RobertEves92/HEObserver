@@ -8,6 +8,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,9 +24,14 @@ public class Util {
     }
 
     public static String getWebSource(String Url) throws IOException {
+        int timeout = 5; //timeout in seconds
         HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
+
+        HttpConnectionParams.setConnectionTimeout(httpclient.getParams(), timeout * 1000); //Connection Timeout
+        HttpConnectionParams.setSoTimeout(httpclient.getParams(), timeout * 1000); //Socket Timeout
+
         HttpGet httpget = new HttpGet(Url); // Set the action you want to do
-        HttpResponse response = httpclient.execute(httpget); // Executeit
+        HttpResponse response = httpclient.execute(httpget); // Execute it
         HttpEntity entity = response.getEntity();
 
         InputStream is = entity.getContent();
