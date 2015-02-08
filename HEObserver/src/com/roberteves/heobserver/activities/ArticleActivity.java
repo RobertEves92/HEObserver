@@ -14,27 +14,24 @@ import android.widget.TextView;
 
 public class ArticleActivity extends Activity {
 	private static Article article;
-	private TextView txtTitle;
-    private TextView txtBody;
-    private TextView txtPubDate;
 
-	@Override
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_article);
 
 		article = (Article) getIntent().getSerializableExtra("article");
 
-		txtTitle = (TextView) findViewById(R.id.txtTitle);
-		txtBody = (TextView) findViewById(R.id.txtBody);
-		txtPubDate = (TextView) findViewById(R.id.txtPubDate);
+        TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
+        TextView txtBody = (TextView) findViewById(R.id.txtBody);
+        TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
 
 		txtTitle.setText(article.getTitle());
 		txtBody.setText(Html.fromHtml(article.getBody()));
 
 		if (article.getPublishedDate() != null) {
 			txtPubDate.setText(String.format(getString(R.string.published),
-					article.getPublishedDate()));
+                    article.getPublishedDate()));
 		} else {
 			txtPubDate.setText("");
 		}
