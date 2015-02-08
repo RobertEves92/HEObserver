@@ -5,12 +5,27 @@ Android app to get news from the Herts and Essex Observer without adverts
 
 Download from [Google Play](http://play.google.com/store/apps/details?id=com.roberteves.heobserver)
 
+## Change Log
+### Current Version: V1.3
+- Fixed Timeout crash issue when loading article list
+- Added date to articles loaded from a web link
+- Reduced app size by removed old unused resources
+
+#### Previous Update: V1.2
+- Published date added to articles list
+- Optimised layout for most tablets
+- Fixed loading bug (caused by new mobile site format)
+
+#### Full Change Log
+See [Change Log](CHANGELOG.md)
+
 ## Contact
 Queries and support messages can be email to [roberteves92@gmail.com](mailto:roberteves92@gmail.com?Subject=HEObserver%20App)
 
 ## Credits
-
 * Main Application Development: [Robert Eves](https://github.com/RobertEves92)
+
+The HEObserver app also uses some Open Source Libraries:
 * Android RSS Reader Library: [Mats Hofman](https://github.com/matshofman/Android-RSS-Reader-Library) `*`
 * Unbescape Library: [The Unbescape Open Source Project](https://github.com/unbescape/unbescape) `*`
 * MarkdownView Library: [Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView) `*`
@@ -36,7 +51,7 @@ Copyright (c) 2015 Robert Eves
 
 
 ### Exceptions
-* **GitHub:** Copies of this software may me created via `forking` and subsequently modified for private use, or the purposes of contribution via `pull request`. These copies are subject to this same license and reamain Copyrighted to Robert Eves (See [License](#license)).
+* **GitHub:** Copies of this software may me created via `forking` and subsequently modified for private use, or the purposes of contribution via `pull request`. These copies are subject to this same license and remain Copyrighted to Robert Eves (See [License](#license)).
 * **Content:** This license does not cover content displayed by this software. Any content displayed is the work of Local World and the Herts and Essex Observer
 
 ## Contributing
