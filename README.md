@@ -21,8 +21,11 @@ Download from [Google Play](http://play.google.com/store/apps/details?id=com.rob
 ## Credits
 
 * Main Application Development: [Robert Eves](https://github.com/RobertEves92)
-* Android RSS Reader Library: [Mats Hofman](https://github.com/matshofman/Android-RSS-Reader-Library) (Used under the Apache License, Version 2.0)
-* Unbescape Library: [The Unbescape Open Source Project](https://github.com/unbescape/unbescape) (Used under the Apache License, Version 2.0)
+* Android RSS Reader Library: [Mats Hofman](https://github.com/matshofman/Android-RSS-Reader-Library) `*`
+* Unbescape Library: [The Unbescape Open Source Project](https://github.com/unbescape/unbescape) `*`
+* MarkdownView Library: [Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView) `*`
+
+`*` Apache License, Version 2.0
 
 ## License
 Copyright (c) 2015 Robert Eves

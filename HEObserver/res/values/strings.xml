@@ -15,5 +15,7 @@
     <string name="error_update_article_list">Error updating article list</string>
     <string name="error_no_internet">No internet connection available</string>
     <string name="error_not_supported">Article not supported, opening in web view</string>
+    <string name="title_activity_about">About</string>
+    <string name="action_about">About</string>
 
 </resources>
