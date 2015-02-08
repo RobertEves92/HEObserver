@@ -18,7 +18,7 @@ import unbescape.html.HtmlEscape;
 
 @SuppressWarnings("serial")
 public class Article implements Serializable {
-    private String title, body, description, publishedDate, link;
+    private String title, body, publishedDate, link;
 
     private static final String[] mediaTags = new String[]{"PHOTOS:", "PHOTO:",
             "VIDEO:", "VIDEOS:", "PICTURES:", "POLL:", " - SLIDESHOW"};
@@ -35,7 +35,7 @@ public class Article implements Serializable {
     public static final String regexDate = "\\d{4}\\-\\d{2}\\-\\d{2}";
     public static final String regexTime = "\\d{2}\\:\\d{2}\\:\\d{2}";
 
-    public Article(String link, String description, Date published)
+    public Article(String link, Date published)
             throws IOException {
         String source = Util.getWebSource(link);
         // Set Title
@@ -51,9 +51,6 @@ public class Article implements Serializable {
         b = b.replaceAll(regexXmlComment, "");
         b = b.replaceAll(regexExcessWhitespace, " ");
         setBody(b);
-
-        // Set Summary/Description
-        setDescription(processArticlePreview(description));
 
         // Set Date
         setPublishedDate(processPubDate(published));
@@ -77,9 +74,6 @@ public class Article implements Serializable {
         b = b.replaceAll(regexXmlComment, "");
         b = b.replaceAll(regexExcessWhitespace, " ");
         setBody(b);
-
-        // Set Summary/Description and published date to null
-        setDescription(null);
 
         String date = selectStringFromRegex(source, regexDate).substring(0, 10);
         String time = selectStringFromRegex(source, regexTime).substring(0, 8);
@@ -164,14 +158,6 @@ public class Article implements Serializable {
 
     public void setPublishedDate(String publishedDate) {
         this.publishedDate = publishedDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getLink() {

@@ -223,8 +223,7 @@ public class MainActivity extends Activity {
                 Article article;
                 try {
                     article = new Article(Lists.RssItems.get(position)
-                            .getLink(), Lists.RssItems.get(position)
-                            .getDescription(), Lists.RssItems.get(
+                            .getLink(), Lists.RssItems.get(
                             position).getPubDate());
 
                     Intent i = new Intent(MainActivity.this,
