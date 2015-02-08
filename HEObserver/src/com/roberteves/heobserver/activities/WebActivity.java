@@ -67,7 +67,7 @@ public class WebActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-            finish(); // close when resumed
+        finish(); // close when resumed
     }
 
     private void loadWebView() {

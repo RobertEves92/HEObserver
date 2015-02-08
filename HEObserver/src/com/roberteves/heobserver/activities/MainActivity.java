@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
                 updateList();
                 return true;
             case R.id.action_bar_about:
-                Intent i = new Intent(MainActivity.this,AboutActivity.class);
+                Intent i = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(i);
                 return true;
             default:
@@ -97,6 +97,46 @@ public class MainActivity extends Activity {
         }
 
         return feeds.toArray(new String[feeds.size()]);
+    }
+
+    private void UpdateView() {
+        //Create ListView Adapter
+        SimpleAdapter simpleAdpt = new SimpleAdapter(this,
+                Lists.storyList, android.R.layout.simple_list_item_2,
+                new String[]{"title", "date"},
+                new int[]{android.R.id.text1, android.R.id.text2});
+
+        //Set ListView from Adapter
+        lv.setAdapter(simpleAdpt);
+
+        //Set OnClick Handlers
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Article article;
+                try {
+                    article = new Article(Lists.RssItems.get(position)
+                            .getLink(), Lists.RssItems.get(
+                            position).getPubDate());
+
+                    Intent i = new Intent(MainActivity.this,
+                            ArticleActivity.class);
+
+                    i.putExtra("article", article);
+                    startActivity(i);
+                } catch (IOException e) {
+                    Crashlytics.logException(e); // Send caught
+                    // exception to
+                    // crashlytics
+                    Toast.makeText(getApplicationContext(),
+                            R.string.error_retrieve_article_source,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private class UpdateListViewTask extends AsyncTask<String, Void, Boolean> {
@@ -201,45 +241,5 @@ public class MainActivity extends Activity {
                     rssItems.add(y);
             }
         }
-    }
-
-    private void UpdateView() {
-        //Create ListView Adapter
-        SimpleAdapter simpleAdpt = new SimpleAdapter(this,
-                Lists.storyList, android.R.layout.simple_list_item_2,
-                new String[]{"title", "date"},
-                new int[]{android.R.id.text1, android.R.id.text2});
-
-        //Set ListView from Adapter
-        lv.setAdapter(simpleAdpt);
-
-        //Set OnClick Handlers
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                Article article;
-                try {
-                    article = new Article(Lists.RssItems.get(position)
-                            .getLink(), Lists.RssItems.get(
-                            position).getPubDate());
-
-                    Intent i = new Intent(MainActivity.this,
-                            ArticleActivity.class);
-
-                    i.putExtra("article", article);
-                    startActivity(i);
-                } catch (IOException e) {
-                    Crashlytics.logException(e); // Send caught
-                    // exception to
-                    // crashlytics
-                    Toast.makeText(getApplicationContext(),
-                            R.string.error_retrieve_article_source,
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 }

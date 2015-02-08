@@ -16,11 +16,8 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("serial")
 public class Article implements Serializable {
-    private String title, body, publishedDate, link;
-
     private static final String[] mediaTags = new String[]{"PHOTOS:", "PHOTO:",
             "VIDEO:", "VIDEOS:", "PICTURES:", "POLL:", " - SLIDESHOW"};
-
     private static final String regexArticleBody = "<p>.*</p>";
     private static final String regexArticleRelated = "<div.*?</div>";
     private static final String regexXmlComment = "<!--.*?-->";
@@ -31,6 +28,7 @@ public class Article implements Serializable {
     private static final String regexTitleEnd = "\\s\\|.*";
     private static final String regexDate = "\\d{4}\\-\\d{2}\\-\\d{2}";
     private static final String regexTime = "\\d{2}\\:\\d{2}\\:\\d{2}";
+    private String title, body, publishedDate, link;
 
     public Article(String link, Date published)
             throws IOException {
@@ -113,10 +111,6 @@ public class Article implements Serializable {
         }
     }
 
-    public boolean hasMedia() {
-        return hasMedia(getTitle());
-    }
-
     public static boolean hasMedia(String title) {
         for (String s : mediaTags) {
             if (title.toUpperCase().contains(s.toUpperCase())) {
@@ -126,8 +120,16 @@ public class Article implements Serializable {
         return false;
     }
 
+    public boolean hasMedia() {
+        return hasMedia(getTitle());
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    void setTitle(String title) {
+        this.title = title;
     }
 
     public String getBody() {
@@ -136,10 +138,6 @@ public class Article implements Serializable {
 
     void setBody(String body) {
         this.body = body;
-    }
-
-    void setTitle(String title) {
-        this.title = title;
     }
 
     public String getPublishedDate() {
