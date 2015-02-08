@@ -46,7 +46,7 @@ public class Util {
         }
 
         StringBuilder sb = new StringBuilder();
-        String line = null;
+        String line;
         while ((line = reader.readLine()) != null) // Read line by line
             sb.append(line + "\n");
 

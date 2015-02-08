@@ -179,7 +179,7 @@ public class MainActivity extends Activity {
         private ArrayList<RssItem> getDataFromFeeds(String[] feeds) throws SAXException, IOException,
                 MalformedURLException, XmlPullParserException {
             ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
-            ArrayList<RssItem> feedItems = new ArrayList<RssItem>();
+            ArrayList<RssItem> feedItems;
 
             for (String s : feeds) {
                 feedItems = RssReader.read(Util.getWebSource(s)).getRssItems();
