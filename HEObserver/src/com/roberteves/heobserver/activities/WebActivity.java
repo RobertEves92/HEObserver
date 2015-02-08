@@ -32,7 +32,7 @@ public class WebActivity extends Activity {
         dataString = formatDataString(intent.getDataString());
 
         if (dataString
-                .matches("http:\\/\\/((www.)?)hertsandessexobserver.co.uk\\/.*story.html")) {
+                .matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html")) {
             // is article - open in article activity
             try {
                 Article article = new Article(dataString);
@@ -67,7 +67,7 @@ public class WebActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-            finish(); // close when resumed
+        finish(); // close when resumed
     }
 
     private void loadWebView() {
@@ -75,6 +75,6 @@ public class WebActivity extends Activity {
     }
 
     private String formatDataString(String dataString) {
-        return dataString.replaceAll("\\/story.html#.*", "/story.html");
+        return dataString.replaceAll("/story.html#.*", "/story.html");
     }
 }

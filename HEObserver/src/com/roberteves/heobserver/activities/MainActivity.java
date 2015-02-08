@@ -24,16 +24,13 @@ import com.roberteves.heobserver.core.Lists;
 import com.roberteves.heobserver.core.Util;
 
 import org.xml.sax.SAXException;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
 import nl.matshofman.saxrssreader.RssItem;
@@ -71,7 +68,7 @@ public class MainActivity extends Activity {
                 updateList();
                 return true;
             case R.id.action_bar_about:
-                Intent i = new Intent(MainActivity.this,AboutActivity.class);
+                Intent i = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(i);
                 return true;
             default:
@@ -91,7 +88,7 @@ public class MainActivity extends Activity {
     }
 
     private String[] getFeeds() throws IOException {
-        ArrayList<String> feeds = new ArrayList<String>();
+        ArrayList<String> feeds = new ArrayList<>();
         BufferedReader in = new BufferedReader(new InputStreamReader(this
                 .getResources().openRawResource(R.raw.feeds)));
         String line;
@@ -102,8 +99,48 @@ public class MainActivity extends Activity {
         return feeds.toArray(new String[feeds.size()]);
     }
 
+    private void UpdateView() {
+        //Create ListView Adapter
+        SimpleAdapter simpleAdpt = new SimpleAdapter(this,
+                Lists.storyList, android.R.layout.simple_list_item_2,
+                new String[]{"title", "date"},
+                new int[]{android.R.id.text1, android.R.id.text2});
+
+        //Set ListView from Adapter
+        lv.setAdapter(simpleAdpt);
+
+        //Set OnClick Handlers
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Article article;
+                try {
+                    article = new Article(Lists.RssItems.get(position)
+                            .getLink(), Lists.RssItems.get(
+                            position).getPubDate());
+
+                    Intent i = new Intent(MainActivity.this,
+                            ArticleActivity.class);
+
+                    i.putExtra("article", article);
+                    startActivity(i);
+                } catch (IOException e) {
+                    Crashlytics.logException(e); // Send caught
+                    // exception to
+                    // crashlytics
+                    Toast.makeText(getApplicationContext(),
+                            R.string.error_retrieve_article_source,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     private class UpdateListViewTask extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+        private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
 
         @Override
         protected void onPreExecute() {
@@ -117,8 +154,8 @@ public class MainActivity extends Activity {
                 try {
                     //Set Lists
                     Lists.RssItems = getDataFromFeeds(feeds);
-                    Lists.storyList = new ArrayList<Map<String, String>>();
-                    ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
+                    Lists.storyList = new ArrayList<>();
+                    ArrayList<RssItem> rssItems = new ArrayList<>();
 
                     // Add Story Items to HashMap Array
                     for (RssItem item : Lists.RssItems) {
@@ -169,17 +206,16 @@ public class MainActivity extends Activity {
         }
 
         private HashMap<String, String> createStory(String title, String publishedDate) {
-            HashMap<String, String> story = new HashMap<String, String>();
+            HashMap<String, String> story = new HashMap<>();
             story.put("title", title);
             story.put("date", publishedDate);
 
             return story;
         }
 
-        private ArrayList<RssItem> getDataFromFeeds(String[] feeds) throws SAXException, IOException,
-                MalformedURLException, XmlPullParserException {
-            ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
-            ArrayList<RssItem> feedItems = new ArrayList<RssItem>();
+        private ArrayList<RssItem> getDataFromFeeds(String[] feeds) throws SAXException, IOException {
+            ArrayList<RssItem> rssItems = new ArrayList<>();
+            ArrayList<RssItem> feedItems;
 
             for (String s : feeds) {
                 feedItems = RssReader.read(Util.getWebSource(s)).getRssItems();
@@ -205,45 +241,5 @@ public class MainActivity extends Activity {
                     rssItems.add(y);
             }
         }
-    }
-
-    private void UpdateView() {
-        //Create ListView Adapter
-        SimpleAdapter simpleAdpt = new SimpleAdapter(this,
-                Lists.storyList, android.R.layout.simple_list_item_2,
-                new String[]{"title", "date"},
-                new int[]{android.R.id.text1, android.R.id.text2});
-
-        //Set ListView from Adapter
-        lv.setAdapter(simpleAdpt);
-
-        //Set OnClick Handlers
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                Article article;
-                try {
-                    article = new Article(Lists.RssItems.get(position)
-                            .getLink(), Lists.RssItems.get(
-                            position).getPubDate());
-
-                    Intent i = new Intent(MainActivity.this,
-                            ArticleActivity.class);
-
-                    i.putExtra("article", article);
-                    startActivity(i);
-                } catch (IOException e) {
-                    Crashlytics.logException(e); // Send caught
-                    // exception to
-                    // crashlytics
-                    Toast.makeText(getApplicationContext(),
-                            R.string.error_retrieve_article_source,
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 }
