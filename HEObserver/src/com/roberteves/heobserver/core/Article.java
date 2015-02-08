@@ -87,7 +87,7 @@ public class Article implements Serializable {
     private static String selectStringFromRegex(String text, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
-        List<String> listMatches = new ArrayList<String>();
+        List<String> listMatches = new ArrayList<>();
         while (matcher.find()) {
             listMatches.add(matcher.group());
         }

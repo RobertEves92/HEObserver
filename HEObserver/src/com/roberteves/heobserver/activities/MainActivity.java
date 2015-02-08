@@ -91,7 +91,7 @@ public class MainActivity extends Activity {
     }
 
     private String[] getFeeds() throws IOException {
-        ArrayList<String> feeds = new ArrayList<String>();
+        ArrayList<String> feeds = new ArrayList<>();
         BufferedReader in = new BufferedReader(new InputStreamReader(this
                 .getResources().openRawResource(R.raw.feeds)));
         String line;
@@ -117,8 +117,8 @@ public class MainActivity extends Activity {
                 try {
                     //Set Lists
                     Lists.RssItems = getDataFromFeeds(feeds);
-                    Lists.storyList = new ArrayList<Map<String, String>>();
-                    ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
+                    Lists.storyList = new ArrayList<>();
+                    ArrayList<RssItem> rssItems = new ArrayList<>();
 
                     // Add Story Items to HashMap Array
                     for (RssItem item : Lists.RssItems) {
@@ -169,7 +169,7 @@ public class MainActivity extends Activity {
         }
 
         private HashMap<String, String> createStory(String title, String publishedDate) {
-            HashMap<String, String> story = new HashMap<String, String>();
+            HashMap<String, String> story = new HashMap<>();
             story.put("title", title);
             story.put("date", publishedDate);
 
@@ -178,7 +178,7 @@ public class MainActivity extends Activity {
 
         private ArrayList<RssItem> getDataFromFeeds(String[] feeds) throws SAXException, IOException,
                 MalformedURLException, XmlPullParserException {
-            ArrayList<RssItem> rssItems = new ArrayList<RssItem>();
+            ArrayList<RssItem> rssItems = new ArrayList<>();
             ArrayList<RssItem> feedItems;
 
             for (String s : feeds) {
