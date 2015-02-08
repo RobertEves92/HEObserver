@@ -4,10 +4,10 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.15.1'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 repositories {
@@ -18,11 +18,12 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':appcompat_v7')
-    compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.2.1@aar') {
         transitive = true;
     }
     compile project(':unbescape')
     compile project(':android-rss-reader-library')
+    compile files('kit-libs/markdownview/markdownview-1.2.jar')
 }
 
 android {
@@ -32,10 +33,10 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src','unbescape','rssreader']
-            resources.srcDirs = ['src','unbescape','rssreader']
-            aidl.srcDirs = ['src','unbescape','rssreader']
-            renderscript.srcDirs = ['src','unbescape','rssreader']
+            java.srcDirs = ['src', 'unbescape', 'rssreader']
+            resources.srcDirs = ['src', 'unbescape', 'rssreader']
+            aidl.srcDirs = ['src', 'unbescape', 'rssreader']
+            renderscript.srcDirs = ['src', 'unbescape', 'rssreader']
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }

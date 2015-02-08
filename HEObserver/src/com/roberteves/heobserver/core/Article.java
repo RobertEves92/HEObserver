@@ -1,9 +1,10 @@
 package com.roberteves.heobserver.core;
 
-import android.util.Log;
+import com.crashlytics.android.Crashlytics;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,26 +14,23 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import unbescape.html.HtmlEscape;
-
 @SuppressWarnings("serial")
 public class Article implements Serializable {
-    private String title, body, description, publishedDate, link;
-
     private static final String[] mediaTags = new String[]{"PHOTOS:", "PHOTO:",
             "VIDEO:", "VIDEOS:", "PICTURES:", "POLL:", " - SLIDESHOW"};
-
     private static final String regexArticleBody = "<p>.*</p>";
-    private static final String regexArticleRelated = "<div.*?<\\/div>";
+    private static final String regexArticleRelated = "<div.*?</div>";
     private static final String regexXmlComment = "<!--.*?-->";
     private static final String regexExcessWhitespace = "\\s+";
     private static final String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
-    private static final String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
     private static final String regexTitle = "<title>\\s*.*?<\\/title>";
     private static final String regexTitleStart = "<title>\\s+";
     private static final String regexTitleEnd = "\\s\\|.*";
+    private static final String regexDate = "\\d{4}\\-\\d{2}\\-\\d{2}";
+    private static final String regexTime = "\\d{2}\\:\\d{2}\\:\\d{2}";
+    private String title, body, publishedDate, link;
 
-    public Article(String link, String description, Date published)
+    public Article(String link, Date published)
             throws IOException {
         String source = Util.getWebSource(link);
         // Set Title
@@ -48,9 +46,6 @@ public class Article implements Serializable {
         b = b.replaceAll(regexXmlComment, "");
         b = b.replaceAll(regexExcessWhitespace, " ");
         setBody(b);
-
-        // Set Summary/Description
-        setDescription(processArticlePreview(description));
 
         // Set Date
         setPublishedDate(processPubDate(published));
@@ -75,9 +70,10 @@ public class Article implements Serializable {
         b = b.replaceAll(regexExcessWhitespace, " ");
         setBody(b);
 
-        // Set Summary/Description and published date to null
-        setDescription(null);
-        setPublishedDate(null);
+        String date = selectStringFromRegex(source, regexDate).substring(0, 10);
+        String time = selectStringFromRegex(source, regexTime).substring(0, 8);
+
+        setPublishedDate(processPubDate(date + time));
 
         // Set Link
         setLink(link);
@@ -86,7 +82,7 @@ public class Article implements Serializable {
     private static String selectStringFromRegex(String text, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
-        List<String> listMatches = new ArrayList<String>();
+        List<String> listMatches = new ArrayList<>();
         while (matcher.find()) {
             listMatches.add(matcher.group());
         }
@@ -104,64 +100,59 @@ public class Article implements Serializable {
         return sdf.format(calendar.getTime());
     }
 
-    private static String processArticlePreview(String text) {
-        String t = text;
-        t = HtmlEscape.unescapeHtml(t);
-        t = t.replaceAll(regexHtml, ""); // remove any remaining html tags
-        return t;
-    }
-
-    public boolean hasMedia() {
-        return hasMedia(getTitle());
+    private static String processPubDate(String date) {
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
+            Date d = df.parse(date);
+            return processPubDate(d);
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+            return "";
+        }
     }
 
     public static boolean hasMedia(String title) {
         for (String s : mediaTags) {
             if (title.toUpperCase().contains(s.toUpperCase())) {
-                Log.i("MediaFilter", "Found tag \"" + s + "\" in title \"" + title + "\"");
                 return true;
             }
         }
         return false;
     }
 
+    public boolean hasMedia() {
+        return hasMedia(getTitle());
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    void setTitle(String title) {
+        this.title = title;
     }
 
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    void setBody(String body) {
         this.body = body;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getPublishedDate() {
         return publishedDate;
     }
 
-    public void setPublishedDate(String publishedDate) {
+    void setPublishedDate(String publishedDate) {
         this.publishedDate = publishedDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getLink() {
         return link;
     }
 
-    public void setLink(String link) {
+    void setLink(String link) {
         this.link = link;
     }
 
