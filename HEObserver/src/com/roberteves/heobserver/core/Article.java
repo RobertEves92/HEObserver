@@ -24,7 +24,7 @@ public class Article implements Serializable {
             "VIDEO:", "VIDEOS:", "PICTURES:", "POLL:", " - SLIDESHOW"};
 
     private static final String regexArticleBody = "<p>.*</p>";
-    private static final String regexArticleRelated = "<div.*?<\\/div>";
+    private static final String regexArticleRelated = "<div.*?</div>";
     private static final String regexXmlComment = "<!--.*?-->";
     private static final String regexExcessWhitespace = "\\s+";
     private static final String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
