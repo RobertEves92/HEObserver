@@ -17,7 +17,6 @@ import io.fabric.sdk.android.Fabric;
 
 public class WebActivity extends Activity {
     private static WebView webView;
-    private boolean finishOnResume = false;
     private String dataString;
 
     @Override
@@ -45,7 +44,6 @@ public class WebActivity extends Activity {
                             ArticleActivity.class);
 
                     i.putExtra("article", article);
-                    finishOnResume = true;
                     startActivity(i);
                 }
             } catch (IOException e) {
@@ -60,9 +58,7 @@ public class WebActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        if (finishOnResume) {
             finish(); // close when resumed
-        }
     }
 
     private void loadWebView() {
