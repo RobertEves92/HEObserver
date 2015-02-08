@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import unbescape.html.HtmlEscape;
-
 @SuppressWarnings("serial")
 public class Article implements Serializable {
     private String title, body, publishedDate, link;
