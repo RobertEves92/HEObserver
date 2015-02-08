@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
     }
 
     private class UpdateListViewTask extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+        private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
 
         @Override
         protected void onPreExecute() {
@@ -176,8 +176,7 @@ public class MainActivity extends Activity {
             return story;
         }
 
-        private ArrayList<RssItem> getDataFromFeeds(String[] feeds) throws SAXException, IOException,
-                MalformedURLException, XmlPullParserException {
+        private ArrayList<RssItem> getDataFromFeeds(String[] feeds) throws SAXException, IOException {
             ArrayList<RssItem> rssItems = new ArrayList<>();
             ArrayList<RssItem> feedItems;
 

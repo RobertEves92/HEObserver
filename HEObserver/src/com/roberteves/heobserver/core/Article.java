@@ -28,12 +28,11 @@ public class Article implements Serializable {
     private static final String regexXmlComment = "<!--.*?-->";
     private static final String regexExcessWhitespace = "\\s+";
     private static final String regexArticle = "<!-- Article Start -->([\\s\\S]*?)<!-- Article End -->";
-    private static final String regexHtml = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
     private static final String regexTitle = "<title>\\s*.*?<\\/title>";
     private static final String regexTitleStart = "<title>\\s+";
     private static final String regexTitleEnd = "\\s\\|.*";
-    public static final String regexDate = "\\d{4}\\-\\d{2}\\-\\d{2}";
-    public static final String regexTime = "\\d{2}\\:\\d{2}\\:\\d{2}";
+    private static final String regexDate = "\\d{4}\\-\\d{2}\\-\\d{2}";
+    private static final String regexTime = "\\d{2}\\:\\d{2}\\:\\d{2}";
 
     public Article(String link, Date published)
             throws IOException {
@@ -78,7 +77,7 @@ public class Article implements Serializable {
         String date = selectStringFromRegex(source, regexDate).substring(0, 10);
         String time = selectStringFromRegex(source, regexTime).substring(0, 8);
 
-        setPublishedDate(processPubDate(date + time, "yyyy-MM-ddHH:mm:ss"));
+        setPublishedDate(processPubDate(date + time));
 
         // Set Link
         setLink(link);
@@ -105,22 +104,15 @@ public class Article implements Serializable {
         return sdf.format(calendar.getTime());
     }
 
-    public static String processPubDate(String date, String format) {
+    private static String processPubDate(String date) {
         try {
-            DateFormat df = new SimpleDateFormat(format);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
             Date d = df.parse(date);
             return processPubDate(d);
         } catch (Exception e) {
             Crashlytics.logException(e);
             return "";
         }
-    }
-
-    private static String processArticlePreview(String text) {
-        String t = text;
-        t = HtmlEscape.unescapeHtml(t);
-        t = t.replaceAll(regexHtml, ""); // remove any remaining html tags
-        return t;
     }
 
     public boolean hasMedia() {
@@ -144,11 +136,11 @@ public class Article implements Serializable {
         return body;
     }
 
-    public void setBody(String body) {
+    void setBody(String body) {
         this.body = body;
     }
 
-    public void setTitle(String title) {
+    void setTitle(String title) {
         this.title = title;
     }
 
@@ -156,7 +148,7 @@ public class Article implements Serializable {
         return publishedDate;
     }
 
-    public void setPublishedDate(String publishedDate) {
+    void setPublishedDate(String publishedDate) {
         this.publishedDate = publishedDate;
     }
 
@@ -164,7 +156,7 @@ public class Article implements Serializable {
         return link;
     }
 
-    public void setLink(String link) {
+    void setLink(String link) {
         this.link = link;
     }
 

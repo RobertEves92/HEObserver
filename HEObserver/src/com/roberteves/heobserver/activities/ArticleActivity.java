@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 public class ArticleActivity extends Activity {
 	private static Article article;
-	TextView txtTitle, txtBody, txtPubDate;
+	private TextView txtTitle;
+    private TextView txtBody;
+    private TextView txtPubDate;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
