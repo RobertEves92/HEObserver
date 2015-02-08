@@ -38,6 +38,9 @@ public class WebActivity extends Activity {
                 Article article = new Article(dataString);
                 if (article.hasMedia()) // load in web view
                 {
+                    Toast.makeText(getApplicationContext(),
+                            R.string.error_not_supported,
+                            Toast.LENGTH_SHORT).show();
                     loadWebView();
                 } else { // load in article activity
                     Intent i = new Intent(WebActivity.this,
@@ -48,9 +51,15 @@ public class WebActivity extends Activity {
                 }
             } catch (IOException e) {
                 Crashlytics.logException(e);
+                Toast.makeText(getApplicationContext(),
+                        R.string.error_retrieve_article_source,
+                        Toast.LENGTH_SHORT).show();
                 loadWebView();
             }
         } else {
+            Toast.makeText(getApplicationContext(),
+                    R.string.error_not_supported,
+                    Toast.LENGTH_SHORT).show();
             loadWebView();
         }
     }
@@ -62,9 +71,6 @@ public class WebActivity extends Activity {
     }
 
     private void loadWebView() {
-        Toast.makeText(getApplicationContext(),
-                "Article not supported, opening in web view",
-                Toast.LENGTH_SHORT).show();
         webView.loadUrl(dataString);
     }
 
