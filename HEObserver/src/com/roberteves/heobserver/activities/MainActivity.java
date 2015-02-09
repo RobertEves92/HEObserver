@@ -109,34 +109,41 @@ public class MainActivity extends Activity {
         //Set ListView from Adapter
         lv.setAdapter(simpleAdpt);
 
-        //Set OnClick Handlers
+        //Set OnClick Handler
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                if (isOnline()) {
+                    Article article;
+                    try {
+                        article = new Article(Lists.RssItems.get(position)
+                                .getLink(), Lists.RssItems.get(
+                                position).getPubDate());
 
-                Article article;
-                try {
-                    article = new Article(Lists.RssItems.get(position)
-                            .getLink(), Lists.RssItems.get(
-                            position).getPubDate());
+                        Intent i = new Intent(MainActivity.this,
+                                ArticleActivity.class);
 
-                    Intent i = new Intent(MainActivity.this,
-                            ArticleActivity.class);
-
-                    i.putExtra("article", article);
-                    startActivity(i);
-                } catch (IOException e) {
-                    Crashlytics.logException(e); // Send caught
-                    // exception to
-                    // crashlytics
-                    Toast.makeText(getApplicationContext(),
-                            R.string.error_retrieve_article_source,
+                        i.putExtra("article", article);
+                        startActivity(i);
+                    } catch (IOException e) {
+                        Crashlytics.logException(e);
+                        Toast.makeText(getApplicationContext(),
+                                R.string.error_retrieve_article_source,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.error_no_internet,
                             Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnected();
     }
 
     private class UpdateListViewTask extends AsyncTask<String, Void, Boolean> {
@@ -197,12 +204,6 @@ public class MainActivity extends Activity {
                         R.string.error_update_article_list, Toast.LENGTH_SHORT)
                         .show();
             }
-        }
-
-        private boolean isOnline() {
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            return netInfo != null && netInfo.isConnected();
         }
 
         private HashMap<String, String> createStory(String title, String publishedDate) {
