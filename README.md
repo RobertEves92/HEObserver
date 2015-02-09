@@ -6,10 +6,11 @@ Android app to get news from the Herts and Essex Observer without adverts
 Download from [Google Play](http://play.google.com/store/apps/details?id=com.roberteves.heobserver)
 
 ## Change Log
-### Current Version: V1.3
+### Current Version: V1.3.1
 - Fixed Timeout crash issue when loading article list
 - Added date to articles loaded from a web link
 - Reduced app size by removed old unused resources
+- Fixed blank article view bug when no internet available
 
 #### Previous Update: V1.2
 - Published date added to articles list
@@ -26,6 +27,7 @@ Queries and support messages can be email to [roberteves92@gmail.com](mailto:rob
 * Main Application Development: [Robert Eves](https://github.com/RobertEves92)
 
 The HEObserver app also uses some Open Source Libraries:
+
 * Android RSS Reader Library: [Mats Hofman](https://github.com/matshofman/Android-RSS-Reader-Library) `*`
 * Unbescape Library: [The Unbescape Open Source Project](https://github.com/unbescape/unbescape) `*`
 * MarkdownView Library: [Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView) `*`
