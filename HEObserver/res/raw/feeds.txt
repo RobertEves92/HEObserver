@@ -3,5 +3,4 @@ http://www.hertsandessexobserver.co.uk/bishops-stortford.rss
 http://www.hertsandessexobserver.co.uk/sport.rss
 http://www.hertsandessexobserver.co.uk/music-news.rss
 http://www.hertsandessexobserver.co.uk/sawbridgeworth.rss
-http://www.hertsandessexobserver.co.uk/politics.rss
 http://www.hertsandessexobserver.co.uk/dunmow-stansted.rss

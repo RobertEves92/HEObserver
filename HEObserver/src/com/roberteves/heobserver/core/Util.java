@@ -54,6 +54,8 @@ public class Util {
 
         is.close(); // Close the stream
 
+        resString = resString.replaceAll("'","");
+        
         return resString;
     }
 }
