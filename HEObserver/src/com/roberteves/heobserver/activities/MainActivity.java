@@ -24,8 +24,6 @@ import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
 import com.roberteves.heobserver.core.Util;
 
-import org.xml.sax.SAXException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -159,31 +157,24 @@ public class MainActivity extends Activity {
         @Override
         protected Boolean doInBackground(String... feeds) {
             if (isOnline()) {
-                try {
-                    //Set Lists
-                    Lists.RssItems = getDataFromFeeds(feeds);
-                    Lists.storyList = new ArrayList<>();
-                    ArrayList<RssItem> rssItems = new ArrayList<>();
+                //Set Lists
+                Lists.RssItems = getDataFromFeeds(feeds);
+                Lists.storyList = new ArrayList<>();
+                ArrayList<RssItem> rssItems = new ArrayList<>();
 
-                    // Add Story Items to HashMap Array
-                    for (RssItem item : Lists.RssItems) {
-                        //If item has unsupported media, don't add
-                        if (!Article.hasMedia(item.getTitle())) {
-                            Lists.storyList.add(createStory(HtmlEscape.unescapeHtml(item.getTitle()), Article.processPubDate(item.getPubDate())));
-                            rssItems.add(item);
-                        }
+                // Add Story Items to HashMap Array
+                for (RssItem item : Lists.RssItems) {
+                    //If item has unsupported media, don't add
+                    if (!Article.hasMedia(item.getTitle())) {
+                        Lists.storyList.add(createStory(HtmlEscape.unescapeHtml(item.getTitle()), Article.processPubDate(item.getPubDate())));
+                        rssItems.add(item);
                     }
-
-                    //Update with new lists (filtered results)
-                    Lists.RssItems = rssItems;
-
-                    return true;
-                } catch (Exception e) {
-                    Crashlytics.logException(e); // Send caught exception to
-                    // crashlytics
-
-                    return false;
                 }
+
+                //Update with new lists (filtered results)
+                Lists.RssItems = rssItems;
+
+                return true;
             } else {
                 Toast.makeText(getApplicationContext(), R.string.error_no_internet,
                         Toast.LENGTH_SHORT).show();
@@ -215,19 +206,26 @@ public class MainActivity extends Activity {
             return story;
         }
 
-        private ArrayList<RssItem> getDataFromFeeds(String[] feeds) throws SAXException, IOException {
+        private ArrayList<RssItem> getDataFromFeeds(String[] feeds) {
             ArrayList<RssItem> rssItems = new ArrayList<>();
             ArrayList<RssItem> feedItems;
 
             for (String s : feeds) {
                 try {
-                    feedItems = RssReader.read(Util.getWebSource(s)).getRssItems();
+                    feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
                     checkDuplicates(rssItems, feedItems);
-                }
-                catch(Exception e)
-                {
-                    Log.d("Feed Exception","Feed: " + s + "; " + e.getMessage());
-                    throw e;
+                } catch (Exception e) {
+                    Log.d("Feed Exception", "Feed: " + s + "; Processing: False; " + e.getMessage());
+                    Crashlytics.logException(e);
+
+                    //Try with processing if it doesnt work
+                    try {
+                        feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
+                        checkDuplicates(rssItems, feedItems);
+                    } catch (Exception ee) {
+                        Log.d("Feed Exception", "Feed: " + s + "; Processing: True; " + e.getMessage());
+                        Crashlytics.logException(ee);
+                    }
                 }
             }
 

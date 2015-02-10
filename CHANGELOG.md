@@ -1,10 +1,11 @@
 ## Change Log
-### Current Version: V1.3.2
+### Current Version: V1.3.3
 - Fixed Timeout crash issue when loading article list
 - Added date to articles loaded from a web link
 - Reduced app size by removed old unused resources
 - Fixed blank article view bug when no internet available
 - Fixed issue loading feeds with bad formatting
+- Added new feeds
 
 #### Previous Update: V1.2
 - Published date added to articles list
