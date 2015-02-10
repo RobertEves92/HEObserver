@@ -32,7 +32,7 @@ public class Article implements Serializable {
 
     public Article(String link, Date published)
             throws IOException {
-        String source = Util.getWebSource(link);
+        String source = Util.getWebSource(link, false);
         // Set Title
         String t = selectStringFromRegex(source, regexTitle);
         t = t.replaceAll(regexTitleStart, "");
@@ -55,7 +55,7 @@ public class Article implements Serializable {
     }
 
     public Article(String link) throws IOException {
-        String source = Util.getWebSource(link);
+        String source = Util.getWebSource(link, false);
         // Set Title
         String t = selectStringFromRegex(source, regexTitle);
         t = t.replaceAll(regexTitleStart, "");
