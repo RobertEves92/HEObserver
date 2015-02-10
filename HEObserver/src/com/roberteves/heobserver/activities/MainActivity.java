@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -219,8 +220,15 @@ public class MainActivity extends Activity {
             ArrayList<RssItem> feedItems;
 
             for (String s : feeds) {
-                feedItems = RssReader.read(Util.getWebSource(s)).getRssItems();
-                checkDuplicates(rssItems, feedItems);
+                try {
+                    feedItems = RssReader.read(Util.getWebSource(s)).getRssItems();
+                    checkDuplicates(rssItems, feedItems);
+                }
+                catch(Exception e)
+                {
+                    Log.d("Feed Exception","Feed: " + s + "; " + e.getMessage());
+                    throw e;
+                }
             }
 
             Collections.sort(rssItems);// sorts into reverse date order
