@@ -1,6 +1,8 @@
 package com.roberteves.heobserver.feeds;
 
 
+import android.app.Activity;
+
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Lists;
 
@@ -8,8 +10,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class FeedManager {
-    public static void LoadFeeds() {
-        BufferedReader in = new BufferedReader(new InputStreamReader(this
+    public static void LoadFeeds(Activity activity) {
+        BufferedReader in = new BufferedReader(new InputStreamReader(activity.getApplicationContext()
                 .getResources().openRawResource(R.raw.feeds)));
         String line;
         Category c = Category.News;
