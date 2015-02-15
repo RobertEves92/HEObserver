@@ -23,10 +23,10 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
 import com.roberteves.heobserver.core.Util;
+import com.roberteves.heobserver.feeds.Feed;
+import com.roberteves.heobserver.feeds.FeedManager;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -77,22 +77,15 @@ public class MainActivity extends Activity {
 
     private void updateList() {
         UpdateListViewTask updateListViewTask = new UpdateListViewTask();
-        try {
-            updateListViewTask.execute(getFeeds());
-        } catch (IOException e) {
-            Crashlytics.logException(e);
-            Toast.makeText(getApplicationContext(), "Failed to read feeds list",
-                    Toast.LENGTH_SHORT).show();
-        }
+        updateListViewTask.execute(getFeeds());
     }
 
-    private String[] getFeeds() throws IOException {
+    private String[] getFeeds() {
+        FeedManager.LoadFeeds(this);
         ArrayList<String> feeds = new ArrayList<>();
-        BufferedReader in = new BufferedReader(new InputStreamReader(this
-                .getResources().openRawResource(R.raw.feeds)));
-        String line;
-        while ((line = in.readLine()) != null) {
-            feeds.add(line);
+
+        for (Feed f : Lists.FeedList) {
+            feeds.add(f.getLink());
         }
 
         return feeds.toArray(new String[feeds.size()]);
