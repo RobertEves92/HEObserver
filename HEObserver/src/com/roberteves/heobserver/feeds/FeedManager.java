@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 public class FeedManager {
     public static void LoadFeeds(Activity activity) {
         BufferedReader in = new BufferedReader(new InputStreamReader(activity.getApplicationContext()
-                .getResources().openRawResource(R.raw.feeds)));
+                .getResources().openRawResource(R.raw.feedsnew)));
         String line;
         Category c = Category.News;
         while ((line = in.readLine()) != null) {
