@@ -16,7 +16,7 @@ public class FeedManager {
     public static void LoadFeeds(Activity activity) {
         ArrayList<Feed> feedList = new ArrayList<>();
         BufferedReader in = new BufferedReader(new InputStreamReader(activity.getApplicationContext()
-                .getResources().openRawResource(R.raw.feedsnew)));
+                .getResources().openRawResource(R.raw.feeds)));
         String line;
         Category c = Category.News;
         try {
