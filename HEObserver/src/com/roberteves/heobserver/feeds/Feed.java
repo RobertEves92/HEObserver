@@ -11,19 +11,23 @@ public class Feed {
 
     public static Category getCategoryFromString(String category) {
         switch (category) {
+            case "news":
+            default:
+                return Category.News;
             case "localnews":
                 return Category.LocalNews;
             case "sport":
                 return Category.Sport;
-            case "music":
-                return Category.Music;
             case "lifestyle":
                 return Category.Lifestyle;
+            case "retail":
+                return Category.Retail;
             case "weather":
                 return Category.Weather;
-            case "news":
-            default:
-                return Category.News;
+            case "family":
+                return Category.Family;
+            case "misc":
+                return Category.Misc;
         }
     }
 

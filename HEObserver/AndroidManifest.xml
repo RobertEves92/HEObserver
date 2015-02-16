@@ -48,6 +48,15 @@
             android:name="com.roberteves.heobserver.activities.AboutActivity"
             android:label="@string/title_activity_about" />
 
+        <activity
+            android:name="com.roberteves.heobserver.activities.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName="com.roberteves.heobserver.activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.roberteves.heobserver.activities.MainActivity" />
+        </activity>
+
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="e1bbc16b796f44c99f9259c5d6133b91f7afc880" />

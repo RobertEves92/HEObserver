@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <PreferenceCategory android:title="Feeds">
+        <CheckBoxPreference
+            android:enabled="false"
+            android:key="feed_news"
+            android:summary="Summary of news headlines"
+            android:title="News" />
+        <CheckBoxPreference
+            android:key="feed_localnews"
+            android:summary="News from Bishop's Stortford, Dunmow, Sawbridgeworth, Stansted, and Uttlesford"
+            android:title="Local News" />
+        <CheckBoxPreference
+            android:key="feed_sport"
+            android:summary="Local sports events and headlines"
+            android:title="Sport" />
+        <CheckBoxPreference
+            android:key="feed_lifestyle"
+            android:summary="Local transport, retail, restaurant, and lifestyle updates"
+            android:title="Lifestyle" />
+        <CheckBoxPreference
+            android:key="feed_retail"
+            android:summary="Retail news and headlines"
+            android:title="Retail" />
+        <CheckBoxPreference
+            android:key="feed_weather"
+            android:summary="Weathers alerts, updates, and news"
+            android:title="Weather" />
+        <CheckBoxPreference
+            android:key="feed_family"
+            android:summary="Family and school headlines"
+            android:title="Family" />
+        <CheckBoxPreference
+            android:key="feed_misc"
+            android:summary="Miscellaneous headlines and articles"
+            android:title="Miscellaneouss" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Reset All Settings">
+        <Preference
+            android:key="reset"
+            android:summary="Reset All Settings"
+            android:title="Reset" />
+    </PreferenceCategory>
+</PreferenceScreen>

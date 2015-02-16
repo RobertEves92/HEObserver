@@ -22,6 +22,7 @@ import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
+import com.roberteves.heobserver.core.SettingsManager;
 import com.roberteves.heobserver.core.Util;
 import com.roberteves.heobserver.feeds.Feed;
 import com.roberteves.heobserver.feeds.FeedManager;
@@ -70,6 +71,8 @@ public class MainActivity extends Activity {
                 Intent i = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(i);
                 return true;
+            case R.id.action_bar_settings:
+                startActivity(new Intent(MainActivity.this,SettingsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -83,9 +86,13 @@ public class MainActivity extends Activity {
     private String[] getFeeds() {
         FeedManager.LoadFeeds(this);
         ArrayList<String> feeds = new ArrayList<>();
+        SettingsManager settingsManager = new SettingsManager(this);
 
         for (Feed f : Lists.FeedList) {
-            feeds.add(f.getLink());
+            //Only add the feed if the setting is enabled
+            if(settingsManager.isEnabled(f.getCategory())) {
+                feeds.add(f.getLink());
+            }
         }
 
         return feeds.toArray(new String[feeds.size()]);
