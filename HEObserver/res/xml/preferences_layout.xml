@@ -34,8 +34,8 @@
             android:title="Family" />
         <CheckBoxPreference
             android:key="feed_misc"
-            android:summary="Miscallanious headlines and articles"
-            android:title="Miscallanious" />
+            android:summary="Miscellaneous headlines and articles"
+            android:title="Miscellaneouss" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Reset All Settings">
         <Preference
