@@ -3,6 +3,8 @@ package com.roberteves.heobserver.core;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
+import com.roberteves.heobserver.feeds.Category;
+
 public class SettingsManager {
     private final static String PREFS_NAME = "HEOPrefs";
     private final static String KEY_FEED_NEWS = "feed_news";
@@ -18,6 +20,19 @@ public class SettingsManager {
     public SettingsManager(Activity activity) {
         settings = activity.getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
         editor = settings.edit();
+    }
+    
+    public Boolean isEnabled(Category category)
+    {
+        switch (category){
+            default:
+            case News:return true;
+            case LocalNews:return getFeedLocalNews();
+            case Sport:return getFeedSport();
+            case Music:return getFeedMusic();
+            case Lifestyle:return getFeedLifestyle();
+            case Weather:return getFeedWeather();
+        }
     }
 
     public Boolean getFeedNews() {

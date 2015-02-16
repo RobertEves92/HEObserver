@@ -22,6 +22,7 @@ import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
+import com.roberteves.heobserver.core.SettingsManager;
 import com.roberteves.heobserver.core.Util;
 import com.roberteves.heobserver.feeds.Feed;
 import com.roberteves.heobserver.feeds.FeedManager;
@@ -85,9 +86,13 @@ public class MainActivity extends Activity {
     private String[] getFeeds() {
         FeedManager.LoadFeeds(this);
         ArrayList<String> feeds = new ArrayList<>();
+        SettingsManager settingsManager = new SettingsManager(this);
 
         for (Feed f : Lists.FeedList) {
-            feeds.add(f.getLink());
+            //Only add the feed if the setting is enabled
+            if(settingsManager.isEnabled(f.getCategory())) {
+                feeds.add(f.getLink());
+            }
         }
 
         return feeds.toArray(new String[feeds.size()]);
