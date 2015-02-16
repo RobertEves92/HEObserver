@@ -44,7 +44,7 @@ public class SettingsManager {
     }
 
     public Boolean getFeedLocalNews() {
-        return settings.getBoolean(KEY_FEED_LOCALNEWS, true);
+        return settings.getBoolean(KEY_FEED_LOCALNEWS, false);
     }
 
     public void setFeedLocalNews(Boolean b) {
@@ -52,7 +52,7 @@ public class SettingsManager {
     }
 
     public Boolean getFeedSport() {
-        return settings.getBoolean(KEY_FEED_SPORT, true);
+        return settings.getBoolean(KEY_FEED_SPORT, false);
     }
 
     public void setFeedSport(Boolean b) {
@@ -60,7 +60,7 @@ public class SettingsManager {
     }
 
     public Boolean getFeedMusic() {
-        return settings.getBoolean(KEY_FEED_MUSIC, true);
+        return settings.getBoolean(KEY_FEED_MUSIC, false);
     }
 
     public void setFeedMusic(Boolean b) {
@@ -68,7 +68,7 @@ public class SettingsManager {
     }
 
     public Boolean getFeedLifestyle() {
-        return settings.getBoolean(KEY_FEED_LIFESTYLE, true);
+        return settings.getBoolean(KEY_FEED_LIFESTYLE, false);
     }
 
     public void setFeedLifestyle(Boolean b) {
@@ -76,7 +76,7 @@ public class SettingsManager {
     }
 
     public Boolean getFeedWeather() {
-        return settings.getBoolean(KEY_FEED_WEATHER, true);
+        return settings.getBoolean(KEY_FEED_WEATHER, false);
     }
 
     public void setFeedWeather(Boolean b) {
