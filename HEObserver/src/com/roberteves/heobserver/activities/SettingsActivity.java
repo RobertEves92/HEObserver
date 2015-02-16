@@ -12,7 +12,7 @@ import com.roberteves.heobserver.core.SettingsManager;
 
 public class SettingsActivity extends PreferenceActivity {
     Preference reset;
-    CheckBoxPreference news, localnews, sport, music, lifestyle, weather;
+    CheckBoxPreference news, localnews, sport, music, lifestyle,retail, weather,family,misc;
     SettingsManager settingsManager;
 
     @Override
@@ -31,7 +31,10 @@ public class SettingsActivity extends PreferenceActivity {
         sport = (CheckBoxPreference) getPreferenceManager().findPreference("feed_sport");
         music = (CheckBoxPreference) getPreferenceManager().findPreference("feed_music");
         lifestyle = (CheckBoxPreference) getPreferenceManager().findPreference("feed_lifestyle");
+        retail = (CheckBoxPreference) getPreferenceManager().findPreference("feed_retail");
         weather = (CheckBoxPreference) getPreferenceManager().findPreference("feed_weather");
+        family = (CheckBoxPreference) getPreferenceManager().findPreference("feed_family");
+        misc = (CheckBoxPreference) getPreferenceManager().findPreference("feed_misc");
 
         news.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -60,15 +63,6 @@ public class SettingsActivity extends PreferenceActivity {
             }
         });
 
-        music.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                settingsManager.setFeedMusic((Boolean) newValue);
-                updatePreferences();
-                return true;
-            }
-        });
-
         lifestyle.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -78,10 +72,37 @@ public class SettingsActivity extends PreferenceActivity {
             }
         });
 
+        retail.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settingsManager.setFeedRetail((Boolean) newValue);
+                updatePreferences();
+                return true;
+            }
+        });
+
         weather.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 settingsManager.setFeedWeather((Boolean) newValue);
+                updatePreferences();
+                return true;
+            }
+        });
+        
+        family.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settingsManager.setFeedFamily((Boolean) newValue);
+                updatePreferences();
+                return true;
+            }
+        });
+        
+        misc.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settingsManager.setFeedMisc((Boolean) newValue);
                 updatePreferences();
                 return true;
             }
@@ -119,8 +140,10 @@ public class SettingsActivity extends PreferenceActivity {
         news.setChecked(settingsManager.getFeedNews());
         localnews.setChecked(settingsManager.getFeedLocalNews());
         sport.setChecked(settingsManager.getFeedSport());
-        music.setChecked(settingsManager.getFeedMusic());
         lifestyle.setChecked(settingsManager.getFeedLifestyle());
+        retail.setChecked(settingsManager.getFeedRetail());
         weather.setChecked(settingsManager.getFeedWeather());
+        family.setChecked(settingsManager.getFeedFamily());
+        misc.setChecked(settingsManager.getFeedMisc());
     }
 }

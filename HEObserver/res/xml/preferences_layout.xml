@@ -21,19 +21,29 @@
             android:title="Sport" />
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="feed_music"
-            android:summary="Local music events and headlines"
-            android:title="Music" />
-        <CheckBoxPreference
-            android:defaultValue="true"
             android:key="feed_lifestyle"
             android:summary="Local transport, retail, restaurant, and lifestyle updates"
             android:title="Lifestyle" />
         <CheckBoxPreference
             android:defaultValue="true"
+            android:key="feed_retail"
+            android:summary="Retail news and headlines"
+            android:title="Retail" />
+        <CheckBoxPreference
+            android:defaultValue="true"
             android:key="feed_weather"
             android:summary="Weathers alerts, updates, and news"
             android:title="Weather" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="feed_family"
+            android:summary="Family and school headlines"
+            android:title="Family" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="feed_misc"
+            android:summary="Miscallanious headlines and articles"
+            android:title="Miscallanious" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Reset All Settings">
         <Preference

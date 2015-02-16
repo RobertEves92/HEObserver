@@ -4,7 +4,9 @@ public enum Category {
     News,
     LocalNews,
     Sport,
-    Music,
     Lifestyle,
-    Weather
+    Retail,
+    Weather,
+    Family,
+    Misc
 }
