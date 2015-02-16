@@ -20,6 +20,12 @@ public class SettingsActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         settingsManager = new SettingsManager(this);
         addPreferencesFromResource(R.xml.preferences_layout);
+
+        createPreferences();
+        updatePreferences();
+    }
+
+    private void createPreferences() {
         news = (CheckBoxPreference) getPreferenceManager().findPreference("feed_news");
         localnews = (CheckBoxPreference) getPreferenceManager().findPreference("feed_localnews");
         sport = (CheckBoxPreference) getPreferenceManager().findPreference("feed_sport");
@@ -27,7 +33,59 @@ public class SettingsActivity extends PreferenceActivity {
         lifestyle = (CheckBoxPreference) getPreferenceManager().findPreference("feed_lifestyle");
         weather = (CheckBoxPreference) getPreferenceManager().findPreference("feed_weather");
 
-        updatePreferences();
+        news.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settingsManager.setFeedNews(true);//force always on
+                updatePreferences();
+                return true;
+            }
+        });
+
+        localnews.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settingsManager.setFeedLocalNews((Boolean) newValue);
+                updatePreferences();
+                return true;
+            }
+        });
+
+        sport.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settingsManager.setFeedSport((Boolean) newValue);
+                updatePreferences();
+                return true;
+            }
+        });
+
+        music.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settingsManager.setFeedMusic((Boolean) newValue);
+                updatePreferences();
+                return true;
+            }
+        });
+
+        lifestyle.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settingsManager.setFeedLifestyle((Boolean) newValue);
+                updatePreferences();
+                return true;
+            }
+        });
+
+        weather.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settingsManager.setFeedWeather((Boolean) newValue);
+                updatePreferences();
+                return true;
+            }
+        });
 
         reset = getPreferenceManager().findPreference("reset");
         reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
