@@ -14,6 +14,26 @@
             android:key="feed_localnews"
             android:summary="News from Bishop's Stortford, Dunmow, Sawbridgeworth, Stansted, and Uttlesford"
             android:title="Local News" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="feed_sport"
+            android:summary="Local sports events and headlines"
+            android:title="Sport" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="feed_music"
+            android:summary="Local music events and headlines"
+            android:title="Music" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="feed_lifestyle"
+            android:summary="Local transport, retail, restaurant, and lifestyle updates"
+            android:title="Lifestyle" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="feed_weather"
+            android:summary="Weathers alerts, updates, and news"
+            android:title="Weather" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Reset All Settings">
         <Preference
