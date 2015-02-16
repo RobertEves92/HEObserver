@@ -70,6 +70,8 @@ public class MainActivity extends Activity {
                 Intent i = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(i);
                 return true;
+            case R.id.action_bar_settings:
+                startActivity(new Intent(MainActivity.this,SettingsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
