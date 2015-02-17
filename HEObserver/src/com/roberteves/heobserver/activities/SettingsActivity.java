@@ -2,6 +2,7 @@ package com.roberteves.heobserver.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -127,8 +128,38 @@ public class SettingsActivity extends PreferenceActivity {
         });
 
         about = getPreferenceManager().findPreference("about");
+        about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
+                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/README.md");
+                i.putExtra("title","About");
+                startActivity(i);
+                return true;
+            }
+        });
         license = getPreferenceManager().findPreference("license");
+        license.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
+                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/LICENSE.md");
+                i.putExtra("title","License");
+                startActivity(i);
+                return true;
+            }
+        });
         changelog = getPreferenceManager().findPreference("changelog");
+        changelog.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
+                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/CHANGELOG.md");
+                i.putExtra("title","Whats New");
+                startActivity(i);
+                return true;
+            }
+        });
     }
 
     private void updatePreferences() {

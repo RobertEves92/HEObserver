@@ -12,6 +12,7 @@ public class MarkdownActivity extends Activity {
         super.onCreate(savedInstanceState);
         MarkdownView markdownView = new MarkdownView(this);
         setContentView(markdownView);
+        setTitle(getIntent().getStringExtra("title"));
         markdownView.loadMarkdownFile(getIntent().getStringExtra("url"));
         //markdownView.loadMarkdownFile("https://raw.githubusercontent.com/RobertEves92/HEObserver/master/README.md");
     }
