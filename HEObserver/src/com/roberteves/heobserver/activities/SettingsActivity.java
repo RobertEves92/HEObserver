@@ -11,8 +11,8 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.SettingsManager;
 
 public class SettingsActivity extends PreferenceActivity {
-    Preference reset;
-    CheckBoxPreference news, localnews, sport, music, lifestyle,retail, weather,family,misc;
+    Preference reset, about, license, changelog;
+    CheckBoxPreference news, localnews, sport, music, lifestyle, retail, weather, family, misc;
     SettingsManager settingsManager;
 
     @Override
@@ -27,15 +27,6 @@ public class SettingsActivity extends PreferenceActivity {
 
     private void createPreferences() {
         news = (CheckBoxPreference) getPreferenceManager().findPreference("feed_news");
-        localnews = (CheckBoxPreference) getPreferenceManager().findPreference("feed_localnews");
-        sport = (CheckBoxPreference) getPreferenceManager().findPreference("feed_sport");
-        music = (CheckBoxPreference) getPreferenceManager().findPreference("feed_music");
-        lifestyle = (CheckBoxPreference) getPreferenceManager().findPreference("feed_lifestyle");
-        retail = (CheckBoxPreference) getPreferenceManager().findPreference("feed_retail");
-        weather = (CheckBoxPreference) getPreferenceManager().findPreference("feed_weather");
-        family = (CheckBoxPreference) getPreferenceManager().findPreference("feed_family");
-        misc = (CheckBoxPreference) getPreferenceManager().findPreference("feed_misc");
-
         news.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -44,7 +35,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
+        localnews = (CheckBoxPreference) getPreferenceManager().findPreference("feed_localnews");
         localnews.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -53,7 +44,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
+        sport = (CheckBoxPreference) getPreferenceManager().findPreference("feed_sport");
         sport.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -62,7 +53,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
+        lifestyle = (CheckBoxPreference) getPreferenceManager().findPreference("feed_lifestyle");
         lifestyle.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -71,7 +62,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
+        retail = (CheckBoxPreference) getPreferenceManager().findPreference("feed_retail");
         retail.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -80,7 +71,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
+        weather = (CheckBoxPreference) getPreferenceManager().findPreference("feed_weather");
         weather.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -89,7 +80,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-        
+        family = (CheckBoxPreference) getPreferenceManager().findPreference("feed_family");
         family.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -98,7 +89,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-        
+        misc = (CheckBoxPreference) getPreferenceManager().findPreference("feed_misc");
         misc.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -134,6 +125,10 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
+
+        about = getPreferenceManager().findPreference("about");
+        license = getPreferenceManager().findPreference("license");
+        changelog = getPreferenceManager().findPreference("changelog");
     }
 
     private void updatePreferences() {
