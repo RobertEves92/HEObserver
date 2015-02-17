@@ -49,7 +49,7 @@
             android:title="About the App" />
         <Preference
             android:key="license"
-            android:title="Licenses" />
+            android:title="License" />
         <Preference
             android:key="changelog"
             android:title="What's New" />
