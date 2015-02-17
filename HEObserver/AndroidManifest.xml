@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.roberteves.heobserver.activities.AboutActivity"
+            android:name="com.roberteves.heobserver.activities.MarkdownActivity"
             android:label="@string/title_activity_about" />
 
         <activity

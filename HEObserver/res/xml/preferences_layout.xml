@@ -43,4 +43,15 @@
             android:summary="Reset All Settings"
             android:title="Reset" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="About">
+        <Preference
+            android:key="about"
+            android:title="About the App" />
+        <Preference
+            android:key="license"
+            android:title="Licenses" />
+        <Preference
+            android:key="changelog"
+            android:title="What's New" />
+    </PreferenceCategory>
 </PreferenceScreen>

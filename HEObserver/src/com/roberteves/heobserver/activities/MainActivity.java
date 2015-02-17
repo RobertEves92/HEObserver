@@ -67,10 +67,6 @@ public class MainActivity extends Activity {
             case R.id.action_bar_refresh:
                 updateList();
                 return true;
-            case R.id.action_bar_about:
-                Intent i = new Intent(MainActivity.this, AboutActivity.class);
-                startActivity(i);
-                return true;
             case R.id.action_bar_settings:
                 startActivity(new Intent(MainActivity.this,SettingsActivity.class));
             default:

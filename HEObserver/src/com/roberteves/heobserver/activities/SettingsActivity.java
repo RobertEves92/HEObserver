@@ -2,6 +2,7 @@ package com.roberteves.heobserver.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -11,8 +12,8 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.SettingsManager;
 
 public class SettingsActivity extends PreferenceActivity {
-    Preference reset;
-    CheckBoxPreference news, localnews, sport, music, lifestyle,retail, weather,family,misc;
+    Preference reset, about, license, changelog;
+    CheckBoxPreference news, localnews, sport, music, lifestyle, retail, weather, family, misc;
     SettingsManager settingsManager;
 
     @Override
@@ -27,15 +28,6 @@ public class SettingsActivity extends PreferenceActivity {
 
     private void createPreferences() {
         news = (CheckBoxPreference) getPreferenceManager().findPreference("feed_news");
-        localnews = (CheckBoxPreference) getPreferenceManager().findPreference("feed_localnews");
-        sport = (CheckBoxPreference) getPreferenceManager().findPreference("feed_sport");
-        music = (CheckBoxPreference) getPreferenceManager().findPreference("feed_music");
-        lifestyle = (CheckBoxPreference) getPreferenceManager().findPreference("feed_lifestyle");
-        retail = (CheckBoxPreference) getPreferenceManager().findPreference("feed_retail");
-        weather = (CheckBoxPreference) getPreferenceManager().findPreference("feed_weather");
-        family = (CheckBoxPreference) getPreferenceManager().findPreference("feed_family");
-        misc = (CheckBoxPreference) getPreferenceManager().findPreference("feed_misc");
-
         news.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -44,7 +36,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
+        localnews = (CheckBoxPreference) getPreferenceManager().findPreference("feed_localnews");
         localnews.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -53,7 +45,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
+        sport = (CheckBoxPreference) getPreferenceManager().findPreference("feed_sport");
         sport.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -62,7 +54,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
+        lifestyle = (CheckBoxPreference) getPreferenceManager().findPreference("feed_lifestyle");
         lifestyle.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -71,7 +63,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
+        retail = (CheckBoxPreference) getPreferenceManager().findPreference("feed_retail");
         retail.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -80,7 +72,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
+        weather = (CheckBoxPreference) getPreferenceManager().findPreference("feed_weather");
         weather.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -89,7 +81,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-        
+        family = (CheckBoxPreference) getPreferenceManager().findPreference("feed_family");
         family.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -98,7 +90,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-        
+        misc = (CheckBoxPreference) getPreferenceManager().findPreference("feed_misc");
         misc.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -131,6 +123,40 @@ public class SettingsActivity extends PreferenceActivity {
                                 });
 
                 builder.create().show();
+                return true;
+            }
+        });
+
+        about = getPreferenceManager().findPreference("about");
+        about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
+                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/README.md");
+                i.putExtra("title","About");
+                startActivity(i);
+                return true;
+            }
+        });
+        license = getPreferenceManager().findPreference("license");
+        license.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
+                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/LICENSE.md");
+                i.putExtra("title","License");
+                startActivity(i);
+                return true;
+            }
+        });
+        changelog = getPreferenceManager().findPreference("changelog");
+        changelog.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
+                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/CHANGELOG.md");
+                i.putExtra("title","Whats New");
+                startActivity(i);
                 return true;
             }
         });
