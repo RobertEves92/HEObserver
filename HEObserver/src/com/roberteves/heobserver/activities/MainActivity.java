@@ -68,7 +68,8 @@ public class MainActivity extends Activity {
                 updateList();
                 return true;
             case R.id.action_bar_about:
-                Intent i = new Intent(MainActivity.this, AboutActivity.class);
+                Intent i = new Intent(MainActivity.this, MarkdownActivity.class);
+                i.putExtra("url","https://raw.githubusercontent.com/RobertEves92/HEObserver/master/README.md");
                 startActivity(i);
                 return true;
             case R.id.action_bar_settings:
