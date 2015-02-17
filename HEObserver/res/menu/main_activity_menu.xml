@@ -5,9 +5,6 @@
         android:id="@+id/action_bar_refresh"
         android:title="@string/refresh" />
     <item
-        android:id="@+id/action_bar_about"
-        android:title="@string/action_about" />
-    <item
         android:id="@+id/action_bar_settings"
         android:title="Settings"/>
 
