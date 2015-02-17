@@ -5,8 +5,8 @@ Android app to get news from the Herts and Essex Observer without adverts
 
 Download from [Google Play](http://play.google.com/store/apps/details?id=com.roberteves.heobserver)
 
-## Change Log
-See [Change Log](CHANGELOG.md)
+## Whats New
+See *Whats New*
 
 ## Contact
 Queries and support messages can be email to [roberteves92@gmail.com](mailto:roberteves92@gmail.com?Subject=HEObserver%20App)
@@ -23,7 +23,7 @@ The HEObserver app also uses some Open Source Libraries:
 ## License
 Copyright (c) 2015 Robert Eves
 
-See [License](LICENSE.md)
+See *License*
 
 ## Contributing
 
