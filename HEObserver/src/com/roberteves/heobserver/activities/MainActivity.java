@@ -19,6 +19,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
@@ -43,7 +44,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
         Util.setupThreadPolicy();
         setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_main);
