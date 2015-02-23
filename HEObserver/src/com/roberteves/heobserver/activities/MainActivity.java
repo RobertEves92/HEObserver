@@ -141,12 +141,15 @@ public class MainActivity extends Activity {
         return netInfo != null && netInfo.isConnected();
     }
 
-    private class UpdateListViewTask extends AsyncTask<String, Void, Boolean> {
+    private class UpdateListViewTask extends AsyncTask<String, Integer, Boolean> {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+        private int completedFeeds = 0;
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Updating Article List...");
+            this.dialog.setMessage("Fetching articles...");
+            this.dialog.setCancelable(false);
+            this.dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             this.dialog.show();
         }
 
@@ -194,6 +197,10 @@ public class MainActivity extends Activity {
                             Crashlytics.logException(ee);
                         }
                     }
+                    finally {
+                        completedFeeds++;
+                        publishProgress((100/feeds.length)*completedFeeds);
+                    }
                 }
 
                 Collections.sort(rssItems);// sorts into reverse date order
@@ -224,6 +231,11 @@ public class MainActivity extends Activity {
 
                 return false;
             }
+        }
+        
+        protected void onProgressUpdate(Integer... progress)
+        {
+            this.dialog.setProgress(progress[0]);
         }
 
         @Override
