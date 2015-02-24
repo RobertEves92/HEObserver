@@ -29,6 +29,7 @@ public class Article implements Serializable {
     private static final String regexDate = "\\d{4}\\-\\d{2}\\-\\d{2}";
     private static final String regexTime = "\\d{2}\\:\\d{2}\\:\\d{2}";
     private String title, body, publishedDate, link;
+    private ArrayList<Comment> comments;
 
     public Article(String link, Date published)
             throws IOException {
@@ -52,6 +53,9 @@ public class Article implements Serializable {
 
         // Set Link
         setLink(link);
+        
+        // Get Comments
+        getComments(source);
     }
 
     public Article(String link) throws IOException {
@@ -77,6 +81,33 @@ public class Article implements Serializable {
 
         // Set Link
         setLink(link);
+
+        // Get Comments
+        getComments(source);
+    }
+    
+    private void getComments(String source)
+    {
+        List<String> authors,comments;
+        authors = selectStringListFromRegex(source,"<span class=\"author\">.*<\\/span>");
+        comments = selectStringListFromRegex(source,"<div class=\"comment-text\">.*\\s*.*\\s*<\\/div>");
+        
+        authors.remove(0);
+        
+        this.comments = new ArrayList<>();
+        
+        for(int i = 0;i<authors.size();i++)
+        {
+            this.comments.add(new Comment(authors.get(i),comments.get(i)));
+        }
+        
+        for(Comment c : this.comments)
+        {
+            c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?\\>",""));
+            c.setAuthor(c.getAuthor().replaceAll("</a></span>",""));
+            c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">",""));
+            c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>",""));
+        }
     }
 
     private static String selectStringFromRegex(String text, String regex) {
@@ -92,7 +123,18 @@ public class Article implements Serializable {
         }
         return t;
     }
-
+    
+    private static List<String> selectStringListFromRegex(String text, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        List<String> listMatches = new ArrayList<>();
+        while (matcher.find()) {
+            listMatches.add(matcher.group());
+        }
+        
+        return listMatches;
+    }
+    
     public static String processPubDate(Date pubDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Calendar calendar = new GregorianCalendar();
@@ -155,5 +197,4 @@ public class Article implements Serializable {
     void setLink(String link) {
         this.link = link;
     }
-
 }
