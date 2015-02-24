@@ -10,7 +10,7 @@
     <item
         android:id="@+id/action_bar_comment"
         android:icon="@drawable/ic_action_chat"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="Comments" />
 
 </menu>
