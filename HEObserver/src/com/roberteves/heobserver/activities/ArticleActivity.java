@@ -35,6 +35,8 @@ public class ArticleActivity extends Activity {
         } else {
             txtPubDate.setText("");
         }
+        
+        article.getComments();
     }
 
     @Override
@@ -42,6 +44,7 @@ public class ArticleActivity extends Activity {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.article_activity_menu, menu);
+        menu.findItem(R.id.action_bar_comment).setVisible(article.hasComments());
         return super.onCreateOptionsMenu(menu);
     }
 

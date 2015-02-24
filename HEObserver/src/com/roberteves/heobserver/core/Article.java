@@ -28,12 +28,12 @@ public class Article implements Serializable {
     private static final String regexTitleEnd = "\\s\\|.*";
     private static final String regexDate = "\\d{4}\\-\\d{2}\\-\\d{2}";
     private static final String regexTime = "\\d{2}\\:\\d{2}\\:\\d{2}";
-    private String title, body, publishedDate, link;
+    private String title, body, publishedDate, link, source;
     private ArrayList<Comment> comments;
 
     public Article(String link, Date published)
             throws IOException {
-        String source = Util.getWebSource(link, false);
+        source = Util.getWebSource(link, false);
         // Set Title
         String t = selectStringFromRegex(source, regexTitle);
         t = t.replaceAll(regexTitleStart, "");
@@ -53,13 +53,10 @@ public class Article implements Serializable {
 
         // Set Link
         setLink(link);
-        
-        // Get Comments
-        getComments(source);
     }
 
     public Article(String link) throws IOException {
-        String source = Util.getWebSource(link, false);
+        source = Util.getWebSource(link, false);
         // Set Title
         String t = selectStringFromRegex(source, regexTitle);
         t = t.replaceAll(regexTitleStart, "");
@@ -81,12 +78,9 @@ public class Article implements Serializable {
 
         // Set Link
         setLink(link);
-
-        // Get Comments
-        getComments(source);
     }
     
-    private void getComments(String source)
+    public void getComments()
     {
         List<String> authors,comments;
         authors = selectStringListFromRegex(source,"<span class=\"author\">.*<\\/span>");
@@ -196,5 +190,9 @@ public class Article implements Serializable {
 
     void setLink(String link) {
         this.link = link;
+    }
+
+    public Boolean hasComments() {
+        return comments.size() > 0;
     }
 }
