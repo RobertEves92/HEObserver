@@ -7,4 +7,10 @@
         android:showAsAction="always"
         android:title="@string/Share" />
 
+    <item
+        android:id="@+id/action_bar_comment"
+        android:icon="@drawable/ic_action_chat"
+        android:showAsAction="always"
+        android:title="Comments" />
+
 </menu>
