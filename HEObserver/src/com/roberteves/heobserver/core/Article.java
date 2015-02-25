@@ -30,6 +30,8 @@ public class Article implements Serializable {
     private static final String regexTitleEnd = "\\s\\|.*";
     private static final String regexDate = "\\d{4}\\-\\d{2}\\-\\d{2}";
     private static final String regexTime = "\\d{2}\\:\\d{2}\\:\\d{2}";
+    private static final String regexLinkOpen = "<a.*?>";
+    private static final String regexLinkClose = "</a.*?>";
     private String title, body, publishedDate, link, source;
     private ArrayList<Comment> comments;
 
@@ -108,6 +110,8 @@ public class Article implements Serializable {
             c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">",""));
             c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>",""));
             c.setContent(HtmlEscape.unescapeHtml(c.getContent()));
+            c.setContent(c.getContent().replaceAll(regexLinkOpen,""));
+            c.setContent(c.getContent().replaceAll(regexLinkClose,""));
         }
     }
 
