@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
         Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
         Util.setupThreadPolicy();
         setTitle(getString(R.string.app_name_long));
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
 
         updateList();

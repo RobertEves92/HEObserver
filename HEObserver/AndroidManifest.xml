@@ -56,6 +56,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.roberteves.heobserver.activities.MainActivity" />
         </activity>
+        <activity android:name="com.roberteves.heobserver.activities.CommentActivity"
+            android:label="Comments"
+            android:parentActivityName="com.roberteves.heobserver.activities.ArticleActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.roberteves.heobserver.activities.ArticleActivity"/>
+            </activity>
 
         <meta-data
             android:name="com.crashlytics.ApiKey"
