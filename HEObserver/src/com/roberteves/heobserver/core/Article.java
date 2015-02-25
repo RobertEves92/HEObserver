@@ -84,7 +84,7 @@ public class Article implements Serializable {
     {
         List<String> authors,comments;
         authors = selectStringListFromRegex(source,"<span class=\"author\">.*<\\/span>");
-        comments = selectStringListFromRegex(source,"<div class=\"comment-text\">.*\\s*.*\\s*<\\/div>");
+        comments = selectStringListFromRegex(source,"<div class=\"comment-text\">([^]]*?)<\\/div>");
         
         authors.remove(0);
         
