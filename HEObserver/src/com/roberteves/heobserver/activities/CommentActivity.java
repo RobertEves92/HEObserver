@@ -32,6 +32,7 @@ public class CommentActivity extends Activity {
             HashMap<String, String> comment = new HashMap<>();
             comment.put("comment", c.getContent());
             comment.put("author", c.getAuthor());
+            commentList.add(comment);
         }
 
         //Create ListView Adapter

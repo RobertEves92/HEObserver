@@ -1,7 +1,9 @@
 package com.roberteves.heobserver.core;
 
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment implements Serializable{
     private String author,content;
     
     public Comment(String author,String content)

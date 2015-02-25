@@ -36,7 +36,7 @@ public class ArticleActivity extends Activity {
             txtPubDate.setText("");
         }
         
-        article.getComments();
+        article.processComments();
     }
 
     @Override
@@ -62,6 +62,13 @@ public class ArticleActivity extends Activity {
 
                 startActivity(Intent.createChooser(share,
                         getString(R.string.share_via)));
+                return true;
+            case R.id.action_bar_comment:
+                Intent i = new Intent(ArticleActivity.this,
+                        CommentActivity.class);
+
+                i.putExtra("comments", article.getComments());
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

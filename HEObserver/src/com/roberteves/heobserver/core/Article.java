@@ -80,7 +80,7 @@ public class Article implements Serializable {
         setLink(link);
     }
     
-    public void getComments()
+    public void processComments()
     {
         List<String> authors,comments;
         authors = selectStringListFromRegex(source,"<span class=\"author\">.*<\\/span>");
@@ -194,5 +194,10 @@ public class Article implements Serializable {
 
     public Boolean hasComments() {
         return comments.size() > 0;
+    }
+    
+    public ArrayList<Comment> getComments()
+    {
+        return comments;
     }
 }
