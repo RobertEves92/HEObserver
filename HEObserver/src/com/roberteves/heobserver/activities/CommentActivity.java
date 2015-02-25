@@ -19,7 +19,6 @@ public class CommentActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
 
