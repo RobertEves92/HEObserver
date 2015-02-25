@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import unbescape.html.HtmlEscape;
+
 @SuppressWarnings("serial")
 public class Article implements Serializable {
     private static final String[] mediaTags = new String[]{"PHOTOS:", "PHOTO:",
@@ -97,10 +99,15 @@ public class Article implements Serializable {
         
         for(Comment c : this.comments)
         {
+            //Format author name
             c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?\\>",""));
             c.setAuthor(c.getAuthor().replaceAll("</a></span>",""));
+            c.setAuthor(HtmlEscape.unescapeHtml(c.getAuthor()));
+            
+            //Format comment body
             c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">",""));
             c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>",""));
+            c.setContent(HtmlEscape.unescapeHtml(c.getContent()));
         }
     }
 
