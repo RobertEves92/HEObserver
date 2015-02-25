@@ -8,6 +8,8 @@
         android:title="@string/refresh" />
     <item
         android:id="@+id/action_bar_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:showAsAction="ifRoom"
         android:title="Settings"/>
 
 </menu>
