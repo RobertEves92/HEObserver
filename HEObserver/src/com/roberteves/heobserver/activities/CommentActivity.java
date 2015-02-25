@@ -38,7 +38,7 @@ public class CommentActivity extends Activity {
         //Create ListView Adapter
         SimpleAdapter simpleAdpt = new SimpleAdapter(this,
                 commentList, android.R.layout.simple_list_item_2,
-                new String[]{"comment", "author"},
+                new String[]{"author", "comment"},
                 new int[]{android.R.id.text1, android.R.id.text2});
 
         //Set ListView from Adapter
