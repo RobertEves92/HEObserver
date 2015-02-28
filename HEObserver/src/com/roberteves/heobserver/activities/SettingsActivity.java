@@ -14,7 +14,14 @@ import com.roberteves.heobserver.core.SettingsManager;
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {
     Preference reset, about, license, changelog;
-    CheckBoxPreference news, localnews, sport, music, lifestyle, retail, weather, family, misc;
+    CheckBoxPreference news;
+    CheckBoxPreference localnews;
+    CheckBoxPreference sport;
+    CheckBoxPreference lifestyle;
+    CheckBoxPreference retail;
+    CheckBoxPreference weather;
+    CheckBoxPreference family;
+    CheckBoxPreference misc;
     SettingsManager settingsManager;
 
     @Override
