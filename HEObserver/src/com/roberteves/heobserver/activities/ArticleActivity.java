@@ -19,12 +19,14 @@ public class ArticleActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-
-        article = (Article) getIntent().getSerializableExtra("article");
-
         TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
         TextView txtBody = (TextView) findViewById(R.id.txtBody);
         TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
+        if (article == null || article != getIntent().getSerializableExtra("article")) {
+            if(getIntent().getSerializableExtra("article") != null) {
+                article = (Article) getIntent().getSerializableExtra("article");
+            }
+        }
 
         txtTitle.setText(article.getTitle());
         txtBody.setText(Html.fromHtml(article.getBody()));
