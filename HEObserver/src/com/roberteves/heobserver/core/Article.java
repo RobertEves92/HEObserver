@@ -183,10 +183,8 @@ public class Article implements Serializable {
             return false;
         
         //Check for body length
-        if(getBody().length() == 0)
-            return false;
-        
-        return true;
+        return getBody().length() != 0;
+
     }
 
     public String getTitle() {
