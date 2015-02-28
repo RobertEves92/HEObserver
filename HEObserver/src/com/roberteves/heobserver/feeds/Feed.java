@@ -1,8 +1,8 @@
 package com.roberteves.heobserver.feeds;
 
 public class Feed {
-    private String link;
-    private Category category;
+    private final String link;
+    private final Category category;
 
     public Feed(String link, Category category) {
         this.link = link;
