@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -142,7 +143,7 @@ public class Article implements Serializable {
     }
     
     public static String processPubDate(Date pubDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(pubDate);
         return sdf.format(calendar.getTime());
@@ -150,7 +151,7 @@ public class Article implements Serializable {
 
     private static String processPubDate(String date) {
         try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.getDefault());
             Date d = df.parse(date);
             return processPubDate(d);
         } catch (Exception e) {
