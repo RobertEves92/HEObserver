@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
         lv = (ListView) findViewById(R.id.listView);
         
         articleDialog = new ProgressDialog(MainActivity.this);
-        articleDialog.setMessage("Loading Article...");
+        articleDialog.setMessage(getString(R.string.loading_article));
         articleDialog.setCancelable(false);
         
         updateList();
@@ -156,7 +156,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Fetching articles...");
+            this.dialog.setMessage(getString(R.string.fetching_articles));
             this.dialog.setCancelable(false);
             this.dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             this.dialog.show();
@@ -211,7 +211,7 @@ public class MainActivity extends Activity {
                     feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
                     processDuplicates(rssItems, feedItems);
                 } catch (Exception e) {
-                    Crashlytics.log(Log.WARN,"Feed Exception", "Feed: " + s + "; Processing: False; " + e.getMessage());
+                    Crashlytics.log(Log.WARN,getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, e.getMessage()));
                     Crashlytics.logException(e);
 
                     //Try with processing if it doesnt work
@@ -219,7 +219,7 @@ public class MainActivity extends Activity {
                         feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
                         processDuplicates(rssItems, feedItems);
                     } catch (Exception ee) {
-                        Crashlytics.log(Log.WARN,"Feed Exception", "Feed: " + s + "; Processing: True; " + ee.getMessage());
+                        Crashlytics.log(Log.WARN,getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, ee.getMessage()));
                         Crashlytics.logException(ee);
                     }
                 }
