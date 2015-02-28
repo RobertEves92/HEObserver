@@ -113,10 +113,18 @@ public class MainActivity extends Activity {
                 if (isOnline()) {
                     Article article;
                     try {
+                        ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+                        dialog.setMessage("Loading Article...");
+                        dialog.setCancelable(false);
+                        dialog.show();
+                        
+                        //Load article
                         article = new Article(Lists.RssItems.get(position)
                                 .getLink(), Lists.RssItems.get(
                                 position).getPubDate());
 
+                        dialog.cancel();
+                        
                         Intent i = new Intent(MainActivity.this,
                                 ArticleActivity.class);
 
