@@ -11,6 +11,7 @@ import android.preference.PreferenceActivity;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.SettingsManager;
 
+@SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {
     Preference reset, about, license, changelog;
     CheckBoxPreference news, localnews, sport, music, lifestyle, retail, weather, family, misc;
