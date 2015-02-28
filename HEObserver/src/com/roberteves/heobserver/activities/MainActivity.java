@@ -132,6 +132,7 @@ public class MainActivity extends Activity {
                         startActivity(i);
                     } catch (IOException e) {
                         Crashlytics.logException(e);
+                        articleDialog.cancel();
                         Toast.makeText(getApplicationContext(),
                                 R.string.error_retrieve_article_source,
                                 Toast.LENGTH_SHORT).show();
