@@ -20,6 +20,7 @@ import unbescape.html.HtmlEscape;
 public class Article implements Serializable {
     private static final String[] mediaTags = new String[]{"PHOTOS:", "PHOTO:",
             "VIDEO:", "VIDEOS:", "PICTURES:", "POLL:", " - SLIDESHOW", "PICTURE GALLERY:"};
+    private static final String[] urlTags = new String[]{"UNDEFINED-HEADLINE"};
     private static final String regexArticleBody = "<p>.*</p>";
     private static final String regexArticleRelated = "<div.*?</div>";
     private static final String regexXmlComment = "<!--.*?-->";
@@ -158,7 +159,7 @@ public class Article implements Serializable {
         }
     }
 
-    public static boolean titleHasMedia(String title) {
+    public static boolean checkTitle(String title) {
         for (String s : mediaTags) {
             if (title.toUpperCase().contains(s.toUpperCase())) {
                 return true;
@@ -167,9 +168,18 @@ public class Article implements Serializable {
         return false;
     }
 
+    public static boolean checkLink(String link) {
+        for (String s : urlTags) {
+            if (link.toUpperCase().contains(s.toUpperCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isReadable() {
         //Check for media tags in title
-        if(titleHasMedia(getTitle()))
+        if(checkTitle(getTitle()))
             return false;
         
         //Check for body length

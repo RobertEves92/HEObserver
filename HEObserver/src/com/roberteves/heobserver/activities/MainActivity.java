@@ -191,7 +191,7 @@ public class MainActivity extends Activity {
 
             for (RssItem item : Lists.RssItems) {
                 //If item has unsupported media, don't add
-                if (!Article.titleHasMedia(item.getTitle())) {
+                if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
                     HashMap<String,String> story = new HashMap<>();
                     story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
                     story.put("date",Article.processPubDate(item.getPubDate()));
