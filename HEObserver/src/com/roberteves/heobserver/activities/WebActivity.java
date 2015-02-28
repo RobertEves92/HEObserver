@@ -37,7 +37,7 @@ public class WebActivity extends Activity {
             // is article - open in article activity
             try {
                 Article article = new Article(dataString);
-                if (article.isReadable()) // load in web view
+                if (!article.isReadable()) // load in web view
                 {
                     Toast.makeText(getApplicationContext(),
                             R.string.error_not_supported,

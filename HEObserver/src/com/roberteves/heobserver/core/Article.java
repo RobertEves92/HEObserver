@@ -170,13 +170,13 @@ public class Article implements Serializable {
     public boolean isReadable() {
         //Check for media tags in title
         if(titleHasMedia(getTitle()))
-            return true;
+            return false;
         
         //Check for body length
         if(getBody().length() == 0)
-            return true;
+            return false;
         
-        return false;
+        return true;
     }
 
     public String getTitle() {
