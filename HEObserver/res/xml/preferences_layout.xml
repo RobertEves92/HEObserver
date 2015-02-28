@@ -2,56 +2,56 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <PreferenceCategory android:title="Feeds">
+    <PreferenceCategory android:title="@string/cat_feeds">
         <CheckBoxPreference
             android:enabled="false"
             android:key="feed_news"
-            android:summary="Summary of news headlines"
-            android:title="News" />
+            android:summary="@string/news_summary"
+            android:title="@string/news_title" />
         <CheckBoxPreference
             android:key="feed_localnews"
-            android:summary="News from Bishop's Stortford, Dunmow, Sawbridgeworth, Stansted, and Uttlesford"
-            android:title="Local News" />
+            android:summary="@string/localnews_summary"
+            android:title="@string/localnews_title" />
         <CheckBoxPreference
             android:key="feed_sport"
-            android:summary="Local sports events and headlines"
-            android:title="Sport" />
+            android:summary="@string/sports_summary"
+            android:title="@string/sport_title" />
         <CheckBoxPreference
             android:key="feed_lifestyle"
-            android:summary="Local transport, retail, restaurant, and lifestyle updates"
-            android:title="Lifestyle" />
+            android:summary="@string/lifestyle_summary"
+            android:title="@string/lifestyle_title" />
         <CheckBoxPreference
             android:key="feed_retail"
-            android:summary="Retail news and headlines"
-            android:title="Retail" />
+            android:summary="@string/retail_summary"
+            android:title="@string/retail_title" />
         <CheckBoxPreference
             android:key="feed_weather"
-            android:summary="Weathers alerts, updates, and news"
-            android:title="Weather" />
+            android:summary="@string/weather_summary"
+            android:title="@string/weather_title" />
         <CheckBoxPreference
             android:key="feed_family"
-            android:summary="Family and school headlines"
-            android:title="Family" />
+            android:summary="@string/family_summary"
+            android:title="@string/family_title" />
         <CheckBoxPreference
             android:key="feed_misc"
-            android:summary="Miscellaneous headlines and articles"
-            android:title="Miscellaneouss" />
+            android:summary="@string/misc_summary"
+            android:title="@string/misc_title" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Reset All Settings">
+    <PreferenceCategory android:title="@string/cat_reset">
         <Preference
             android:key="reset"
-            android:summary="Reset All Settings"
-            android:title="Reset" />
+            android:summary="@string/reset_summary"
+            android:title="@string/reset_title" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="About">
+    <PreferenceCategory android:title="@string/cat_about">
         <Preference
             android:key="about"
-            android:title="About the App" />
+            android:title="@string/about_title" />
         <Preference
             android:key="license"
-            android:title="License" />
+            android:title="@string/license_title" />
         <Preference
             android:key="changelog"
-            android:title="What's New" />
+            android:title="@string/changelog_title" />
     </PreferenceCategory>
 </PreferenceScreen>

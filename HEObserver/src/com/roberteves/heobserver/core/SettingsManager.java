@@ -1,5 +1,6 @@
 package com.roberteves.heobserver.core;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
@@ -19,6 +20,7 @@ public class SettingsManager {
     private static SharedPreferences settings;
     private static SharedPreferences.Editor editor;
 
+    @SuppressLint("CommitPrefEdits")
     public SettingsManager(Activity activity) {
         settings = activity.getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
         editor = settings.edit();
@@ -50,8 +52,8 @@ public class SettingsManager {
         return settings.getBoolean(KEY_FEED_NEWS, true);
     }
 
-    public void setFeedNews(Boolean b) {
-        editor.putBoolean(KEY_FEED_NEWS, b).commit();
+    public void setFeedNews() {
+        editor.putBoolean(KEY_FEED_NEWS, true).commit();
     }
 
     public Boolean getFeedLocalNews() {
@@ -111,7 +113,7 @@ public class SettingsManager {
     }
 
     public void resetSettings() {
-        setFeedNews(true);
+        setFeedNews();
         setFeedLocalNews(false);
         setFeedSport(false);
         setFeedLifestyle(false);

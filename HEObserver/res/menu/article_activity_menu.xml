@@ -11,6 +11,6 @@
         android:id="@+id/action_bar_comment"
         android:icon="@drawable/ic_action_chat"
         android:showAsAction="ifRoom"
-        android:title="Comments" />
+        android:title="@string/comments" />
 
 </menu>

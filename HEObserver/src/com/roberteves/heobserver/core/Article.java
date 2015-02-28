@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,37 +85,6 @@ public class Article implements Serializable {
         // Set Link
         setLink(link);
     }
-    
-    public void processComments()
-    {
-        List<String> authors,comments;
-        authors = selectStringListFromRegex(source,"<span class=\"author\">.*<\\/span>");
-        comments = selectStringListFromRegex(source,"<div class=\"comment-text\">([^]]*?)<\\/div>");
-        
-        authors.remove(0);
-        
-        this.comments = new ArrayList<>();
-        
-        for(int i = 0;i<authors.size();i++)
-        {
-            this.comments.add(new Comment(authors.get(i),comments.get(i)));
-        }
-        
-        for(Comment c : this.comments)
-        {
-            //Format author name
-            c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?\\>",""));
-            c.setAuthor(c.getAuthor().replaceAll("</a></span>",""));
-            c.setAuthor(HtmlEscape.unescapeHtml(c.getAuthor()));
-            
-            //Format comment body
-            c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">",""));
-            c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>",""));
-            c.setContent(HtmlEscape.unescapeHtml(c.getContent()));
-            c.setContent(c.getContent().replaceAll(regexLinkOpen,""));
-            c.setContent(c.getContent().replaceAll(regexLinkClose,""));
-        }
-    }
 
     private static String selectStringFromRegex(String text, String regex) {
         Pattern pattern = Pattern.compile(regex);
@@ -129,7 +99,7 @@ public class Article implements Serializable {
         }
         return t;
     }
-    
+
     private static List<String> selectStringListFromRegex(String text, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
@@ -137,12 +107,12 @@ public class Article implements Serializable {
         while (matcher.find()) {
             listMatches.add(matcher.group());
         }
-        
+
         return listMatches;
     }
-    
+
     public static String processPubDate(Date pubDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(pubDate);
         return sdf.format(calendar.getTime());
@@ -150,7 +120,7 @@ public class Article implements Serializable {
 
     private static String processPubDate(String date) {
         try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.getDefault());
             Date d = df.parse(date);
             return processPubDate(d);
         } catch (Exception e) {
@@ -177,16 +147,42 @@ public class Article implements Serializable {
         return false;
     }
 
+    public void processComments() {
+        List<String> authors, comments;
+        authors = selectStringListFromRegex(source, "<span class=\"author\">.*<\\/span>");
+        comments = selectStringListFromRegex(source, "<div class=\"comment-text\">([^]]*?)<\\/div>");
+
+        authors.remove(0);
+
+        this.comments = new ArrayList<>();
+
+        for (int i = 0; i < authors.size(); i++) {
+            this.comments.add(new Comment(authors.get(i), comments.get(i)));
+        }
+
+        for (Comment c : this.comments) {
+            //Format author name
+            c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?>", ""));
+            c.setAuthor(c.getAuthor().replaceAll("</a></span>", ""));
+            c.setAuthor(HtmlEscape.unescapeHtml(c.getAuthor()));
+
+            //Format comment body
+            c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">", ""));
+            c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>", ""));
+            c.setContent(HtmlEscape.unescapeHtml(c.getContent()));
+            c.setContent(c.getContent().replaceAll(regexLinkOpen, ""));
+            c.setContent(c.getContent().replaceAll(regexLinkClose, ""));
+        }
+    }
+
     public boolean isReadable() {
         //Check for media tags in title
-        if(checkTitle(getTitle()))
+        if (checkTitle(getTitle()))
             return false;
-        
+
         //Check for body length
-        if(getBody().length() == 0)
-            return false;
-        
-        return true;
+        return getBody().length() != 0;
+
     }
 
     public String getTitle() {
@@ -224,9 +220,8 @@ public class Article implements Serializable {
     public Boolean hasComments() {
         return comments.size() > 0;
     }
-    
-    public ArrayList<Comment> getComments()
-    {
+
+    public ArrayList<Comment> getComments() {
         return comments;
     }
 }

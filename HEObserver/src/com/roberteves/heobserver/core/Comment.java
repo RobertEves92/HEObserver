@@ -3,15 +3,14 @@ package com.roberteves.heobserver.core;
 
 import java.io.Serializable;
 
-public class Comment implements Serializable{
-    private String author,content;
-    
-    public Comment(String author,String content)
-    {
+public class Comment implements Serializable {
+    private String author, content;
+
+    public Comment(String author, String content) {
         setAuthor(author);
         setContent(content);
     }
-    
+
     public String getAuthor() {
         return author;
     }
