@@ -14,13 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 public class CommentActivity extends Activity {
-    private static ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scroll_list);
-        lv = (ListView) findViewById(R.id.listView);
+        ListView lv = (ListView) findViewById(R.id.listView);
 
         ArrayList<Comment> comments = (ArrayList<Comment>) getIntent().getSerializableExtra("comments");
         List<Map<String, String>> commentList;
