@@ -35,15 +35,8 @@ public class Feed {
         return link;
     }
 
-    public void setLink(String link) {
-        this.link = link;
-    }
-
     public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 }
