@@ -219,7 +219,7 @@ public class MainActivity extends Activity {
                         feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
                         processDuplicates(rssItems, feedItems);
                     } catch (Exception ee) {
-                        Crashlytics.log(Log.WARN,"Feed Exception", "Feed: " + s + "; Processing: True; " + e.getMessage());
+                        Crashlytics.log(Log.WARN,"Feed Exception", "Feed: " + s + "; Processing: True; " + ee.getMessage());
                         Crashlytics.logException(ee);
                     }
                 }
