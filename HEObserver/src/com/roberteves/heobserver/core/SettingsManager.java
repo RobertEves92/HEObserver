@@ -1,5 +1,6 @@
 package com.roberteves.heobserver.core;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
@@ -19,6 +20,7 @@ public class SettingsManager {
     private static SharedPreferences settings;
     private static SharedPreferences.Editor editor;
 
+    @SuppressLint("CommitPrefEdits")
     public SettingsManager(Activity activity) {
         settings = activity.getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
         editor = settings.edit();
