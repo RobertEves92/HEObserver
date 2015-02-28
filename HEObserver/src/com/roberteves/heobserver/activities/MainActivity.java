@@ -40,6 +40,7 @@ import unbescape.html.HtmlEscape;
 
 public class MainActivity extends Activity {
     private static ListView lv;
+    private static ProgressDialog articleDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,11 @@ public class MainActivity extends Activity {
         setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
-
+        
+        articleDialog = new ProgressDialog(MainActivity.this);
+        articleDialog.setMessage("Loading Article...");
+        articleDialog.setCancelable(false);
+        
         updateList();
     }
 
@@ -113,10 +118,13 @@ public class MainActivity extends Activity {
                 if (isOnline()) {
                     Article article;
                     try {
+                        //Load article
+                        articleDialog.show();
                         article = new Article(Lists.RssItems.get(position)
                                 .getLink(), Lists.RssItems.get(
                                 position).getPubDate());
-
+                        articleDialog.cancel();
+                        
                         Intent i = new Intent(MainActivity.this,
                                 ArticleActivity.class);
 
