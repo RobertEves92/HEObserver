@@ -28,7 +28,7 @@ public class ArticleActivity extends Activity {
             article = (Article) getArticleFromIntent();
         }
 
-        txtTitle.setText(article.getTitle());
+        txtTitle.setText(article != null ? article.getTitle() : null);
         txtBody.setText(Html.fromHtml(article.getBody()));
 
         if (article.getPublishedDate() != null) {
