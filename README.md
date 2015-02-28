@@ -1,5 +1,5 @@
 # HEObserver
-######Last Updated: 16/02/2015
+######Last Updated: 28/02/2015
 Android app to get news from the Herts and Essex Observer without adverts
 
 ## Contact

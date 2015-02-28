@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.roberteves.heobserver"
-    android:versionCode="11"
-    android:versionName="2.0.1">
+    android:versionCode="13"
+    android:versionName="2.0.3">
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -51,7 +51,7 @@
 
         <activity
             android:name="com.roberteves.heobserver.activities.SettingsActivity"
-            android:label="Settings"
+            android:label="@string/title_activity_settings"
             android:parentActivityName="com.roberteves.heobserver.activities.MainActivity"
             tools:ignore="UnusedAttribute">
             <meta-data
@@ -59,7 +59,7 @@
                 android:value="com.roberteves.heobserver.activities.MainActivity" />
         </activity>
         <activity android:name="com.roberteves.heobserver.activities.CommentActivity"
-            android:label="Comments"
+            android:label="@string/title_activity_comments"
             android:parentActivityName="com.roberteves.heobserver.activities.ArticleActivity"
             tools:ignore="UnusedAttribute">
             <meta-data
