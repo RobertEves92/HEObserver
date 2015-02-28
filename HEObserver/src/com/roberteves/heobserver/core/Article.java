@@ -158,7 +158,7 @@ public class Article implements Serializable {
         }
     }
 
-    public static boolean hasMedia(String title) {
+    public static boolean titleHasMedia(String title) {
         for (String s : mediaTags) {
             if (title.toUpperCase().contains(s.toUpperCase())) {
                 return true;
@@ -167,8 +167,16 @@ public class Article implements Serializable {
         return false;
     }
 
-    public boolean hasMedia() {
-        return hasMedia(getTitle());
+    public boolean isReadable() {
+        //Check for media tags in title
+        if(titleHasMedia(getTitle()))
+            return true;
+        
+        //Check for body length
+        if(getBody().length() == 0)
+            return true;
+        
+        return false;
     }
 
     public String getTitle() {
