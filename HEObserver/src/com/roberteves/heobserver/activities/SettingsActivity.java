@@ -13,10 +13,6 @@ import com.roberteves.heobserver.core.SettingsManager;
 
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {
-    private Preference reset;
-    private Preference about;
-    private Preference license;
-    private Preference changelog;
     private CheckBoxPreference news;
     private CheckBoxPreference localnews;
     private CheckBoxPreference sport;
@@ -111,7 +107,7 @@ public class SettingsActivity extends PreferenceActivity {
             }
         });
 
-        reset = getPreferenceManager().findPreference("reset");
+        Preference reset = getPreferenceManager().findPreference("reset");
         reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -138,35 +134,35 @@ public class SettingsActivity extends PreferenceActivity {
             }
         });
 
-        about = getPreferenceManager().findPreference("about");
+        Preference about = getPreferenceManager().findPreference("about");
         about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
                 i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/README.md");
-                i.putExtra("title","About");
+                i.putExtra("title", "About");
                 startActivity(i);
                 return true;
             }
         });
-        license = getPreferenceManager().findPreference("license");
+        Preference license = getPreferenceManager().findPreference("license");
         license.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
                 i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/LICENSE.md");
-                i.putExtra("title","License");
+                i.putExtra("title", "License");
                 startActivity(i);
                 return true;
             }
         });
-        changelog = getPreferenceManager().findPreference("changelog");
+        Preference changelog = getPreferenceManager().findPreference("changelog");
         changelog.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
                 i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/CHANGELOG.md");
-                i.putExtra("title","Whats New");
+                i.putExtra("title", "Whats New");
                 startActivity(i);
                 return true;
             }
