@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 
+import java.io.Serializable;
+
 public class ArticleActivity extends Activity {
     private static Article article;
 
@@ -22,10 +24,8 @@ public class ArticleActivity extends Activity {
         TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
         TextView txtBody = (TextView) findViewById(R.id.txtBody);
         TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
-        if (article == null || article != getIntent().getSerializableExtra("article")) {
-            if(getIntent().getSerializableExtra("article") != null) {
-                article = (Article) getIntent().getSerializableExtra("article");
-            }
+        if ((article == null || article != getArticleFromIntent()) && getArticleFromIntent() != null) {
+            article = (Article) getArticleFromIntent();
         }
 
         txtTitle.setText(article.getTitle());
@@ -39,6 +39,10 @@ public class ArticleActivity extends Activity {
         }
 
         article.processComments();
+    }
+
+    private Serializable getArticleFromIntent() {
+        return getIntent().getSerializableExtra("article");
     }
 
     @Override
