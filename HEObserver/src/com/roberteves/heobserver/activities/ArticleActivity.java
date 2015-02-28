@@ -35,7 +35,7 @@ public class ArticleActivity extends Activity {
         } else {
             txtPubDate.setText("");
         }
-        
+
         article.processComments();
     }
 

@@ -50,11 +50,11 @@ public class MainActivity extends Activity {
         setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
-        
+
         articleDialog = new ProgressDialog(MainActivity.this);
         articleDialog.setMessage(getString(R.string.loading_article));
         articleDialog.setCancelable(false);
-        
+
         updateList();
     }
 
@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
                 updateList();
                 return true;
             case R.id.action_bar_settings:
-                startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
 
         for (Feed f : Lists.FeedList) {
             //Only add the feed if the setting is enabled
-            if(settingsManager.isEnabled(f.getCategory())) {
+            if (settingsManager.isEnabled(f.getCategory())) {
                 feeds.add(f.getLink());
             }
         }
@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
                                 .getLink(), Lists.RssItems.get(
                                 position).getPubDate());
                         articleDialog.cancel();
-                        
+
                         Intent i = new Intent(MainActivity.this,
                                 ArticleActivity.class);
 
@@ -165,12 +165,12 @@ public class MainActivity extends Activity {
         @Override
         protected Boolean doInBackground(String... feeds) {
             if (isOnline()) {
-                
+
                 ArrayList<RssItem> rssItems = new ArrayList<>();
 
                 getFeeds(rssItems, feeds);
                 processFeeds(rssItems);
-                
+
                 return true;
             } else {
                 Toast.makeText(getApplicationContext(), R.string.error_no_internet,
@@ -192,9 +192,9 @@ public class MainActivity extends Activity {
             for (RssItem item : Lists.RssItems) {
                 //If item has unsupported media, don't add
                 if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
-                    HashMap<String,String> story = new HashMap<>();
+                    HashMap<String, String> story = new HashMap<>();
                     story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
-                    story.put("date",Article.processPubDate(item.getPubDate()));
+                    story.put("date", Article.processPubDate(item.getPubDate()));
                     Lists.storyList.add(story);
                     rssItems.add(item);
                 }
@@ -211,7 +211,7 @@ public class MainActivity extends Activity {
                     feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
                     processDuplicates(rssItems, feedItems);
                 } catch (Exception e) {
-                    Crashlytics.log(Log.WARN,getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, e.getMessage()));
+                    Crashlytics.log(Log.WARN, getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, e.getMessage()));
                     Crashlytics.logException(e);
 
                     //Try with processing if it doesnt work
@@ -219,13 +219,12 @@ public class MainActivity extends Activity {
                         feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
                         processDuplicates(rssItems, feedItems);
                     } catch (Exception ee) {
-                        Crashlytics.log(Log.WARN,getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, ee.getMessage()));
+                        Crashlytics.log(Log.WARN, getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, ee.getMessage()));
                         Crashlytics.logException(ee);
                     }
-                }
-                finally {
+                } finally {
                     completedFeeds++;
-                    publishProgress((100/feeds.length)*completedFeeds);
+                    publishProgress((100 / feeds.length) * completedFeeds);
                 }
             }
         }
@@ -244,8 +243,7 @@ public class MainActivity extends Activity {
             }
         }
 
-        protected void onProgressUpdate(Integer... progress)
-        {
+        protected void onProgressUpdate(Integer... progress) {
             this.dialog.setProgress(progress[0]);
         }
 
