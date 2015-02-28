@@ -7,6 +7,7 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Util;
@@ -23,7 +24,7 @@ public class WebActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Util.setupThreadPolicy();
-        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
 
         setContentView(R.layout.activity_web);
         webView = (WebView) findViewById(R.id.webView);
@@ -36,7 +37,7 @@ public class WebActivity extends Activity {
             // is article - open in article activity
             try {
                 Article article = new Article(dataString);
-                if (article.hasMedia()) // load in web view
+                if (!article.isReadable()) // load in web view
                 {
                     Toast.makeText(getApplicationContext(),
                             R.string.error_not_supported,

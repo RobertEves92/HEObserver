@@ -35,6 +35,8 @@ public class ArticleActivity extends Activity {
         } else {
             txtPubDate.setText("");
         }
+
+        article.processComments();
     }
 
     @Override
@@ -42,6 +44,7 @@ public class ArticleActivity extends Activity {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.article_activity_menu, menu);
+        menu.findItem(R.id.action_bar_comment).setVisible(article.hasComments());
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -59,6 +62,13 @@ public class ArticleActivity extends Activity {
 
                 startActivity(Intent.createChooser(share,
                         getString(R.string.share_via)));
+                return true;
+            case R.id.action_bar_comment:
+                Intent i = new Intent(ArticleActivity.this,
+                        CommentActivity.class);
+
+                i.putExtra("comments", article.getComments());
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

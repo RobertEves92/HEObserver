@@ -19,14 +19,16 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
+import com.roberteves.heobserver.core.SettingsManager;
 import com.roberteves.heobserver.core.Util;
+import com.roberteves.heobserver.feeds.Feed;
+import com.roberteves.heobserver.feeds.FeedManager;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,15 +40,20 @@ import unbescape.html.HtmlEscape;
 
 public class MainActivity extends Activity {
     private static ListView lv;
+    private static ProgressDialog articleDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
         Util.setupThreadPolicy();
         setTitle(getString(R.string.app_name_long));
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
+
+        articleDialog = new ProgressDialog(MainActivity.this);
+        articleDialog.setMessage(getString(R.string.loading_article));
+        articleDialog.setCancelable(false);
 
         updateList();
     }
@@ -66,10 +73,8 @@ public class MainActivity extends Activity {
             case R.id.action_bar_refresh:
                 updateList();
                 return true;
-            case R.id.action_bar_about:
-                Intent i = new Intent(MainActivity.this, AboutActivity.class);
-                startActivity(i);
-                return true;
+            case R.id.action_bar_settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -77,22 +82,19 @@ public class MainActivity extends Activity {
 
     private void updateList() {
         UpdateListViewTask updateListViewTask = new UpdateListViewTask();
-        try {
-            updateListViewTask.execute(getFeeds());
-        } catch (IOException e) {
-            Crashlytics.logException(e);
-            Toast.makeText(getApplicationContext(), "Failed to read feeds list",
-                    Toast.LENGTH_SHORT).show();
-        }
+        updateListViewTask.execute(getFeeds());
     }
 
-    private String[] getFeeds() throws IOException {
+    private String[] getFeeds() {
+        FeedManager.LoadFeeds(this);
         ArrayList<String> feeds = new ArrayList<>();
-        BufferedReader in = new BufferedReader(new InputStreamReader(this
-                .getResources().openRawResource(R.raw.feeds)));
-        String line;
-        while ((line = in.readLine()) != null) {
-            feeds.add(line);
+        SettingsManager settingsManager = new SettingsManager(this);
+
+        for (Feed f : Lists.FeedList) {
+            //Only add the feed if the setting is enabled
+            if (settingsManager.isEnabled(f.getCategory())) {
+                feeds.add(f.getLink());
+            }
         }
 
         return feeds.toArray(new String[feeds.size()]);
@@ -116,9 +118,12 @@ public class MainActivity extends Activity {
                 if (isOnline()) {
                     Article article;
                     try {
+                        //Load article
+                        articleDialog.show();
                         article = new Article(Lists.RssItems.get(position)
                                 .getLink(), Lists.RssItems.get(
                                 position).getPubDate());
+                        articleDialog.cancel();
 
                         Intent i = new Intent(MainActivity.this,
                                 ArticleActivity.class);
@@ -145,34 +150,26 @@ public class MainActivity extends Activity {
         return netInfo != null && netInfo.isConnected();
     }
 
-    private class UpdateListViewTask extends AsyncTask<String, Void, Boolean> {
+    private class UpdateListViewTask extends AsyncTask<String, Integer, Boolean> {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+        private int completedFeeds = 0;
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Updating Article List...");
+            this.dialog.setMessage(getString(R.string.fetching_articles));
+            this.dialog.setCancelable(false);
+            this.dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             this.dialog.show();
         }
 
         @Override
         protected Boolean doInBackground(String... feeds) {
             if (isOnline()) {
-                //Set Lists
-                Lists.RssItems = getDataFromFeeds(feeds);
-                Lists.storyList = new ArrayList<>();
+
                 ArrayList<RssItem> rssItems = new ArrayList<>();
 
-                // Add Story Items to HashMap Array
-                for (RssItem item : Lists.RssItems) {
-                    //If item has unsupported media, don't add
-                    if (!Article.hasMedia(item.getTitle())) {
-                        Lists.storyList.add(createStory(HtmlEscape.unescapeHtml(item.getTitle()), Article.processPubDate(item.getPubDate())));
-                        rssItems.add(item);
-                    }
-                }
-
-                //Update with new lists (filtered results)
-                Lists.RssItems = rssItems;
+                getFeeds(rssItems, feeds);
+                processFeeds(rssItems);
 
                 return true;
             } else {
@@ -181,6 +178,73 @@ public class MainActivity extends Activity {
 
                 return false;
             }
+        }
+
+        private void processFeeds(ArrayList<RssItem> rssItems) {
+            Collections.sort(rssItems);// sorts into reverse date order
+            Collections.reverse(rssItems);// flip to correct order
+            Lists.RssItems = rssItems;
+
+            // Add Story Items to HashMap Array
+            Lists.storyList = new ArrayList<>();
+            rssItems = new ArrayList<>();
+
+            for (RssItem item : Lists.RssItems) {
+                //If item has unsupported media, don't add
+                if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
+                    HashMap<String, String> story = new HashMap<>();
+                    story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
+                    story.put("date", Article.processPubDate(item.getPubDate()));
+                    Lists.storyList.add(story);
+                    rssItems.add(item);
+                }
+            }
+
+            //Update with new lists (filtered results)
+            Lists.RssItems = rssItems;
+        }
+
+        private void getFeeds(ArrayList<RssItem> rssItems, String[] feeds) {
+            ArrayList<RssItem> feedItems;
+            for (String s : feeds) {
+                try {
+                    feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
+                    processDuplicates(rssItems, feedItems);
+                } catch (Exception e) {
+                    Crashlytics.log(Log.WARN, getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, e.getMessage()));
+                    Crashlytics.logException(e);
+
+                    //Try with processing if it doesnt work
+                    try {
+                        feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
+                        processDuplicates(rssItems, feedItems);
+                    } catch (Exception ee) {
+                        Crashlytics.log(Log.WARN, getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, ee.getMessage()));
+                        Crashlytics.logException(ee);
+                    }
+                } finally {
+                    completedFeeds++;
+                    publishProgress((100 / feeds.length) * completedFeeds);
+                }
+            }
+        }
+
+        private void processDuplicates(ArrayList<RssItem> rssItems, ArrayList<RssItem> feedItems) {
+            for (RssItem y : feedItems) {
+                Boolean exists = false;
+                for (RssItem z : rssItems) {
+                    if (z.getTitle().equalsIgnoreCase(y.getTitle())) {
+                        exists = true;
+                    }
+                }
+
+                if (!exists)
+                    rssItems.add(y);
+            }
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+            this.dialog.setProgress(progress[0]);
         }
 
         @Override
@@ -195,57 +259,6 @@ public class MainActivity extends Activity {
                 Toast.makeText(getApplicationContext(),
                         R.string.error_update_article_list, Toast.LENGTH_SHORT)
                         .show();
-            }
-        }
-
-        private HashMap<String, String> createStory(String title, String publishedDate) {
-            HashMap<String, String> story = new HashMap<>();
-            story.put("title", title);
-            story.put("date", publishedDate);
-
-            return story;
-        }
-
-        private ArrayList<RssItem> getDataFromFeeds(String[] feeds) {
-            ArrayList<RssItem> rssItems = new ArrayList<>();
-            ArrayList<RssItem> feedItems;
-
-            for (String s : feeds) {
-                try {
-                    feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
-                    checkDuplicates(rssItems, feedItems);
-                } catch (Exception e) {
-                    Log.d("Feed Exception", "Feed: " + s + "; Processing: False; " + e.getMessage());
-                    Crashlytics.logException(e);
-
-                    //Try with processing if it doesnt work
-                    try {
-                        feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
-                        checkDuplicates(rssItems, feedItems);
-                    } catch (Exception ee) {
-                        Log.d("Feed Exception", "Feed: " + s + "; Processing: True; " + e.getMessage());
-                        Crashlytics.logException(ee);
-                    }
-                }
-            }
-
-            Collections.sort(rssItems);// sorts into reverse date order
-            Collections.reverse(rssItems);// flip to correct order
-            return rssItems;
-        }
-
-        private void checkDuplicates(ArrayList<RssItem> rssItems,
-                                     ArrayList<RssItem> feedItems) {
-            for (RssItem y : feedItems) {
-                Boolean exists = false;
-                for (RssItem z : rssItems) {
-                    if (z.getTitle().equalsIgnoreCase(y.getTitle())) {
-                        exists = true;
-                    }
-                }
-
-                if (!exists)
-                    rssItems.add(y);
             }
         }
     }
