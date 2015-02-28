@@ -50,8 +50,8 @@ public class SettingsManager {
         return settings.getBoolean(KEY_FEED_NEWS, true);
     }
 
-    public void setFeedNews(Boolean b) {
-        editor.putBoolean(KEY_FEED_NEWS, b).commit();
+    public void setFeedNews() {
+        editor.putBoolean(KEY_FEED_NEWS, true).commit();
     }
 
     public Boolean getFeedLocalNews() {
@@ -111,7 +111,7 @@ public class SettingsManager {
     }
 
     public void resetSettings() {
-        setFeedNews(true);
+        setFeedNews();
         setFeedLocalNews(false);
         setFeedSport(false);
         setFeedLifestyle(false);

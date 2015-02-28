@@ -42,7 +42,7 @@ public class SettingsActivity extends PreferenceActivity {
         news.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                settingsManager.setFeedNews(true);//force always on
+                settingsManager.setFeedNews();
                 updatePreferences();
                 return true;
             }
