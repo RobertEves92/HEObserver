@@ -103,7 +103,7 @@ public class Article implements Serializable {
         for(Comment c : this.comments)
         {
             //Format author name
-            c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?\\>",""));
+            c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?>",""));
             c.setAuthor(c.getAuthor().replaceAll("</a></span>",""));
             c.setAuthor(HtmlEscape.unescapeHtml(c.getAuthor()));
             
