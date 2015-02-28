@@ -13,16 +13,19 @@ import com.roberteves.heobserver.core.SettingsManager;
 
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {
-    Preference reset, about, license, changelog;
-    CheckBoxPreference news;
-    CheckBoxPreference localnews;
-    CheckBoxPreference sport;
-    CheckBoxPreference lifestyle;
-    CheckBoxPreference retail;
-    CheckBoxPreference weather;
-    CheckBoxPreference family;
-    CheckBoxPreference misc;
-    SettingsManager settingsManager;
+    private Preference reset;
+    private Preference about;
+    private Preference license;
+    private Preference changelog;
+    private CheckBoxPreference news;
+    private CheckBoxPreference localnews;
+    private CheckBoxPreference sport;
+    private CheckBoxPreference lifestyle;
+    private CheckBoxPreference retail;
+    private CheckBoxPreference weather;
+    private CheckBoxPreference family;
+    private CheckBoxPreference misc;
+    private SettingsManager settingsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
