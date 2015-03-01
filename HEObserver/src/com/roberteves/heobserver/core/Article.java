@@ -118,19 +118,6 @@ public class Article implements Serializable {
         return sdf.format(calendar.getTime());
     }
 
-    private String processPubDate(String date) {
-        try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.getDefault());
-            Date d = df.parse(date);
-            return processPubDate(d);
-        } catch (Exception e) {
-            Crashlytics.setString("action","process article pub date");
-            Crashlytics.setString("data","link: " + getLink() + "; date: " + date);
-            Crashlytics.logException(e);
-            return "";
-        }
-    }
-
     public static boolean checkTitle(String title) {
         for (String s : mediaTags) {
             if (title.toUpperCase().contains(s.toUpperCase())) {
@@ -147,6 +134,19 @@ public class Article implements Serializable {
             }
         }
         return false;
+    }
+
+    private String processPubDate(String date) {
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.getDefault());
+            Date d = df.parse(date);
+            return processPubDate(d);
+        } catch (Exception e) {
+            Crashlytics.setString("action", "process article pub date");
+            Crashlytics.setString("data", "link: " + getLink() + "; date: " + date);
+            Crashlytics.logException(e);
+            return "";
+        }
     }
 
     public void processComments() {
@@ -176,11 +176,9 @@ public class Article implements Serializable {
                 c.setContent(c.getContent().replaceAll(regexLinkOpen, ""));
                 c.setContent(c.getContent().replaceAll(regexLinkClose, ""));
             }
-        }
-        catch(Exception e)
-        {
-            Crashlytics.setString("action","process comments");
-            Crashlytics.setString("data",getLink());
+        } catch (Exception e) {
+            Crashlytics.setString("action", "process comments");
+            Crashlytics.setString("data", getLink());
             Crashlytics.logException(e);
         }
     }
