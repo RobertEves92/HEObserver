@@ -132,9 +132,7 @@ public class MainActivity extends Activity {
                         i.putExtra("article", article);
                         startActivity(i);
                     } catch (IOException e) {
-                        Crashlytics.setString("action", "load article");
-                        Crashlytics.setString("data", Lists.RssItems.get(position).getLink());
-                        Crashlytics.logException(e);
+                        Util.LogException("load article", Lists.RssItems.get(position).getLink(), e);
                         articleDialog.cancel();
                         Toast.makeText(getApplicationContext(),
                                 R.string.error_retrieve_article_source,
@@ -216,9 +214,7 @@ public class MainActivity extends Activity {
                     processDuplicates(rssItems, feedItems);
                 } catch (Exception e) {
                     Crashlytics.log(Log.WARN, getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, e.getMessage()));
-                    Crashlytics.setString("action", "load feed without processing");
-                    Crashlytics.setString("data", s);
-                    Crashlytics.logException(e);
+                    Util.LogException("load feed without processing", s, e);
 
                     //Try with processing if it doesnt work
                     try {
@@ -226,9 +222,7 @@ public class MainActivity extends Activity {
                         processDuplicates(rssItems, feedItems);
                     } catch (Exception ee) {
                         Crashlytics.log(Log.WARN, getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, ee.getMessage()));
-                        Crashlytics.setString("action", "load feed with processing");
-                        Crashlytics.setString("data", s);
-                        Crashlytics.logException(ee);
+                        Util.LogException("load feed with processing", s, ee);
                     }
                 } finally {
                     completedFeeds++;

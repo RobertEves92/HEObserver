@@ -1,7 +1,5 @@
 package com.roberteves.heobserver.core;
 
-import com.crashlytics.android.Crashlytics;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -142,9 +140,7 @@ public class Article implements Serializable {
             Date d = df.parse(date);
             return processPubDate(d);
         } catch (Exception e) {
-            Crashlytics.setString("action", "process article pub date");
-            Crashlytics.setString("data", "link: " + getLink() + "; date: " + date);
-            Crashlytics.logException(e);
+            Util.LogException("process article pub date", "link: " + getLink() + "; date: " + date, e);
             return "";
         }
     }
@@ -177,9 +173,7 @@ public class Article implements Serializable {
                 c.setContent(c.getContent().replaceAll(regexLinkClose, ""));
             }
         } catch (Exception e) {
-            Crashlytics.setString("action", "process comments");
-            Crashlytics.setString("data", getLink());
-            Crashlytics.logException(e);
+            Util.LogException("process comments", getLink(), e);
         }
     }
 
