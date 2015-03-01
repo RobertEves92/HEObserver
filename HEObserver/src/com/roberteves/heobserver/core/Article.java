@@ -148,30 +148,36 @@ public class Article implements Serializable {
     }
 
     public void processComments() {
-        List<String> authors, comments;
-        authors = selectStringListFromRegex(source, "<span class=\"author\">.*<\\/span>");
-        comments = selectStringListFromRegex(source, "<div class=\"comment-text\">([^]]*?)<\\/div>");
+        try {
+            List<String> authors, comments;
+            authors = selectStringListFromRegex(source, "<span class=\"author\">.*<\\/span>");
+            comments = selectStringListFromRegex(source, "<div class=\"comment-text\">([^]]*?)<\\/div>");
 
-        authors.remove(0);
+            authors.remove(0);
 
-        this.comments = new ArrayList<>();
+            this.comments = new ArrayList<>();
 
-        for (int i = 0; i < authors.size(); i++) {
-            this.comments.add(new Comment(authors.get(i), comments.get(i)));
+            for (int i = 0; i < authors.size(); i++) {
+                this.comments.add(new Comment(authors.get(i), comments.get(i)));
+            }
+
+            for (Comment c : this.comments) {
+                //Format author name
+                c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?>", ""));
+                c.setAuthor(c.getAuthor().replaceAll("</a></span>", ""));
+                c.setAuthor(HtmlEscape.unescapeHtml(c.getAuthor()));
+
+                //Format comment body
+                c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">", ""));
+                c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>", ""));
+                c.setContent(HtmlEscape.unescapeHtml(c.getContent()));
+                c.setContent(c.getContent().replaceAll(regexLinkOpen, ""));
+                c.setContent(c.getContent().replaceAll(regexLinkClose, ""));
+            }
         }
-
-        for (Comment c : this.comments) {
-            //Format author name
-            c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?>", ""));
-            c.setAuthor(c.getAuthor().replaceAll("</a></span>", ""));
-            c.setAuthor(HtmlEscape.unescapeHtml(c.getAuthor()));
-
-            //Format comment body
-            c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">", ""));
-            c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>", ""));
-            c.setContent(HtmlEscape.unescapeHtml(c.getContent()));
-            c.setContent(c.getContent().replaceAll(regexLinkOpen, ""));
-            c.setContent(c.getContent().replaceAll(regexLinkClose, ""));
+        catch(Exception e)
+        {
+            Crashlytics.logException(e);
         }
     }
 
