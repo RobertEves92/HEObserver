@@ -118,12 +118,14 @@ public class Article implements Serializable {
         return sdf.format(calendar.getTime());
     }
 
-    private static String processPubDate(String date) {
+    private String processPubDate(String date) {
         try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.getDefault());
             Date d = df.parse(date);
             return processPubDate(d);
         } catch (Exception e) {
+            Crashlytics.setString("action","process article pub date");
+            Crashlytics.setString("data","link: " + getLink() + "; date: " + date);
             Crashlytics.logException(e);
             return "";
         }
@@ -177,6 +179,8 @@ public class Article implements Serializable {
         }
         catch(Exception e)
         {
+            Crashlytics.setString("action","process comments");
+            Crashlytics.setString("data",getLink());
             Crashlytics.logException(e);
         }
     }
