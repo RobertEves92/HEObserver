@@ -45,7 +45,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
+        //Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build()); //dont log in debug mode
+        Fabric.with(this, new Crashlytics.Builder().disabled(!BuildConfig.DEBUG).build()); //do log in debug mode
         Util.setupThreadPolicy();
         setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
