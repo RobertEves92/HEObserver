@@ -29,6 +29,8 @@ public class FeedManager {
             }
             Lists.FeedList = feedList;
         } catch (IOException e) {
+            Crashlytics.setString("action","load feeds");
+            Crashlytics.setString("data","none");
             Crashlytics.logException(e);
         }
     }
