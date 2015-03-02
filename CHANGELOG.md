@@ -1,9 +1,10 @@
 ## Change Log
-### Current Version: V2.0.3
+### Current Version: V2.1
 - Added Preferences to select only feeds users want to view
 - Added comment loading (for articles with comments)
 - Changed all action bar buttons to display icons
 - Fixed several bugs and crashes when loading lots of data
+- Added better crash logging
 
 #### Previous Updates: 
 #####V1.3.3

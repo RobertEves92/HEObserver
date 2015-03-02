@@ -1,7 +1,5 @@
 package com.roberteves.heobserver.core;
 
-import com.crashlytics.android.Crashlytics;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -118,17 +116,6 @@ public class Article implements Serializable {
         return sdf.format(calendar.getTime());
     }
 
-    private static String processPubDate(String date) {
-        try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.getDefault());
-            Date d = df.parse(date);
-            return processPubDate(d);
-        } catch (Exception e) {
-            Crashlytics.logException(e);
-            return "";
-        }
-    }
-
     public static boolean checkTitle(String title) {
         for (String s : mediaTags) {
             if (title.toUpperCase().contains(s.toUpperCase())) {
@@ -147,31 +134,46 @@ public class Article implements Serializable {
         return false;
     }
 
-    public void processComments() {
-        List<String> authors, comments;
-        authors = selectStringListFromRegex(source, "<span class=\"author\">.*<\\/span>");
-        comments = selectStringListFromRegex(source, "<div class=\"comment-text\">([^]]*?)<\\/div>");
-
-        authors.remove(0);
-
-        this.comments = new ArrayList<>();
-
-        for (int i = 0; i < authors.size(); i++) {
-            this.comments.add(new Comment(authors.get(i), comments.get(i)));
+    private String processPubDate(String date) {
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.getDefault());
+            Date d = df.parse(date);
+            return processPubDate(d);
+        } catch (Exception e) {
+            Util.LogException("process article pub date", "link: " + getLink() + "; date: " + date, e);
+            return "";
         }
+    }
 
-        for (Comment c : this.comments) {
-            //Format author name
-            c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?>", ""));
-            c.setAuthor(c.getAuthor().replaceAll("</a></span>", ""));
-            c.setAuthor(HtmlEscape.unescapeHtml(c.getAuthor()));
+    public void processComments() {
+        try {
+            List<String> authors, comments;
+            authors = selectStringListFromRegex(source, "<span class=\"author\">.*<\\/span>");
+            comments = selectStringListFromRegex(source, "<div class=\"comment-text\">([^]]*?)<\\/div>");
 
-            //Format comment body
-            c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">", ""));
-            c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>", ""));
-            c.setContent(HtmlEscape.unescapeHtml(c.getContent()));
-            c.setContent(c.getContent().replaceAll(regexLinkOpen, ""));
-            c.setContent(c.getContent().replaceAll(regexLinkClose, ""));
+            authors.remove(0);
+
+            this.comments = new ArrayList<>();
+
+            for (int i = 0; i < authors.size(); i++) {
+                this.comments.add(new Comment(authors.get(i), comments.get(i)));
+            }
+
+            for (Comment c : this.comments) {
+                //Format author name
+                c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?>", ""));
+                c.setAuthor(c.getAuthor().replaceAll("</a></span>", ""));
+                c.setAuthor(HtmlEscape.unescapeHtml(c.getAuthor()));
+
+                //Format comment body
+                c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">", ""));
+                c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>", ""));
+                c.setContent(HtmlEscape.unescapeHtml(c.getContent()));
+                c.setContent(c.getContent().replaceAll(regexLinkOpen, ""));
+                c.setContent(c.getContent().replaceAll(regexLinkClose, ""));
+            }
+        } catch (Exception e) {
+            Util.LogException("process comments", getLink(), e);
         }
     }
 

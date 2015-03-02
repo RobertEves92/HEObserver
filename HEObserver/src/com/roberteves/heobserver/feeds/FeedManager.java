@@ -3,9 +3,9 @@ package com.roberteves.heobserver.feeds;
 
 import android.app.Activity;
 
-import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Lists;
+import com.roberteves.heobserver.core.Util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class FeedManager {
             }
             Lists.FeedList = feedList;
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            Util.LogException("load feeds", "none", e);
         }
     }
 }
