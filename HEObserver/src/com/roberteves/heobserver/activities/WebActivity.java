@@ -51,7 +51,7 @@ public class WebActivity extends Activity {
                     startActivity(i);
                 }
             } catch (IOException e) {
-                Crashlytics.logException(e);
+                Util.LogException("load article from link", dataString, e);
                 Toast.makeText(getApplicationContext(),
                         R.string.error_retrieve_article_source,
                         Toast.LENGTH_SHORT).show();

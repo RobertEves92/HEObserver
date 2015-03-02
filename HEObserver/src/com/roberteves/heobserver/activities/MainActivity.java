@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,7 +44,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
+        Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build()); //dont log in debug mode
+        //Fabric.with(this, new Crashlytics()); //do log in debug mode
         Util.setupThreadPolicy();
         setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
@@ -131,7 +131,7 @@ public class MainActivity extends Activity {
                         i.putExtra("article", article);
                         startActivity(i);
                     } catch (IOException e) {
-                        Crashlytics.logException(e);
+                        Util.LogException("load article", Lists.RssItems.get(position).getLink(), e);
                         articleDialog.cancel();
                         Toast.makeText(getApplicationContext(),
                                 R.string.error_retrieve_article_source,
@@ -212,16 +212,14 @@ public class MainActivity extends Activity {
                     feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
                     processDuplicates(rssItems, feedItems);
                 } catch (Exception e) {
-                    Crashlytics.log(Log.WARN, getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, e.getMessage()));
-                    Crashlytics.logException(e);
+                    Util.LogException("load feed without processing", s, e);
 
                     //Try with processing if it doesnt work
                     try {
                         feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
                         processDuplicates(rssItems, feedItems);
                     } catch (Exception ee) {
-                        Crashlytics.log(Log.WARN, getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, ee.getMessage()));
-                        Crashlytics.logException(ee);
+                        Util.LogException("load feed with processing", s, ee);
                     }
                 } finally {
                     completedFeeds++;
