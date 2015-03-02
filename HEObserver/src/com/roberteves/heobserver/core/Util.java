@@ -1,6 +1,7 @@
 package com.roberteves.heobserver.core;
 
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -67,5 +68,6 @@ public class Util {
         Crashlytics.setString("action", action);
         Crashlytics.setString("data", data);
         Crashlytics.logException(e);
+        Crashlytics.log(Log.WARN,"Fabric","Caught Exception: Action: "+action+"; Data: " + data+"; Exception: " + e.toString());
     }
 }

@@ -213,7 +213,6 @@ public class MainActivity extends Activity {
                     feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
                     processDuplicates(rssItems, feedItems);
                 } catch (Exception e) {
-                    Crashlytics.log(Log.WARN, getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, e.getMessage()));
                     Util.LogException("load feed without processing", s, e);
 
                     //Try with processing if it doesnt work
@@ -221,7 +220,6 @@ public class MainActivity extends Activity {
                         feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
                         processDuplicates(rssItems, feedItems);
                     } catch (Exception ee) {
-                        Crashlytics.log(Log.WARN, getString(R.string.feed_exception), String.format(getString(R.string.feed_exception_format), s, ee.getMessage()));
                         Util.LogException("load feed with processing", s, ee);
                     }
                 } finally {
