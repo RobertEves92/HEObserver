@@ -35,30 +35,6 @@ public class Article implements Serializable {
     private String title, body, publishedDate, link, source;
     private ArrayList<Comment> comments;
 
-    public Article(String link, Date published)
-            throws IOException {
-        source = Util.getWebSource(link, false);
-        // Set Title
-        String t = selectStringFromRegex(source, regexTitle);
-        t = t.replaceAll(regexTitleStart, "");
-        t = t.replaceAll(regexTitleEnd, "");
-        setTitle(t);
-
-        // Set Body
-        String b = selectStringFromRegex(source, regexArticle);
-        b = selectStringFromRegex(b, regexArticleBody);
-        b = b.replaceAll(regexArticleRelated, "");
-        b = b.replaceAll(regexXmlComment, "");
-        b = b.replaceAll(regexExcessWhitespace, " ");
-        setBody(b);
-
-        // Set Date
-        setPublishedDate(processPubDate(published));
-
-        // Set Link
-        setLink(link);
-    }
-
     public Article(String link) throws IOException {
         source = Util.getWebSource(link, false);
         // Set Title
