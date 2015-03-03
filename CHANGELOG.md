@@ -1,6 +1,6 @@
 ## Change Log
 ### Current Version: V2.2
-- Improved filtering of non-compatable articles
+- Improved filtering of non-compatible articles
 
 #### Previous Updates: 
 ##### v2.1
