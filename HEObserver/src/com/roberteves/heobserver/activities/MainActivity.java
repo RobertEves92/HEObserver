@@ -120,9 +120,7 @@ public class MainActivity extends Activity {
                     try {
                         //Load article
                         articleDialog.show();
-                        article = new Article(Lists.RssItems.get(position)
-                                .getLink(), Lists.RssItems.get(
-                                position).getPubDate());
+                        article = new Article(Lists.RssItems.get(position).getLink());
                         articleDialog.cancel();
 
                         Intent i = new Intent(MainActivity.this,
