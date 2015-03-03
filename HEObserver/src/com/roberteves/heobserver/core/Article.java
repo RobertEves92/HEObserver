@@ -18,8 +18,8 @@ import unbescape.html.HtmlEscape;
 @SuppressWarnings("serial")
 public class Article implements Serializable {
     private static final String[] mediaTags = new String[]{"PHOTOS:", "PHOTO:",
-            "VIDEO:", "VIDEOS:", "PICTURES:", "POLL:", " - SLIDESHOW", "PICTURE GALLERY:"};
-    private static final String[] urlTags = new String[]{"UNDEFINED-HEADLINE"};
+            "VIDEO:", "VIDEOS:", "PICTURES:", "POLL:", " - SLIDESHOW", "PICTURE GALLERY:", "PHOTO GALLERY:"};
+    private static final String[] urlTags = new String[]{"UNDEFINED-HEADLINE", "PICTURES.HTML"};
     private static final String regexArticleBody = "<p>.*</p>";
     private static final String regexArticleRelated = "<div.*?</div>";
     private static final String regexXmlComment = "<!--.*?-->";
@@ -34,30 +34,6 @@ public class Article implements Serializable {
     private static final String regexLinkClose = "</a.*?>";
     private String title, body, publishedDate, link, source;
     private ArrayList<Comment> comments;
-
-    public Article(String link, Date published)
-            throws IOException {
-        source = Util.getWebSource(link, false);
-        // Set Title
-        String t = selectStringFromRegex(source, regexTitle);
-        t = t.replaceAll(regexTitleStart, "");
-        t = t.replaceAll(regexTitleEnd, "");
-        setTitle(t);
-
-        // Set Body
-        String b = selectStringFromRegex(source, regexArticle);
-        b = selectStringFromRegex(b, regexArticleBody);
-        b = b.replaceAll(regexArticleRelated, "");
-        b = b.replaceAll(regexXmlComment, "");
-        b = b.replaceAll(regexExcessWhitespace, " ");
-        setBody(b);
-
-        // Set Date
-        setPublishedDate(processPubDate(published));
-
-        // Set Link
-        setLink(link);
-    }
 
     public Article(String link) throws IOException {
         source = Util.getWebSource(link, false);
