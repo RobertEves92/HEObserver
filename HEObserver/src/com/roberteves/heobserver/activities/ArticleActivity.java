@@ -24,8 +24,9 @@ public class ArticleActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-        if(link == null){
-        link = getIntent().getStringExtra("link");}
+        if (link == null) {
+            link = getIntent().getStringExtra("link");
+        }
     }
 
     @Override

@@ -28,7 +28,6 @@ import com.roberteves.heobserver.core.Util;
 import com.roberteves.heobserver.feeds.Feed;
 import com.roberteves.heobserver.feeds.FeedManager;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -110,8 +109,8 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Intent intent = new Intent(MainActivity.this,ArticleActivity.class);
-                intent.putExtra("link",Lists.RssItems.get(position).getLink());
+                Intent intent = new Intent(MainActivity.this, ArticleActivity.class);
+                intent.putExtra("link", Lists.RssItems.get(position).getLink());
                 startActivity(intent);
             }
         });
