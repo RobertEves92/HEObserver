@@ -1,8 +1,11 @@
 ## Change Log
-### Current Version: V2.2
-- Improved filtering of non-compatible articles
+### Current Version: V2.2.1
+- Fixed bug that caused crashes when an update was requested without internet access
 
 #### Previous Updates: 
+##### v2.2
+- Improved filtering of non-compatible articles
+
 ##### v2.1
 - Improved crash logging
 
