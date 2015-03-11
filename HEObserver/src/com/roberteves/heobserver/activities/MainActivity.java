@@ -250,10 +250,6 @@ public class MainActivity extends Activity {
 
             if (result) {
                 UpdateView();
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        R.string.error_update_article_list, Toast.LENGTH_SHORT)
-                        .show();
             }
         }
     }
