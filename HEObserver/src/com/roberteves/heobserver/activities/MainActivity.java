@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -164,9 +165,14 @@ public class MainActivity extends Activity {
 
                 return true;
             } else {
-                Toast.makeText(getApplicationContext(), R.string.error_no_internet,
-                        Toast.LENGTH_SHORT).show();
-
+                Handler handler = new Handler(getApplicationContext().getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), R.string.error_no_internet,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return false;
             }
         }
