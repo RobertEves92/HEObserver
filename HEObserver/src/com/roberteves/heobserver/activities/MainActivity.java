@@ -111,27 +111,9 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                if (isOnline()) {
-                    Article article;
-                    try {
-                        //Load article
-                        article = new Article(Lists.RssItems.get(position).getLink());
-
-                        Intent i = new Intent(MainActivity.this,
-                                ArticleActivity.class);
-
-                        i.putExtra("article", article);
-                        startActivity(i);
-                    } catch (IOException e) {
-                        Util.LogException("load article", Lists.RssItems.get(position).getLink(), e);
-                        Toast.makeText(getApplicationContext(),
-                                R.string.error_retrieve_article_source,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.error_no_internet,
-                            Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(MainActivity.this,ArticleActivity.class);
+                intent.putExtra("link",Lists.RssItems.get(position).getLink());
+                startActivity(intent);
             }
         });
     }
