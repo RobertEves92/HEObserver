@@ -1,6 +1,7 @@
 package com.roberteves.heobserver.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -59,11 +60,16 @@ Article article;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     private class DownloadArticleTask extends AsyncTask<String, Void, Boolean> {
+        private final ProgressDialog dialog = new ProgressDialog(ArticleActivity.this);
+
         @Override
         protected void onPreExecute() {
+            this.dialog.setMessage("Fetching Article");
+            this.dialog.setCancelable(false);
+            this.dialog.show();
         }
 
         @Override
@@ -81,6 +87,10 @@ Article article;
 
         @Override
         protected void onPostExecute(Boolean result) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
             if(result)
             {
                 TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
