@@ -16,21 +16,22 @@ import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Util;
 
 public class ArticleActivity extends Activity {
-Article article;
+    Article article;
+    MenuItem comments;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-
-        new DownloadArticleTask().execute(getIntent().getStringExtra("link"));
     }
 
-/*    @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.article_activity_menu, menu);
-        menu.findItem(R.id.action_bar_comment).setVisible(article.hasComments());
+        comments = menu.findItem(R.id.action_bar_comment);
+        new DownloadArticleTask().execute(getIntent().getStringExtra("link"));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -59,7 +60,7 @@ Article article;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }*/
+    }
 
     private class DownloadArticleTask extends AsyncTask<String, Void, Boolean> {
         private final ProgressDialog dialog = new ProgressDialog(ArticleActivity.this);
@@ -77,9 +78,7 @@ Article article;
             try {
                 article = new Article(url);
                 return true;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Util.LogException("load article", url, e);
                 return false;
             }
@@ -91,8 +90,7 @@ Article article;
                 dialog.dismiss();
             }
 
-            if(result)
-            {
+            if (result) {
                 TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
                 TextView txtBody = (TextView) findViewById(R.id.txtBody);
                 TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
@@ -109,9 +107,9 @@ Article article;
                 }
 
                 article.processComments();
-            }
-            else
-            {
+
+                comments.setVisible(article.hasComments());
+            } else {
                 //TODO display error toast and go back to main activity
             }
         }
