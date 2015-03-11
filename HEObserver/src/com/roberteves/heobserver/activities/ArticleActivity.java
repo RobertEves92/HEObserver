@@ -14,40 +14,15 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Util;
 
-import java.io.Serializable;
-
 public class ArticleActivity extends Activity {
-    private static Article article;
-
+Article article;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-        displayArticle();
-    }
 
-    private void displayArticle() {
-        TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
-        TextView txtBody = (TextView) findViewById(R.id.txtBody);
-        TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
-        if ((article == null || article != getArticleFromIntent()) && getArticleFromIntent() != null) {
-            article = (Article) getArticleFromIntent();
-        }
-
-        txtTitle.setText(article != null ? article.getTitle() : null);
-        txtBody.setText(Html.fromHtml(article.getBody()));
-
-        if (article.getPublishedDate() != null) {
-            txtPubDate.setText(getString(R.string.published) + article.getPublishedDate());
-        } else {
-            txtPubDate.setText("");
-        }
-
-        article.processComments();
-    }
-
-    private Serializable getArticleFromIntent() {
-        return getIntent().getSerializableExtra("article");
+        DownloadArticleTask downloadArticleTask = new DownloadArticleTask();
+        downloadArticleTask.execute(getIntent().getStringExtra("link"));
     }
 
     @Override
@@ -87,8 +62,6 @@ public class ArticleActivity extends Activity {
     }
 
     private class DownloadArticleTask extends AsyncTask<String, Void, Boolean> {
-        Article article;
-
         @Override
         protected void onPreExecute() {
         }
@@ -110,7 +83,22 @@ public class ArticleActivity extends Activity {
         protected void onPostExecute(Boolean result) {
             if(result)
             {
-                displayArticle();
+                TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
+                TextView txtBody = (TextView) findViewById(R.id.txtBody);
+                TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
+
+                //Error handling for return from comments removed - may bug with new async??
+
+                txtTitle.setText(article != null ? article.getTitle() : null);
+                txtBody.setText(Html.fromHtml(article.getBody()));
+
+                if (article.getPublishedDate() != null) {
+                    txtPubDate.setText(getString(R.string.published) + article.getPublishedDate());
+                } else {
+                    txtPubDate.setText("");
+                }
+
+                article.processComments();
             }
             else
             {
