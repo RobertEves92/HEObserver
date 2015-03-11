@@ -22,11 +22,10 @@ Article article;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
 
-        DownloadArticleTask downloadArticleTask = new DownloadArticleTask();
-        downloadArticleTask.execute(getIntent().getStringExtra("link"));
+        new DownloadArticleTask().execute(getIntent().getStringExtra("link"));
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
@@ -73,14 +72,15 @@ Article article;
         }
 
         @Override
-        protected Boolean doInBackground(String... link) {
+        protected Boolean doInBackground(String... params) {
+            String url = getIntent().getStringExtra("link");
             try {
-                article = new Article(link[0]);
+                article = new Article(url);
                 return true;
             }
             catch (Exception e)
             {
-                Util.LogException("load article", link[0], e);
+                Util.LogException("load article", url, e);
                 return false;
             }
         }
