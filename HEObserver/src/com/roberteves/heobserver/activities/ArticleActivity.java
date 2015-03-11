@@ -56,7 +56,7 @@ public class ArticleActivity extends Activity {
                 share.putExtra(Intent.EXTRA_TEXT, article.getLink());
 
                 startActivity(Intent.createChooser(share,
-                        getString(R.string.share_via)));
+                        getString(R.string.action_share_via)));
                 return true;
             case R.id.action_bar_comment:
                 Intent i = new Intent(ArticleActivity.this,
@@ -75,7 +75,7 @@ public class ArticleActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Fetching Article");
+            this.dialog.setMessage(getString(R.string.dialog_fetching_article));
             this.dialog.setCancelable(false);
             this.dialog.show();
         }

@@ -128,7 +128,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage(getString(R.string.fetching_articles));
+            this.dialog.setMessage(getString(R.string.dialog_fetching_articles));
             this.dialog.setCancelable(false);
             this.dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             this.dialog.show();

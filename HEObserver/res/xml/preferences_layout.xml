@@ -2,56 +2,56 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <PreferenceCategory android:title="@string/cat_feeds">
+    <PreferenceCategory android:title="@string/preference_category_feeds">
         <CheckBoxPreference
             android:enabled="false"
             android:key="feed_news"
-            android:summary="@string/news_summary"
-            android:title="@string/news_title" />
+            android:summary="@string/preference_summary_news"
+            android:title="@string/preference_title_news" />
         <CheckBoxPreference
             android:key="feed_localnews"
-            android:summary="@string/localnews_summary"
-            android:title="@string/localnews_title" />
+            android:summary="@string/preference_summary_localnews"
+            android:title="@string/preference_title_localnews" />
         <CheckBoxPreference
             android:key="feed_sport"
-            android:summary="@string/sports_summary"
-            android:title="@string/sport_title" />
+            android:summary="@string/preference_summary_sports"
+            android:title="@string/preference_title_sport" />
         <CheckBoxPreference
             android:key="feed_lifestyle"
-            android:summary="@string/lifestyle_summary"
-            android:title="@string/lifestyle_title" />
+            android:summary="@string/preference_summary_lifestyle"
+            android:title="@string/preference_title_lifestyle" />
         <CheckBoxPreference
             android:key="feed_retail"
-            android:summary="@string/retail_summary"
-            android:title="@string/retail_title" />
+            android:summary="@string/preference_summary_retail"
+            android:title="@string/preference_title_retail" />
         <CheckBoxPreference
             android:key="feed_weather"
-            android:summary="@string/weather_summary"
-            android:title="@string/weather_title" />
+            android:summary="@string/preference_summary_weather"
+            android:title="@string/preference_title_weather" />
         <CheckBoxPreference
             android:key="feed_family"
-            android:summary="@string/family_summary"
-            android:title="@string/family_title" />
+            android:summary="@string/preference_summary_family"
+            android:title="@string/preference_title_family" />
         <CheckBoxPreference
             android:key="feed_misc"
-            android:summary="@string/misc_summary"
-            android:title="@string/misc_title" />
+            android:summary="@string/preference_summary_misc"
+            android:title="@string/preference_title_misc" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/cat_reset">
+    <PreferenceCategory android:title="@string/preference_category_reset">
         <Preference
             android:key="reset"
-            android:summary="@string/reset_summary"
-            android:title="@string/reset_title" />
+            android:summary="@string/preference_summary_reset"
+            android:title="@string/preference_title_reset" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/cat_about">
+    <PreferenceCategory android:title="@string/preference_category_about">
         <Preference
             android:key="about"
-            android:title="@string/about_title" />
+            android:title="@string/preference_title_about" />
         <Preference
             android:key="license"
-            android:title="@string/license_title" />
+            android:title="@string/preference_title_license" />
         <Preference
             android:key="changelog"
-            android:title="@string/changelog_title" />
+            android:title="@string/preference_title_changelog" />
     </PreferenceCategory>
 </PreferenceScreen>
