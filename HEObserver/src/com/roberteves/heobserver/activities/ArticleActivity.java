@@ -2,6 +2,7 @@ package com.roberteves.heobserver.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
+import com.roberteves.heobserver.core.Util;
 
 import java.io.Serializable;
 
@@ -21,6 +23,10 @@ public class ArticleActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
+        displayArticle();
+    }
+
+    private void displayArticle() {
         TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
         TextView txtBody = (TextView) findViewById(R.id.txtBody);
         TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
@@ -77,6 +83,39 @@ public class ArticleActivity extends Activity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class DownloadArticleTask extends AsyncTask<String, Void, Boolean> {
+        Article article;
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Boolean doInBackground(String... link) {
+            try {
+                article = new Article(link[0]);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Util.LogException("load article", link[0], e);
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result)
+            {
+                displayArticle();
+            }
+            else
+            {
+                //TODO display error toast and go back to main activity
+            }
         }
     }
 }
