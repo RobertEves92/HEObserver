@@ -5,11 +5,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
@@ -19,10 +21,12 @@ public class ArticleActivity extends Activity {
     private static Article article;
     private static MenuItem comments;
     private static String link;
+    private static Activity activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
         setContentView(R.layout.activity_article);
         if (link == null) {
             link = getIntent().getStringExtra("link");
@@ -98,8 +102,6 @@ public class ArticleActivity extends Activity {
                 TextView txtBody = (TextView) findViewById(R.id.txtBody);
                 TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
 
-                //Error handling for return from comments removed - may bug with new async??
-
                 txtTitle.setText(article != null ? article.getTitle() : null);
                 txtBody.setText(Html.fromHtml(article.getBody()));
 
@@ -113,7 +115,15 @@ public class ArticleActivity extends Activity {
 
                 comments.setVisible(article.hasComments());
             } else {
-                //TODO display error toast and go back to main activity
+                Handler handler = new Handler(getApplicationContext().getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Failed to load article",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                activity.finish();
             }
         }
     }
