@@ -16,13 +16,16 @@ import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Util;
 
 public class ArticleActivity extends Activity {
-    Article article;
-    MenuItem comments;
+    private static Article article;
+    private static MenuItem comments;
+    private static String link;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
+        if(link == null){
+        link = getIntent().getStringExtra("link");}
     }
 
     @Override
@@ -31,7 +34,7 @@ public class ArticleActivity extends Activity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.article_activity_menu, menu);
         comments = menu.findItem(R.id.action_bar_comment);
-        new DownloadArticleTask().execute(getIntent().getStringExtra("link"));
+        new DownloadArticleTask().execute(link);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -74,12 +77,11 @@ public class ArticleActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(String... params) {
-            String url = getIntent().getStringExtra("link");
             try {
-                article = new Article(url);
+                article = new Article(link);
                 return true;
             } catch (Exception e) {
-                Util.LogException("load article", url, e);
+                Util.LogException("load article", link, e);
                 return false;
             }
         }
