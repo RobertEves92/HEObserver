@@ -28,7 +28,6 @@ import com.roberteves.heobserver.core.Util;
 import com.roberteves.heobserver.feeds.Feed;
 import com.roberteves.heobserver.feeds.FeedManager;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,7 +45,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build()); //dont log in debug mode
         //Fabric.with(this, new Crashlytics()); //do log in debug mode
-        Util.setupThreadPolicy();
         setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
@@ -111,27 +109,9 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                if (isOnline()) {
-                    Article article;
-                    try {
-                        //Load article
-                        article = new Article(Lists.RssItems.get(position).getLink());
-
-                        Intent i = new Intent(MainActivity.this,
-                                ArticleActivity.class);
-
-                        i.putExtra("article", article);
-                        startActivity(i);
-                    } catch (IOException e) {
-                        Util.LogException("load article", Lists.RssItems.get(position).getLink(), e);
-                        Toast.makeText(getApplicationContext(),
-                                R.string.error_retrieve_article_source,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.error_no_internet,
-                            Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(MainActivity.this, ArticleActivity.class);
+                intent.putExtra("link", Lists.RssItems.get(position).getLink());
+                startActivity(intent);
             }
         });
     }

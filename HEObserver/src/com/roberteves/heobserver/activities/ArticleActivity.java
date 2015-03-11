@@ -1,47 +1,36 @@
 package com.roberteves.heobserver.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
-
-import java.io.Serializable;
+import com.roberteves.heobserver.core.Util;
 
 public class ArticleActivity extends Activity {
     private static Article article;
+    private static MenuItem comments;
+    private static String link;
+    private static Activity activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
         setContentView(R.layout.activity_article);
-        TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
-        TextView txtBody = (TextView) findViewById(R.id.txtBody);
-        TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
-        if ((article == null || article != getArticleFromIntent()) && getArticleFromIntent() != null) {
-            article = (Article) getArticleFromIntent();
+        if (link == null) {
+            link = getIntent().getStringExtra("link");
         }
-
-        txtTitle.setText(article != null ? article.getTitle() : null);
-        txtBody.setText(Html.fromHtml(article.getBody()));
-
-        if (article.getPublishedDate() != null) {
-            txtPubDate.setText(getString(R.string.published) + article.getPublishedDate());
-        } else {
-            txtPubDate.setText("");
-        }
-
-        article.processComments();
-    }
-
-    private Serializable getArticleFromIntent() {
-        return getIntent().getSerializableExtra("article");
     }
 
     @Override
@@ -49,7 +38,8 @@ public class ArticleActivity extends Activity {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.article_activity_menu, menu);
-        menu.findItem(R.id.action_bar_comment).setVisible(article.hasComments());
+        comments = menu.findItem(R.id.action_bar_comment);
+        new DownloadArticleTask().execute(link);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -77,6 +67,64 @@ public class ArticleActivity extends Activity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class DownloadArticleTask extends AsyncTask<String, Void, Boolean> {
+        private final ProgressDialog dialog = new ProgressDialog(ArticleActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Fetching Article");
+            this.dialog.setCancelable(false);
+            this.dialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            try {
+                article = new Article(link);
+                return true;
+            } catch (Exception e) {
+                Util.LogException("load article", link, e);
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
+            if (result) {
+                TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
+                TextView txtBody = (TextView) findViewById(R.id.txtBody);
+                TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
+
+                txtTitle.setText(article != null ? article.getTitle() : null);
+                txtBody.setText(Html.fromHtml(article.getBody()));
+
+                if (article.getPublishedDate() != null) {
+                    txtPubDate.setText(getString(R.string.published) + article.getPublishedDate());
+                } else {
+                    txtPubDate.setText("");
+                }
+
+                article.processComments();
+
+                comments.setVisible(article.hasComments());
+            } else {
+                Handler handler = new Handler(getApplicationContext().getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Failed to load article",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                activity.finish();
+            }
         }
     }
 }
