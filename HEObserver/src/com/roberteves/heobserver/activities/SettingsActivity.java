@@ -152,7 +152,7 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void updatePreferences() {
-        localnews.setChecked(settingsManager.getFeedLocalNews());
+        localnews.setChecked(true);
         sport.setChecked(settingsManager.getFeedSport());
         lifestyle.setChecked(settingsManager.getFeedLifestyle());
         retail.setChecked(settingsManager.getFeedRetail());

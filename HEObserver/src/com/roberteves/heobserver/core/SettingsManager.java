@@ -44,10 +44,6 @@ public class SettingsManager {
         }
     }
 
-    public Boolean getFeedLocalNews() {
-        return true;
-    }
-
     public Boolean getFeedSport() {
         return settings.getBoolean(KEY_FEED_SPORT, false);
     }
