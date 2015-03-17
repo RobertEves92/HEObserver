@@ -33,7 +33,7 @@ public class WebActivity extends Activity {
         dataString = formatDataString(intent.getDataString());
 
         if (dataString
-                .matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html")) {
+                .matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html") && !dataString.toUpperCase().contains("UNDEFINED-HEADLINE")) {
             // is article - open in article activity
             try {
                 Article article = new Article(dataString);
