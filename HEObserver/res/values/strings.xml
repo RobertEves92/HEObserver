@@ -20,8 +20,6 @@
 
     <!-- Preferences -->
     <string name="preference_category_feeds">Feeds</string>
-    <string name="preference_summary_news">Summary of news headlines</string>
-    <string name="preference_title_news">News</string>
     <string name="preference_summary_localnews">News from Bishop\'s Stortford, Dunmow, Sawbridgeworth, Stansted, and Uttlesford</string>
     <string name="preference_title_localnews">Local News</string>
     <string name="preference_summary_sports">Local sports events and headlines</string>

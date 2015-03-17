@@ -8,8 +8,6 @@ import com.roberteves.heobserver.feeds.Category;
 
 public class SettingsManager {
     private final static String PREFS_NAME = "HEOPrefs";
-    private final static String KEY_FEED_NEWS = "feed_news";
-    private final static String KEY_FEED_LOCALNEWS = "feed_localnews";
     private final static String KEY_FEED_SPORT = "feed_sport";
     private final static String KEY_FEED_LIFESTYLE = "feed_lifestyle";
     private final static String KEY_FEED_RETAIL = "feed_retail";
@@ -29,10 +27,8 @@ public class SettingsManager {
     public Boolean isEnabled(Category category) {
         switch (category) {
             default:
-            case News:
-                return true;
             case LocalNews:
-                return getFeedLocalNews();
+                return true;
             case Sport:
                 return getFeedSport();
             case Lifestyle:
@@ -46,22 +42,6 @@ public class SettingsManager {
             case Misc:
                 return getFeedMisc();
         }
-    }
-
-    public Boolean getFeedNews() {
-        return settings.getBoolean(KEY_FEED_NEWS, true);
-    }
-
-    public void setFeedNews() {
-        editor.putBoolean(KEY_FEED_NEWS, true).commit();
-    }
-
-    public Boolean getFeedLocalNews() {
-        return settings.getBoolean(KEY_FEED_LOCALNEWS, false);
-    }
-
-    public void setFeedLocalNews(Boolean b) {
-        editor.putBoolean(KEY_FEED_LOCALNEWS, b).commit();
     }
 
     public Boolean getFeedSport() {
@@ -113,8 +93,6 @@ public class SettingsManager {
     }
 
     public void resetSettings() {
-        setFeedNews();
-        setFeedLocalNews(false);
         setFeedSport(false);
         setFeedLifestyle(false);
         setFeedRetail(false);
