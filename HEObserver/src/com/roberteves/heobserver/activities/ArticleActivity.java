@@ -37,6 +37,13 @@ public class ArticleActivity extends Activity {
     }
 
     @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        link = null;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
