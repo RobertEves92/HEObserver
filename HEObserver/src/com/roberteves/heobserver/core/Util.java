@@ -70,4 +70,8 @@ public class Util {
         Crashlytics.logException(e);
         Crashlytics.log(Log.WARN, "Fabric", "Caught Exception: Action: " + action + "; Data: " + data + "; Exception: " + e.toString());
     }
+
+    public static void LogMessage(int priority, String tag, String message) {
+        Crashlytics.log(priority, tag, message);
+    }
 }

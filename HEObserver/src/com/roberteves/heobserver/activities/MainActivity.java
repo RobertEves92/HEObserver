@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import com.roberteves.heobserver.core.Util;
 import com.roberteves.heobserver.feeds.Feed;
 import com.roberteves.heobserver.feeds.FeedManager;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -188,14 +190,23 @@ public class MainActivity extends Activity {
                     feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
                     processDuplicates(rssItems, feedItems);
                 } catch (Exception e) {
-                    Util.LogException("load feed without processing", s, e);
+                    if (!(e instanceof SocketTimeoutException)) { //Don't log or try again if timeout exception
+                        Util.LogException("load feed without processing", s, e);
+                    } else {
+                        Util.LogMessage(Log.INFO, "SocketTimeout", "Feed: " + s);
+                    }
+
 
                     //Try with processing if it doesnt work
                     try {
                         feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
                         processDuplicates(rssItems, feedItems);
                     } catch (Exception ee) {
-                        Util.LogException("load feed with processing", s, ee);
+                        if (!(ee instanceof SocketTimeoutException)) {
+                            Util.LogException("load feed with processing", s, ee);
+                        } else {
+                            Util.LogMessage(Log.INFO, "SocketTimeout", "Feed: " + s);
+                        }
                     }
                 } finally {
                     completedFeeds++;
