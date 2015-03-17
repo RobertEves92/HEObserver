@@ -13,7 +13,6 @@ import com.roberteves.heobserver.core.SettingsManager;
 
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {
-    private CheckBoxPreference news;
     private CheckBoxPreference localnews;
     private CheckBoxPreference sport;
     private CheckBoxPreference lifestyle;
@@ -34,24 +33,7 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void createPreferences() {
-        news = (CheckBoxPreference) getPreferenceManager().findPreference("feed_news");
-        news.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                settingsManager.setFeedNews();
-                updatePreferences();
-                return true;
-            }
-        });
         localnews = (CheckBoxPreference) getPreferenceManager().findPreference("feed_localnews");
-        localnews.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                settingsManager.setFeedLocalNews((Boolean) newValue);
-                updatePreferences();
-                return true;
-            }
-        });
         sport = (CheckBoxPreference) getPreferenceManager().findPreference("feed_sport");
         sport.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -170,7 +152,6 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private void updatePreferences() {
-        news.setChecked(settingsManager.getFeedNews());
         localnews.setChecked(settingsManager.getFeedLocalNews());
         sport.setChecked(settingsManager.getFeedSport());
         lifestyle.setChecked(settingsManager.getFeedLifestyle());
