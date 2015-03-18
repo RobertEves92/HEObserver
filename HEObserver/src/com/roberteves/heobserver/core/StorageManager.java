@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nl.matshofman.saxrssreader.RssItem;
+
 public class StorageManager {
     private final static String PREFS_NAME = "HEOStorage";
 
@@ -29,6 +31,19 @@ public class StorageManager {
         }
         //endregion
 
+        //region RssItem List
+        editor.putInt("rssitems_size", Lists.RssItems.size());
+
+        int ii = 0;
+        for (RssItem r : Lists.RssItems) {
+            editor.putString("rssitem_" + ii + "_title", r.getTitle());
+            editor.putString("rssitem_" + ii + "_link", r.getLink());
+            editor.putString("rssitem_" + ii + "_description", r.getDescription());
+            editor.putString("rssitem_" + ii + "_date", r.getPubDate().toString());
+            editor.putString("rssitem_" + ii + "_content", r.getContent());
+            ii++;
+        }
+        //endregion
         editor.apply();
     }
 
