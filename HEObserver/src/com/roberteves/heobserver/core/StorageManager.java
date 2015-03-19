@@ -8,6 +8,7 @@ import android.util.Log;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +26,12 @@ public class StorageManager {
             settings = activity.getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
             editor = settings.edit();
 
+            //region Save Last Updated
+            Calendar currentDate = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            String lastUpdate = df.format(currentDate.getTime());
+            editor.putString("last_updated", lastUpdate);
+            //endregion
             //region StoryList
             editor.putInt("storylist_size", Lists.storyList.size());
 
