@@ -31,16 +31,19 @@ public class ArticleActivity extends Activity {
         super.onCreate(savedInstanceState);
         activity = this;
         setContentView(R.layout.activity_article);
-        if (link == null) {
+
+        if (getIntent().getSerializableExtra("article") != null) {
+            article = (Article) getIntent().getSerializableExtra("article");
+        } else if (link == null) {
             link = getIntent().getStringExtra("link");
         }
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         link = null;
+        article = null;
     }
 
     @Override
@@ -49,7 +52,11 @@ public class ArticleActivity extends Activity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.article_activity_menu, menu);
         comments = menu.findItem(R.id.action_bar_comment);
-        new DownloadArticleTask().execute(link);
+        if (article != null) {
+            DisplayArticle();
+        } else {
+            new DownloadArticleTask().execute(link);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -78,6 +85,25 @@ public class ArticleActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void DisplayArticle() {
+        TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
+        TextView txtBody = (TextView) findViewById(R.id.txtBody);
+        TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
+
+        txtTitle.setText(article != null ? article.getTitle() : null);
+        txtBody.setText(Html.fromHtml(article.getBody()));
+
+        if (article.getPublishedDate() != null) {
+            txtPubDate.setText(getString(R.string.published) + article.getPublishedDate());
+        } else {
+            txtPubDate.setText("");
+        }
+
+        article.processComments();
+
+        comments.setVisible(article.hasComments());
     }
 
     private class DownloadArticleTask extends AsyncTask<String, Void, Boolean> {
@@ -112,22 +138,7 @@ public class ArticleActivity extends Activity {
             }
 
             if (result) {
-                TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
-                TextView txtBody = (TextView) findViewById(R.id.txtBody);
-                TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
-
-                txtTitle.setText(article != null ? article.getTitle() : null);
-                txtBody.setText(Html.fromHtml(article.getBody()));
-
-                if (article.getPublishedDate() != null) {
-                    txtPubDate.setText(getString(R.string.published) + article.getPublishedDate());
-                } else {
-                    txtPubDate.setText("");
-                }
-
-                article.processComments();
-
-                comments.setVisible(article.hasComments());
+                DisplayArticle();
             } else {
                 Handler handler = new Handler(getApplicationContext().getMainLooper());
                 handler.post(new Runnable() {
