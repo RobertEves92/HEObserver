@@ -63,43 +63,49 @@ public class StorageManager {
             //region StoryList
             int storyListSize = settings.getInt("storylist_size", 0);
             List<Map<String, String>> storyList = new ArrayList<>();
-
-            int i = 0;
-            do {
-                HashMap<String, String> story = new HashMap<>();
-                story.put("title", settings.getString("storylist_" + i + "_title", ""));
-                story.put("date", settings.getString("storylist_" + i + "_date", ""));
-                storyList.add(story);
-                i++;
-            } while (i != storyListSize);
+            if (storyListSize != 0) {
+                int i = 0;
+                do {
+                    HashMap<String, String> story = new HashMap<>();
+                    story.put("title", settings.getString("storylist_" + i + "_title", ""));
+                    story.put("date", settings.getString("storylist_" + i + "_date", ""));
+                    storyList.add(story);
+                    i++;
+                } while (i != storyListSize);
+            }
             //endregion
             //region RssItem List
             int rssItemsSize = settings.getInt("rssitems_size", 0);
             ArrayList<RssItem> RssItems = new ArrayList<>();
-            DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzzzzzzz yyyy", Locale.getDefault());
+            if (rssItemsSize != 0) {
+                DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzzzzzzz yyyy", Locale.getDefault());
 
-            int ii = 0;
-            do {
-                RssItem r = new RssItem();
-                r.setTitle(settings.getString("rssitem_" + ii + "_title", ""));
-                r.setLink(settings.getString("rssitem_" + ii + "_link", ""));
-                r.setDescription(settings.getString("rssitem_" + ii + "_description", ""));
-                try {
-                    String d = settings.getString("rssitem_" + ii + "_date", "");
-                    r.setPubDate(df.parse(d));
-                } catch (Exception e) {
-                    Log.e("ERROR", e.getMessage());
-                }
-                r.setContent(settings.getString("rssitem_" + ii + "_content", ""));
-                RssItems.add(r);
-                ii++;
-            } while (ii != rssItemsSize);
+                int ii = 0;
+                do {
+                    RssItem r = new RssItem();
+                    r.setTitle(settings.getString("rssitem_" + ii + "_title", ""));
+                    r.setLink(settings.getString("rssitem_" + ii + "_link", ""));
+                    r.setDescription(settings.getString("rssitem_" + ii + "_description", ""));
+                    try {
+                        String d = settings.getString("rssitem_" + ii + "_date", "");
+                        r.setPubDate(df.parse(d));
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.getMessage());
+                    }
+                    r.setContent(settings.getString("rssitem_" + ii + "_content", ""));
+                    RssItems.add(r);
+                    ii++;
+                } while (ii != rssItemsSize);
+            }
             //endregion
+            if (storyList.size() != 0 && RssItems.size() != 0) {
+                Lists.storyList = storyList;
+                Lists.RssItems = RssItems;
 
-            Lists.storyList = storyList;
-            Lists.RssItems = RssItems;
-
-            return true;
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             Util.LogException("load data", "none", e);
             return false;

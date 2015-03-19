@@ -52,7 +52,12 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
 
-        updateList();
+        //Display saved feeds if available or update and display if not
+        if (StorageManager.GetData(MainActivity.this)) {
+            UpdateView();
+        } else {
+            updateList();
+        }
     }
 
     @Override
@@ -249,6 +254,7 @@ public class MainActivity extends Activity {
 
             if (result) {
                 UpdateView();
+                StorageManager.SaveData(MainActivity.this);
             }
         }
     }
