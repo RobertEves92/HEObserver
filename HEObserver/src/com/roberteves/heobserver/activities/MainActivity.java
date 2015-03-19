@@ -25,6 +25,7 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Lists;
 import com.roberteves.heobserver.core.SettingsManager;
+import com.roberteves.heobserver.core.StorageManager;
 import com.roberteves.heobserver.core.Util;
 import com.roberteves.heobserver.feeds.Feed;
 import com.roberteves.heobserver.feeds.FeedManager;
@@ -66,6 +67,12 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
+            case R.id.action_bar_save:
+                StorageManager.SaveData(this);
+                return true;
+            case R.id.action_bar_load:
+                StorageManager.GetData(this);
+                return true;
             case R.id.action_bar_refresh:
                 updateList();
                 return true;
