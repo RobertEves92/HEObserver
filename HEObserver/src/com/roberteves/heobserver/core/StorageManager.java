@@ -35,7 +35,6 @@ public class StorageManager {
                 i++;
             }
             //endregion
-
             //region RssItem List
             editor.putInt("rssitems_size", Lists.RssItems.size());
 
@@ -98,6 +97,7 @@ public class StorageManager {
                 } while (ii != rssItemsSize);
             }
             //endregion
+            //region Processing
             if (storyList.size() != 0 && RssItems.size() != 0) {
                 Lists.storyList = storyList;
                 Lists.RssItems = RssItems;
@@ -106,6 +106,7 @@ public class StorageManager {
             } else {
                 return false;
             }
+            //endregion
         } catch (Exception e) {
             Util.LogException("load data", "none", e);
             return false;
