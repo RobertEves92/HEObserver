@@ -43,6 +43,7 @@ public class ArticleActivity extends Activity {
     public void onDestroy() {
         super.onDestroy();
         link = null;
+        article = null;
     }
 
     @Override
