@@ -72,6 +72,7 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.action_bar_load:
                 StorageManager.GetData(this);
+                UpdateView();
                 return true;
             case R.id.action_bar_refresh:
                 updateList();
