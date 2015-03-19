@@ -3,10 +3,14 @@ package com.roberteves.heobserver.core;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import nl.matshofman.saxrssreader.RssItem;
@@ -64,7 +68,30 @@ public class StorageManager {
             i++;
         } while (i != storyListSize);
         //endregion
+        //region RssItem List
+        int rssItemsSize = settings.getInt("rssitems_size",0);
+        ArrayList<RssItem> RssItems = new ArrayList<>();
+        DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzzzzzzz yyyy", Locale.getDefault());
 
+        int ii = 0;
+        do{
+            RssItem r = new RssItem();
+            r.setTitle(settings.getString("rssitem_"+ii+"_title",""));
+            r.setLink(settings.getString("rssitem_" + ii + "_link", ""));
+            r.setDescription(settings.getString("rssitem_" + ii + "_description", ""));
+            try {
+                String d = settings.getString("rssitem_" + ii + "_date", "");
+                r.setPubDate(df.parse(d));
+            }
+            catch(Exception e)
+            {
+                Log.e("ERROR",e.getMessage());
+            }
+            r.setContent(settings.getString("rssitem_"+ii+"_content",""));
+            RssItems.add(r);
+            ii++;
+        }while(ii != rssItemsSize);
+        //endregion
         //TODO add final processing here
     }
 }
