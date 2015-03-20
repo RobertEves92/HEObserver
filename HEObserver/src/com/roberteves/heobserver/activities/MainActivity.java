@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
         lv = (ListView) findViewById(R.id.listView);
 
         //Display saved feeds if available or update and display if not
-        if (StorageManager.GetData(MainActivity.this)) {
+        if (StorageManager.LoadLists(MainActivity.this)) {
             UpdateView();
         } else {
             updateList();
@@ -73,10 +73,10 @@ public class MainActivity extends Activity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_bar_save:
-                StorageManager.SaveData(this);
+                StorageManager.SaveLists(this);
                 return true;
             case R.id.action_bar_load:
-                StorageManager.GetData(this);
+                StorageManager.LoadLists(this);
                 UpdateView();
                 return true;
             case R.id.action_bar_refresh:
@@ -254,7 +254,7 @@ public class MainActivity extends Activity {
 
             if (result) {
                 UpdateView();
-                StorageManager.SaveData(MainActivity.this);
+                StorageManager.SaveLists(MainActivity.this);
             }
         }
     }

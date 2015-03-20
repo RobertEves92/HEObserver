@@ -16,13 +16,13 @@ import java.util.Map;
 import nl.matshofman.saxrssreader.RssItem;
 
 public class StorageManager {
-    private final static String PREFS_NAME = "HEOStorage";
+    private final static String LISTSTORAGE = "HEOListStorage";
 
-    public static void SaveData(Activity activity) {
+    public static void SaveLists(Activity activity) {
         try {
             SharedPreferences settings;
             SharedPreferences.Editor editor;
-            settings = activity.getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
+            settings = activity.getApplicationContext().getSharedPreferences(LISTSTORAGE, 0);
             editor = settings.edit();
 
             //region Save Last Updated
@@ -60,10 +60,10 @@ public class StorageManager {
         }
     }
 
-    public static Boolean GetData(Activity activity) {
+    public static Boolean LoadLists(Activity activity) {
         try {
             SharedPreferences settings;
-            settings = activity.getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
+            settings = activity.getApplicationContext().getSharedPreferences(LISTSTORAGE, 0);
 
             //region StoryList
             int storyListSize = settings.getInt("storylist_size", 0);
