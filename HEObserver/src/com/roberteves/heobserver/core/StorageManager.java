@@ -3,7 +3,6 @@ package com.roberteves.heobserver.core;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -92,11 +91,11 @@ public class StorageManager {
                     r.setTitle(settings.getString("rssitem_" + ii + "_title", ""));
                     r.setLink(settings.getString("rssitem_" + ii + "_link", ""));
                     r.setDescription(settings.getString("rssitem_" + ii + "_description", ""));
+                    String d = settings.getString("rssitem_" + ii + "_date", "");
                     try {
-                        String d = settings.getString("rssitem_" + ii + "_date", "");
                         r.setPubDate(df.parse(d));
                     } catch (Exception e) {
-                        Log.e("ERROR", e.getMessage());
+                        Util.LogException("parse date", d, e);
                     }
                     r.setContent(settings.getString("rssitem_" + ii + "_content", ""));
                     RssItems.add(r);
