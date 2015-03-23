@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -117,5 +118,23 @@ public class StorageManager {
             Util.LogException("load data", "none", e);
             return false;
         }
+    }
+
+    public static Date LastUpdated(Activity activity)
+    {
+        SharedPreferences settings;
+        settings = activity.getApplicationContext().getSharedPreferences(LISTSTORAGE, 0);
+        String lastUpdate = settings.getString("last_updated","");
+        if(!lastUpdate.equals("")) {
+            try {
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                return df.parse(lastUpdate);
+            }
+            catch (Exception e)
+            {
+                Util.LogException("parse last update",lastUpdate,e);
+                return null;
+            }
+        }else{return null;}
     }
 }
