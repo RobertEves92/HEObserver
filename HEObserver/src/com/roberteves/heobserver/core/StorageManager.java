@@ -4,14 +4,11 @@ package com.roberteves.heobserver.core;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import nl.matshofman.saxrssreader.RssItem;
@@ -28,8 +25,7 @@ public class StorageManager {
 
             //region Save Last Updated
             Calendar currentDate = Calendar.getInstance();
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            String lastUpdate = df.format(currentDate.getTime());
+            String lastUpdate = Util.FormatDate(currentDate.getTime(),"dd/MM/yyyy HH:mm:ss");
             editor.putString("last_updated", lastUpdate);
             //endregion
             //region StoryList
@@ -84,8 +80,6 @@ public class StorageManager {
             int rssItemsSize = settings.getInt("rssitems_size", 0);
             ArrayList<RssItem> RssItems = new ArrayList<>();
             if (rssItemsSize != 0) {
-                DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzzzzzzz yyyy", Locale.getDefault());
-
                 int ii = 0;
                 do {
                     RssItem r = new RssItem();
@@ -94,7 +88,7 @@ public class StorageManager {
                     r.setDescription(settings.getString("rssitem_" + ii + "_description", ""));
                     String d = settings.getString("rssitem_" + ii + "_date", "");
                     try {
-                        r.setPubDate(df.parse(d));
+                        r.setPubDate(Util.ParseDate(d,"EEE MMM dd HH:mm:ss zzzzzzzzz yyyy"));
                     } catch (Exception e) {
                         Util.LogException("parse date", d, e);
                     }
@@ -127,8 +121,7 @@ public class StorageManager {
         String lastUpdate = settings.getString("last_updated","");
         if(!lastUpdate.equals("")) {
             try {
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                return df.parse(lastUpdate);
+                return Util.ParseDate(lastUpdate,"dd/MM/yyyy HH:mm:ss");
             }
             catch (Exception e)
             {

@@ -2,14 +2,11 @@ package com.roberteves.heobserver.core;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -86,10 +83,9 @@ public class Article implements Serializable {
     }
 
     public static String processPubDate(Date pubDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(pubDate);
-        return sdf.format(calendar.getTime());
+        return Util.FormatDate(calendar.getTime(),"dd/MM/yyyy HH:mm");
     }
 
     public static boolean checkTitle(String title) {
@@ -112,8 +108,7 @@ public class Article implements Serializable {
 
     private String processPubDate(String date) {
         try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.getDefault());
-            Date d = df.parse(date);
+            Date d = Util.ParseDate(date,"yyyy-MM-ddHH:mm:ss");
             return processPubDate(d);
         } catch (Exception e) {
             Util.LogException("process article pub date", "link: " + getLink() + "; date: " + date, e);

@@ -17,6 +17,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.zip.GZIPInputStream;
 
 public class Util {
@@ -73,5 +78,15 @@ public class Util {
 
     public static void LogMessage(int priority, String tag, String message) {
         Crashlytics.log(priority, tag, message);
+    }
+
+    public static Date ParseDate(String date, String format) throws ParseException {
+        DateFormat df = new SimpleDateFormat(format, Locale.getDefault());
+        return df.parse(date);
+    }
+
+    public static String FormatDate(Date date,String format){
+        SimpleDateFormat df = new SimpleDateFormat(format,Locale.getDefault());
+        return df.format(date);
     }
 }
