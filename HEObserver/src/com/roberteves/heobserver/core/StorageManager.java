@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public class StorageManager {
 
             //region Save Last Updated
             Calendar currentDate = Calendar.getInstance();
-            String lastUpdate = Util.FormatDate(currentDate.getTime(),"dd/MM/yyyy HH:mm:ss");
+            String lastUpdate = Date.FormatDate(currentDate.getTime(), "dd/MM/yyyy HH:mm:ss");
             editor.putString("last_updated", lastUpdate);
             //endregion
             //region StoryList
@@ -88,7 +87,7 @@ public class StorageManager {
                     r.setDescription(settings.getString("rssitem_" + ii + "_description", ""));
                     String d = settings.getString("rssitem_" + ii + "_date", "");
                     try {
-                        r.setPubDate(Util.ParseDate(d,"EEE MMM dd HH:mm:ss zzzzzzzzz yyyy"));
+                        r.setPubDate(Date.ParseDate(d, "EEE MMM dd HH:mm:ss zzzzzzzzz yyyy"));
                     } catch (Exception e) {
                         Util.LogException("parse date", d, e);
                     }
@@ -114,20 +113,19 @@ public class StorageManager {
         }
     }
 
-    public static Date LastUpdated(Activity activity)
-    {
+    public static java.util.Date LastUpdated(Activity activity) {
         SharedPreferences settings;
         settings = activity.getApplicationContext().getSharedPreferences(LISTSTORAGE, 0);
-        String lastUpdate = settings.getString("last_updated","");
-        if(!lastUpdate.equals("")) {
+        String lastUpdate = settings.getString("last_updated", "");
+        if (!lastUpdate.equals("")) {
             try {
-                return Util.ParseDate(lastUpdate,"dd/MM/yyyy HH:mm:ss");
-            }
-            catch (Exception e)
-            {
-                Util.LogException("parse last update",lastUpdate,e);
+                return Date.ParseDate(lastUpdate, "dd/MM/yyyy HH:mm:ss");
+            } catch (Exception e) {
+                Util.LogException("parse last update", lastUpdate, e);
                 return null;
             }
-        }else{return null;}
+        } else {
+            return null;
+        }
     }
 }

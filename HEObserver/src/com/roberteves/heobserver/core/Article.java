@@ -3,9 +3,6 @@ package com.roberteves.heobserver.core;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,9 +46,15 @@ public class Article implements Serializable {
         setBody(b);
 
         String date = selectStringFromRegex(source, regexDate).substring(0, 10);
-        String time = selectStringFromRegex(source, regexTime).substring(0, 8);
+        String time = selectStringFromRegex(source, regexTime).substring(0, 5);
 
-        setPublishedDate(processPubDate(date + time));
+        try {
+            date = Date.FormatDate(Date.ParseDate(date, "yyyy-MM-dd"), "dd/MM/yyyy");
+            setPublishedDate(date + " " + time);
+        } catch (Exception e) {
+            Util.LogException("parse article date", date + " " + time, e);
+            setPublishedDate("");
+        }
 
         // Set Link
         setLink(link);
@@ -82,12 +85,6 @@ public class Article implements Serializable {
         return listMatches;
     }
 
-    public static String processPubDate(Date pubDate) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(pubDate);
-        return Util.FormatDate(calendar.getTime(),"dd/MM/yyyy HH:mm");
-    }
-
     public static boolean checkTitle(String title) {
         for (String s : mediaTags) {
             if (title.toUpperCase().contains(s.toUpperCase())) {
@@ -104,16 +101,6 @@ public class Article implements Serializable {
             }
         }
         return false;
-    }
-
-    private String processPubDate(String date) {
-        try {
-            Date d = Util.ParseDate(date,"yyyy-MM-ddHH:mm:ss");
-            return processPubDate(d);
-        } catch (Exception e) {
-            Util.LogException("process article pub date", "link: " + getLink() + "; date: " + date, e);
-            return "";
-        }
     }
 
     public void processComments() {

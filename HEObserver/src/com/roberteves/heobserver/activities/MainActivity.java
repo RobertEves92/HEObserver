@@ -23,6 +23,7 @@ import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
+import com.roberteves.heobserver.core.Date;
 import com.roberteves.heobserver.core.Lists;
 import com.roberteves.heobserver.core.SettingsManager;
 import com.roberteves.heobserver.core.StorageManager;
@@ -186,7 +187,7 @@ public class MainActivity extends Activity {
                 if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
                     HashMap<String, String> story = new HashMap<>();
                     story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
-                    story.put("date", Article.processPubDate(item.getPubDate()));
+                    story.put("date",Date.FormatDate(item.getPubDate(),"dd/MM/yyyy HH:mm"));
                     Lists.storyList.add(story);
                     rssItems.add(item);
                 }
