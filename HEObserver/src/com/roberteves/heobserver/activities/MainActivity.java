@@ -138,6 +138,19 @@ public class MainActivity extends Activity {
         return netInfo != null && netInfo.isConnected();
     }
 
+    private Boolean CheckUpdates() {
+        long diff = Date.GetTimeDifference(StorageManager.LastUpdated(this), new java.util.Date());
+        diff = diff / 1000;//seconds
+        diff = diff / 60;//mins
+        diff = diff / 60;//hours
+
+        if (diff >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private class UpdateListViewTask extends AsyncTask<String, Integer, Boolean> {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
         private int completedFeeds = 0;

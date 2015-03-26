@@ -15,4 +15,9 @@ public class Date {
         SimpleDateFormat df = new SimpleDateFormat(format, Locale.getDefault());
         return df.format(date);
     }
+
+    public static Long GetTimeDifference(java.util.Date date1, java.util.Date date2)
+    {
+        return date1.getTime() - date2.getTime();
+    }
 }
