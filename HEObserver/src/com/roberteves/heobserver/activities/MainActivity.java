@@ -3,6 +3,7 @@ package com.roberteves.heobserver.activities;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -157,10 +158,27 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
+            Util.LogMessage(Log.INFO,"UpdateAsync","Started");
+
             this.dialog.setMessage(getString(R.string.dialog_fetching_articles));
-            this.dialog.setCancelable(false);
+            //this.dialog.setCancelable(false);
             this.dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             this.dialog.show();
+            this.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    cancel(true);
+                    Util.LogMessage(Log.INFO,"UpdateAsync","Cancelled");
+                    Handler handler = new Handler(getApplicationContext().getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Update Cancelled",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
         }
 
         @Override
@@ -196,6 +214,9 @@ public class MainActivity extends Activity {
             rssItems = new ArrayList<>();
 
             for (RssItem item : Lists.RssItems) {
+                if(isCancelled())
+                    break;
+
                 //If item has unsupported media, don't add
                 if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
                     HashMap<String, String> story = new HashMap<>();
@@ -213,6 +234,9 @@ public class MainActivity extends Activity {
         private void getFeeds(ArrayList<RssItem> rssItems, String[] feeds) {
             ArrayList<RssItem> feedItems;
             for (String s : feeds) {
+                if(isCancelled())
+                    break;
+
                 try {
                     feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
                     processDuplicates(rssItems, feedItems);
@@ -244,8 +268,14 @@ public class MainActivity extends Activity {
 
         private void processDuplicates(ArrayList<RssItem> rssItems, ArrayList<RssItem> feedItems) {
             for (RssItem y : feedItems) {
+                if(isCancelled())
+                    break;
+
                 Boolean exists = false;
                 for (RssItem z : rssItems) {
+                    if(isCancelled())
+                        break;
+
                     if (z.getTitle().equalsIgnoreCase(y.getTitle())) {
                         exists = true;
                     }
@@ -270,6 +300,8 @@ public class MainActivity extends Activity {
                 UpdateView();
                 StorageManager.SaveLists(MainActivity.this);
             }
+
+            Util.LogMessage(Log.INFO,"UpdateAsync","Finished with result: " + result);
         }
     }
 }
