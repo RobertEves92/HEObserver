@@ -148,11 +148,7 @@ public class MainActivity extends Activity {
         diff = diff / 60;//mins
         diff = diff / 60;//hours
 
-        if (diff >= 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return diff >= 1;
     }
 
     private class UpdateListViewTask extends AsyncTask<String, Integer, Boolean> {
