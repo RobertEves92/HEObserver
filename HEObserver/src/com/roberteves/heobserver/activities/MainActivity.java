@@ -232,22 +232,9 @@ public class MainActivity extends Activity {
                     processDuplicates(rssItems, feedItems);
                 } catch (Exception e) {
                     if (!(e instanceof SocketTimeoutException)) { //Don't log or try again if timeout exception
-                        Util.LogException("load feed without processing", s, e);
+                        Util.LogException("load feed", s, e);
                     } else {
                         Util.LogMessage(Log.INFO, "SocketTimeout", "Feed: " + s);
-                    }
-
-
-                    //Try with processing if it doesnt work
-                    try {
-                        feedItems = RssReader.read(Util.getWebSource(s)).getRssItems();
-                        processDuplicates(rssItems, feedItems);
-                    } catch (Exception ee) {
-                        if (!(ee instanceof SocketTimeoutException)) {
-                            Util.LogException("load feed with processing", s, ee);
-                        } else {
-                            Util.LogMessage(Log.INFO, "SocketTimeout", "Feed: " + s);
-                        }
                     }
                 }
             }
