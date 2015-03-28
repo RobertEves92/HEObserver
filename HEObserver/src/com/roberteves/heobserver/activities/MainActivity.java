@@ -154,15 +154,12 @@ public class MainActivity extends Activity {
 
     private class UpdateListViewTask extends AsyncTask<String, Integer, Boolean> {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
-        private int completedFeeds = 0;
 
         @Override
         protected void onPreExecute() {
             Util.LogMessage(Log.INFO,"UpdateAsync","Started");
 
             this.dialog.setMessage(getString(R.string.dialog_fetching_articles));
-            //this.dialog.setCancelable(false);
-            this.dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             this.dialog.show();
             this.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
@@ -259,9 +256,6 @@ public class MainActivity extends Activity {
                             Util.LogMessage(Log.INFO, "SocketTimeout", "Feed: " + s);
                         }
                     }
-                } finally {
-                    completedFeeds++;
-                    publishProgress((100 / feeds.length) * completedFeeds);
                 }
             }
         }
@@ -284,10 +278,6 @@ public class MainActivity extends Activity {
                 if (!exists)
                     rssItems.add(y);
             }
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-            this.dialog.setProgress(progress[0]);
         }
 
         @Override
