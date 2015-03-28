@@ -1,4 +1,5 @@
 #LocalNews
+http://www.hertsandessexobserver.co.uk/news.rss
 http://www.hertsandessexobserver.co.uk/bishops-stortford.rss
 http://www.hertsandessexobserver.co.uk/sawbridgeworth.rss
 http://www.hertsandessexobserver.co.uk/dunmow-stansted.rss

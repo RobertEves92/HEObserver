@@ -3,6 +3,7 @@ package com.roberteves.heobserver.activities;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -23,8 +24,10 @@ import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
+import com.roberteves.heobserver.core.Date;
 import com.roberteves.heobserver.core.Lists;
 import com.roberteves.heobserver.core.SettingsManager;
+import com.roberteves.heobserver.core.StorageManager;
 import com.roberteves.heobserver.core.Util;
 import com.roberteves.heobserver.feeds.Feed;
 import com.roberteves.heobserver.feeds.FeedManager;
@@ -51,7 +54,16 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
 
-        updateList();
+        //Display saved feeds if available or update and display if not or 1hr since last update
+        if (StorageManager.LoadLists(MainActivity.this)) {
+            if (CheckUpdates()) {
+                updateList();
+            } else {
+                UpdateView();
+            }
+        } else {
+            updateList();
+        }
     }
 
     @Override
@@ -66,6 +78,13 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
+            case R.id.action_bar_save:
+                StorageManager.SaveLists(this);
+                return true;
+            case R.id.action_bar_load:
+                StorageManager.LoadLists(this);
+                UpdateView();
+                return true;
             case R.id.action_bar_refresh:
                 updateList();
                 return true;
@@ -124,16 +143,39 @@ public class MainActivity extends Activity {
         return netInfo != null && netInfo.isConnected();
     }
 
+    private Boolean CheckUpdates() {
+        long diff = Date.GetTimeDifference(new java.util.Date(),StorageManager.LastUpdated(this));
+        diff = diff / 1000;//seconds
+        diff = diff / 60;//mins
+        diff = diff / 60;//hours
+
+        return diff >= 1;
+    }
+
     private class UpdateListViewTask extends AsyncTask<String, Integer, Boolean> {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
-        private int completedFeeds = 0;
 
         @Override
         protected void onPreExecute() {
+            Util.LogMessage(Log.INFO,"UpdateAsync","Started");
+
             this.dialog.setMessage(getString(R.string.dialog_fetching_articles));
-            this.dialog.setCancelable(false);
-            this.dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             this.dialog.show();
+            this.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    cancel(true);
+                    Util.LogMessage(Log.INFO,"UpdateAsync","Cancelled");
+                    Handler handler = new Handler(getApplicationContext().getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Update Cancelled",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
         }
 
         @Override
@@ -169,11 +211,14 @@ public class MainActivity extends Activity {
             rssItems = new ArrayList<>();
 
             for (RssItem item : Lists.RssItems) {
+                if(isCancelled())
+                    break;
+
                 //If item has unsupported media, don't add
                 if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
                     HashMap<String, String> story = new HashMap<>();
                     story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
-                    story.put("date", Article.processPubDate(item.getPubDate()));
+                    story.put("date",Date.FormatDate(item.getPubDate(),"dd/MM/yyyy HH:mm"));
                     Lists.storyList.add(story);
                     rssItems.add(item);
                 }
@@ -186,6 +231,9 @@ public class MainActivity extends Activity {
         private void getFeeds(ArrayList<RssItem> rssItems, String[] feeds) {
             ArrayList<RssItem> feedItems;
             for (String s : feeds) {
+                if(isCancelled())
+                    break;
+
                 try {
                     feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
                     processDuplicates(rssItems, feedItems);
@@ -208,17 +256,20 @@ public class MainActivity extends Activity {
                             Util.LogMessage(Log.INFO, "SocketTimeout", "Feed: " + s);
                         }
                     }
-                } finally {
-                    completedFeeds++;
-                    publishProgress((100 / feeds.length) * completedFeeds);
                 }
             }
         }
 
         private void processDuplicates(ArrayList<RssItem> rssItems, ArrayList<RssItem> feedItems) {
             for (RssItem y : feedItems) {
+                if(isCancelled())
+                    break;
+
                 Boolean exists = false;
                 for (RssItem z : rssItems) {
+                    if(isCancelled())
+                        break;
+
                     if (z.getTitle().equalsIgnoreCase(y.getTitle())) {
                         exists = true;
                     }
@@ -229,10 +280,6 @@ public class MainActivity extends Activity {
             }
         }
 
-        protected void onProgressUpdate(Integer... progress) {
-            this.dialog.setProgress(progress[0]);
-        }
-
         @Override
         protected void onPostExecute(Boolean result) {
             if (dialog.isShowing()) {
@@ -241,7 +288,10 @@ public class MainActivity extends Activity {
 
             if (result) {
                 UpdateView();
+                StorageManager.SaveLists(MainActivity.this);
             }
+
+            Util.LogMessage(Log.INFO,"UpdateAsync","Finished with result: " + result);
         }
     }
 }
