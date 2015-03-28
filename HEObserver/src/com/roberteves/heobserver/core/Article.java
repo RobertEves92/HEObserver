@@ -35,7 +35,7 @@ public class Article implements Serializable {
         String t = selectStringFromRegex(source, regexTitle);
         t = t.replaceAll(regexTitleStart, "");
         t = t.replaceAll(regexTitleEnd, "");
-        setTitle(t);
+        setTitle(HtmlEscape.unescapeHtml(t));
 
         // Set Body
         String b = selectStringFromRegex(source, regexArticle);
