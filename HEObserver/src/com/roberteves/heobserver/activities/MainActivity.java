@@ -53,9 +53,13 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
 
-        //Display saved feeds if available or update and display if not
+        //Display saved feeds if available or update and display if not or 1hr since last update
         if (StorageManager.LoadLists(MainActivity.this)) {
-            UpdateView();
+            if (CheckUpdates()) {
+                updateList();
+            } else {
+                UpdateView();
+            }
         } else {
             updateList();
         }
