@@ -143,7 +143,7 @@ public class MainActivity extends Activity {
     }
 
     private Boolean CheckUpdates() {
-        long diff = Date.GetTimeDifference(StorageManager.LastUpdated(this), new java.util.Date());
+        long diff = Date.GetTimeDifference(new java.util.Date(),StorageManager.LastUpdated(this));
         diff = diff / 1000;//seconds
         diff = diff / 60;//mins
         diff = diff / 60;//hours
