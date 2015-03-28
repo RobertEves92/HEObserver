@@ -78,13 +78,6 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
-            case R.id.action_bar_save:
-                StorageManager.SaveLists(this);
-                return true;
-            case R.id.action_bar_load:
-                StorageManager.LoadLists(this);
-                UpdateView();
-                return true;
             case R.id.action_bar_refresh:
                 updateList();
                 return true;
