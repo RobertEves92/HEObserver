@@ -26,7 +26,7 @@ public class Util {
         StrictMode.setThreadPolicy(policy);
     }
 
-    public static String getWebSource(String Url, Boolean processing) throws IOException {
+    public static String getWebSource(String Url) throws IOException {
         int timeout = 5; //timeout in seconds
         HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
 
@@ -57,9 +57,7 @@ public class Util {
 
         is.close(); // Close the stream
 
-        if (processing) {
-            resString = resString.replaceAll("'", "`");
-        }
+        resString = resString.replaceAll("'", "`"); //prevents some errors in rss feed parsing
 
         return resString;
     }

@@ -30,7 +30,7 @@ public class Article implements Serializable {
     private ArrayList<Comment> comments;
 
     public Article(String link) throws IOException {
-        source = Util.getWebSource(link, false);
+        source = Util.getWebSource(link);
         // Set Title
         String t = selectStringFromRegex(source, regexTitle);
         t = t.replaceAll(regexTitleStart, "");

@@ -228,7 +228,7 @@ public class MainActivity extends Activity {
                     break;
 
                 try {
-                    feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
+                    feedItems = RssReader.read(Util.getWebSource(s)).getRssItems();
                     processDuplicates(rssItems, feedItems);
                 } catch (Exception e) {
                     if (!(e instanceof SocketTimeoutException)) { //Don't log or try again if timeout exception
@@ -240,7 +240,7 @@ public class MainActivity extends Activity {
 
                     //Try with processing if it doesnt work
                     try {
-                        feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
+                        feedItems = RssReader.read(Util.getWebSource(s)).getRssItems();
                         processDuplicates(rssItems, feedItems);
                     } catch (Exception ee) {
                         if (!(ee instanceof SocketTimeoutException)) {
