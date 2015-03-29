@@ -223,11 +223,19 @@ public class MainActivity extends Activity {
         private void getFeeds(ArrayList<RssItem> rssItems, String[] feeds) {
             ArrayList<RssItem> feedItems;
             for (String s : feeds) {
-                if(isCancelled())
+                if (isCancelled())
                     break;
 
+                String source;
                 try {
-                    feedItems = RssReader.read(Util.getWebSource(s)).getRssItems();
+                    source = Util.getWebSource(s);
+                    try {
+                        feedItems = RssReader.read(source).getRssItems();
+                    } catch (Exception e) {
+                        //replace some characters to prevent some errors in rss feed parsing
+                        feedItems = RssReader.read(source.replaceAll("'", "`")).getRssItems();
+                    }
+
                     processDuplicates(rssItems, feedItems);
                 } catch (Exception e) {
                     if (!(e instanceof SocketTimeoutException)) { //Don't log or try again if timeout exception
