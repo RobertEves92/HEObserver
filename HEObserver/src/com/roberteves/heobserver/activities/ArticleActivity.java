@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -125,7 +124,7 @@ public class ArticleActivity extends Activity {
                 if (!(e instanceof SocketTimeoutException)) { //Don't log if timeout exception
                     Util.LogException("load article", link, e);
                 } else {
-                    Util.LogMessage(Log.INFO, "SocketTimeout", "Article: " + link);
+                    Util.LogMessage("SocketTimeout", "Article: " + link);
                 }
                 return false;
             }

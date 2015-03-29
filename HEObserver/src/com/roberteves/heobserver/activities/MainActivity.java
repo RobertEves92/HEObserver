@@ -10,7 +10,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -149,7 +148,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            Util.LogMessage(Log.INFO,"UpdateAsync","Started");
+            Util.LogMessage("UpdateAsync","Started");
 
             this.dialog.setMessage(getString(R.string.dialog_fetching_articles));
             this.dialog.show();
@@ -157,7 +156,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     cancel(true);
-                    Util.LogMessage(Log.INFO,"UpdateAsync","Cancelled");
+                    Util.LogMessage("UpdateAsync","Cancelled");
                     Handler handler = new Handler(getApplicationContext().getMainLooper());
                     handler.post(new Runnable() {
                         @Override
@@ -241,7 +240,7 @@ public class MainActivity extends Activity {
                     if (!(e instanceof SocketTimeoutException)) { //Don't log or try again if timeout exception
                         Util.LogException("load feed", s, e);
                     } else {
-                        Util.LogMessage(Log.INFO, "SocketTimeout", "Feed: " + s);
+                        Util.LogMessage("SocketTimeout", "Feed: " + s);
                     }
                 }
             }
@@ -273,12 +272,12 @@ public class MainActivity extends Activity {
                 dialog.dismiss();
             }
 
-            if (result) {
+            if (result && !isCancelled()) {
                 UpdateView();
                 StorageManager.SaveLists(MainActivity.this);
             }
 
-            Util.LogMessage(Log.INFO,"UpdateAsync","Finished with result: " + result);
+            Util.LogMessage("UpdateAsync","Finished with result: " + result);
         }
     }
 }
