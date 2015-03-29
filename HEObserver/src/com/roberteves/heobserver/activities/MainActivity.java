@@ -158,7 +158,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            Util.LogMessage("UpdateAsync","Started");
+            Util.LogMessage("UpdateAsync","Pre Execute");
 
             this.dialog.setMessage(getString(R.string.dialog_fetching_articles));
             this.dialog.show();
@@ -182,7 +182,7 @@ public class MainActivity extends Activity {
         @Override
         protected Boolean doInBackground(String... feeds) {
             if (isOnline()) {
-
+                Util.LogMessage("UpdateAsync","Execute");
                 ArrayList<RssItem> rssItems = new ArrayList<>();
 
                 getFeeds(rssItems, feeds);
@@ -190,6 +190,7 @@ public class MainActivity extends Activity {
 
                 return true;
             } else {
+                Util.LogMessage("UpdateAsync","No Internet");
                 Handler handler = new Handler(getApplicationContext().getMainLooper());
                 handler.post(new Runnable() {
                     @Override
@@ -203,6 +204,7 @@ public class MainActivity extends Activity {
         }
 
         private void processFeeds(ArrayList<RssItem> rssItems) {
+            Util.LogMessage("UpdateAsync","Process Feeds");
             Collections.sort(rssItems);// sorts into reverse date order
             Collections.reverse(rssItems);// flip to correct order
             Lists.RssItems = rssItems;
@@ -230,6 +232,7 @@ public class MainActivity extends Activity {
         }
 
         private void getFeeds(ArrayList<RssItem> rssItems, String[] feeds) {
+            Util.LogMessage("UpdateAsync","Get Feeds");
             ArrayList<RssItem> feedItems;
             for (String s : feeds) {
                 if (isCancelled())
@@ -257,6 +260,7 @@ public class MainActivity extends Activity {
         }
 
         private void processDuplicates(ArrayList<RssItem> rssItems, ArrayList<RssItem> feedItems) {
+            Util.LogMessage("UpdateAsync","Process Duplicates");
             for (RssItem y : feedItems) {
                 if(isCancelled())
                     break;
@@ -278,6 +282,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            Util.LogMessage("UpdateAsync","Post Execute");
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
