@@ -57,8 +57,6 @@ public class Util {
 
         is.close(); // Close the stream
 
-        resString = resString.replaceAll("'", "`"); //prevents some errors in rss feed parsing
-
         return resString;
     }
 
