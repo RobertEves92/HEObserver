@@ -49,6 +49,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build()); //dont log in debug mode
         //Fabric.with(this, new Crashlytics()); //do log in debug mode
+
+        Util.LogMessage("MainActivity","Activity Started");
         setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
@@ -74,6 +76,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Util.LogMessage("MainActivity","Option Selected: " + item.getItemId());
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_bar_refresh:
@@ -87,11 +90,13 @@ public class MainActivity extends Activity {
     }
 
     private void updateList() {
+        Util.LogMessage("MainActivity","Update List");
         UpdateListViewTask updateListViewTask = new UpdateListViewTask();
         updateListViewTask.execute(getFeeds());
     }
 
     private String[] getFeeds() {
+        Util.LogMessage("MainActivity","Get Feeds");
         FeedManager.LoadFeeds(this);
         ArrayList<String> feeds = new ArrayList<>();
         SettingsManager settingsManager = new SettingsManager(this);
@@ -107,6 +112,7 @@ public class MainActivity extends Activity {
     }
 
     private void UpdateView() {
+        Util.LogMessage("MainActivity","Update View");
         //Create ListView Adapter
         SimpleAdapter simpleAdpt = new SimpleAdapter(this,
                 Lists.storyList, android.R.layout.simple_list_item_2,
@@ -131,7 +137,9 @@ public class MainActivity extends Activity {
     private boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnected();
+        Boolean status = netInfo != null && netInfo.isConnected();
+        Util.LogMessage("MainActivity","Online Status: "+ status);
+        return status;
     }
 
     private Boolean CheckUpdates() {
@@ -140,7 +148,9 @@ public class MainActivity extends Activity {
         diff = diff / 60;//mins
         diff = diff / 60;//hours
 
-        return diff >= 1;
+        Boolean b = diff >= 1;
+        Util.LogMessage("MainActivity","Check Updates: "+ b);
+        return b;
     }
 
     private class UpdateListViewTask extends AsyncTask<String, Integer, Boolean> {
