@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Util.LogMessage("MainActivity","Option Selected: " + item.getItemId());
+        Util.LogMessage("MainActivity","Option Selected: " + item.getTitle());
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_bar_refresh:
