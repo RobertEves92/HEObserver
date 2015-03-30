@@ -10,6 +10,7 @@ import android.preference.PreferenceActivity;
 
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.SettingsManager;
+import com.roberteves.heobserver.core.Util;
 
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {
@@ -24,22 +25,17 @@ public class SettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Util.LogMessage("SettingsActivity","Activity Started");
         super.onCreate(savedInstanceState);
         settingsManager = new SettingsManager(this);
         addPreferencesFromResource(R.xml.preferences_layout);
 
-        createPreferences();
-        updatePreferences();
-    }
-
-    private void createPreferences() {
         localnews = (CheckBoxPreference) getPreferenceManager().findPreference("feed_localnews");
         sport = (CheckBoxPreference) getPreferenceManager().findPreference("feed_sport");
         sport.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 settingsManager.setFeedSport((Boolean) newValue);
-                updatePreferences();
                 return true;
             }
         });
@@ -48,7 +44,6 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 settingsManager.setFeedLifestyle((Boolean) newValue);
-                updatePreferences();
                 return true;
             }
         });
@@ -57,7 +52,6 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 settingsManager.setFeedRetail((Boolean) newValue);
-                updatePreferences();
                 return true;
             }
         });
@@ -66,7 +60,6 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 settingsManager.setFeedWeather((Boolean) newValue);
-                updatePreferences();
                 return true;
             }
         });
@@ -75,7 +68,6 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 settingsManager.setFeedFamily((Boolean) newValue);
-                updatePreferences();
                 return true;
             }
         });
@@ -84,7 +76,6 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 settingsManager.setFeedMisc((Boolean) newValue);
-                updatePreferences();
                 return true;
             }
         });
@@ -101,7 +92,13 @@ public class SettingsActivity extends PreferenceActivity {
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
                                         settingsManager.resetSettings();
-                                        updatePreferences();
+                                        localnews.setChecked(true);
+                                        sport.setChecked(settingsManager.getFeedSport());
+                                        lifestyle.setChecked(settingsManager.getFeedLifestyle());
+                                        retail.setChecked(settingsManager.getFeedRetail());
+                                        weather.setChecked(settingsManager.getFeedWeather());
+                                        family.setChecked(settingsManager.getFeedFamily());
+                                        misc.setChecked(settingsManager.getFeedMisc());
                                     }
                                 })
                         .setNegativeButton("No",
@@ -149,9 +146,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-    }
 
-    private void updatePreferences() {
         localnews.setChecked(true);
         sport.setChecked(settingsManager.getFeedSport());
         lifestyle.setChecked(settingsManager.getFeedLifestyle());
@@ -159,5 +154,11 @@ public class SettingsActivity extends PreferenceActivity {
         weather.setChecked(settingsManager.getFeedWeather());
         family.setChecked(settingsManager.getFeedFamily());
         misc.setChecked(settingsManager.getFeedMisc());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Util.LogMessage("SettingsActivity","Activity Ended");
     }
 }
