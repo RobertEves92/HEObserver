@@ -23,6 +23,7 @@ public class WebActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Util.LogMessage("WebActivity","Activity Started");
         Util.setupThreadPolicy();
         Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
 
@@ -69,6 +70,12 @@ public class WebActivity extends Activity {
     public void onResume() {
         super.onResume();
         finish(); // close when resumed
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Util.LogMessage("WebActivity","Activity Ended");
     }
 
     private void loadWebView() {
