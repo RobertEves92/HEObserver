@@ -28,6 +28,7 @@ public class ArticleActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Util.LogMessage("ArticleActivity","Activity Started");
         activity = this;
         setContentView(R.layout.activity_article);
 
@@ -41,6 +42,7 @@ public class ArticleActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Util.LogMessage("ArticleActivity","Activity Ended");
         link = null;
         article = null;
     }
@@ -61,6 +63,7 @@ public class ArticleActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Util.LogMessage("ArticleActivity","Option Selected: " + item.getTitle());
         switch (item.getItemId()) {
             case R.id.action_bar_share:
                 Intent share = new Intent(android.content.Intent.ACTION_SEND);
@@ -87,6 +90,7 @@ public class ArticleActivity extends Activity {
     }
 
     private void DisplayArticle() {
+        Util.LogMessage("ArticleActivity","Display Article");
         TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
         TextView txtBody = (TextView) findViewById(R.id.txtBody);
         TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
@@ -110,6 +114,7 @@ public class ArticleActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
+            Util.LogMessage("DownloadArticleAsync","Pre Execute");
             this.dialog.setMessage(getString(R.string.dialog_fetching_article));
             this.dialog.setCancelable(false);
             this.dialog.show();
@@ -117,6 +122,7 @@ public class ArticleActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(String... params) {
+            Util.LogMessage("DownloadArticleAsync","Execute");
             try {
                 article = new Article(link);
                 return true;
@@ -132,6 +138,7 @@ public class ArticleActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            Util.LogMessage("DownloadArticleAsync","Post Execute");
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
