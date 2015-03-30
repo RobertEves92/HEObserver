@@ -89,6 +89,12 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Util.LogMessage("MainActivity","Activity Ended");
+    }
+
     private void updateList() {
         Util.LogMessage("MainActivity","Update List");
         UpdateListViewTask updateListViewTask = new UpdateListViewTask();
