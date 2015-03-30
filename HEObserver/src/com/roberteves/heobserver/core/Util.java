@@ -4,6 +4,7 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.roberteves.heobserver.BuildConfig;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -61,13 +62,21 @@ public class Util {
     }
 
     public static void LogException(String action, String data, Exception e) {
+        if(BuildConfig.DEBUG) {
+            //only log in logcat if in debug
+            Log.w("Fabric", "Caught Exception: Action: " + action + "; Data: " + data + "; Exception: " + e.toString());
+        }
+
         Crashlytics.setString("action", action);
         Crashlytics.setString("data", data);
         Crashlytics.logException(e);
-        Crashlytics.log(Log.WARN, "Fabric", "Caught Exception: Action: " + action + "; Data: " + data + "; Exception: " + e.toString());
     }
 
     public static void LogMessage(String tag, String message) {
-        Crashlytics.log(Log.INFO, tag, message);
+        if (BuildConfig.DEBUG) {
+            Log.i(tag, message); //only log in logcat if in debug
+        }
+
+        Crashlytics.log("[" + tag + "] " + message);
     }
 }
