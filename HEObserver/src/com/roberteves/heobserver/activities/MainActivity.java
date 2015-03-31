@@ -425,6 +425,8 @@ public class MainActivity extends Activity {
                 //region Generate and Save Lists
                 ArrayList<RssItem> supportedRssItems = new ArrayList<>();
                 List<Map<String, String>> supportedStoryList = new ArrayList<>();
+                Collections.sort(rssItems);
+                Collections.reverse(rssItems);
                 for (RssItem item : rssItems) {
                     //If item has unsupported media, don't add
                     if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
