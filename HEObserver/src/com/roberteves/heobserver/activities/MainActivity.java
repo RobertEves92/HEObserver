@@ -305,7 +305,7 @@ public class MainActivity extends Activity {
     private class UpdateListViewTask2 extends AsyncTask<String,Void,Boolean>
     {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
-        private ArrayList<RssItem> rssItems;
+        private ArrayList<RssItem> rssItems = new ArrayList<>();
 
 
         @Override
@@ -342,7 +342,7 @@ public class MainActivity extends Activity {
                 for(String s : feeds)
                 {
                     if(isCancelled())
-                        break;
+                        return false;
 
                     String source;
                     try{
@@ -368,11 +368,35 @@ public class MainActivity extends Activity {
                 }
                 //endregion
                 //region Remove Duplicates
+                ArrayList<RssItem> items = new ArrayList<>();
+                for(RssItem x : rssItems)
+                {
+                    if(isCancelled())
+                        return false;
 
-                //endregion
-                //region Process Feeds
+                    Boolean exists = false;
 
+                    for(RssItem y : items)
+                    {
+                        if(isCancelled())
+                            return false;
+
+                        if (x.getLink().equalsIgnoreCase(y.getLink())) {
+                            exists = true;
+                            break;
+                        }
+                    }
+
+                    if(!exists)
+                        items.add(x);
+                }
+                rssItems = items;
                 //endregion
+
+                if(isCancelled())
+                    return false;
+                else
+                    return true;
             }
             else {
                 Util.LogMessage("UpdateAsync","No Internet");
