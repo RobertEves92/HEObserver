@@ -306,6 +306,7 @@ public class MainActivity extends Activity {
     {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
 
+
         @Override
         protected void onPreExecute(){
             Util.LogMessage("UpdateAsync","Pre Execute");
@@ -332,7 +333,22 @@ public class MainActivity extends Activity {
         @Override
         protected Boolean doInBackground(String... feeds)
         {
+            if(isOnline())
+            {
 
+            }
+            else {
+                Util.LogMessage("UpdateAsync","No Internet");
+                Handler handler = new Handler(getApplicationContext().getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), R.string.error_no_internet,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
+            }
         }
 
         @Override
