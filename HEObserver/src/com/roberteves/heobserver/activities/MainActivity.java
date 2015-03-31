@@ -301,4 +301,44 @@ public class MainActivity extends Activity {
             Util.LogMessage("UpdateAsync","Finished with result: " + result);
         }
     }
+
+    private class UpdateListViewTask2 extends AsyncTask<String,Void,Boolean>
+    {
+        private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            Util.LogMessage("UpdateAsync","Pre Execute");
+
+            this.dialog.setMessage(getString(R.string.dialog_fetching_articles));
+            this.dialog.show();
+            this.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    cancel(true);
+                    Util.LogMessage("UpdateAsync","Cancelled");
+                    Handler handler = new Handler(getApplicationContext().getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Update Cancelled",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        }
+
+        @Override
+        protected Boolean doInBackground(String... feeds)
+        {
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result)
+        {
+
+        }
+    }
 }
