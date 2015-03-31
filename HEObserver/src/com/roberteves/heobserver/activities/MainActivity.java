@@ -10,7 +10,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -50,6 +49,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build()); //dont log in debug mode
         //Fabric.with(this, new Crashlytics()); //do log in debug mode
+
+        Util.LogMessage("MainActivity","Activity Started");
         setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
@@ -75,6 +76,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Util.LogMessage("MainActivity","Option Selected: " + item.getTitle());
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_bar_refresh:
@@ -87,12 +89,20 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Util.LogMessage("MainActivity","Activity Ended");
+    }
+
     private void updateList() {
+        Util.LogMessage("MainActivity","Update List");
         UpdateListViewTask updateListViewTask = new UpdateListViewTask();
         updateListViewTask.execute(getFeeds());
     }
 
     private String[] getFeeds() {
+        Util.LogMessage("MainActivity","Get Feeds");
         FeedManager.LoadFeeds(this);
         ArrayList<String> feeds = new ArrayList<>();
         SettingsManager settingsManager = new SettingsManager(this);
@@ -108,6 +118,7 @@ public class MainActivity extends Activity {
     }
 
     private void UpdateView() {
+        Util.LogMessage("MainActivity","Update View");
         //Create ListView Adapter
         SimpleAdapter simpleAdpt = new SimpleAdapter(this,
                 Lists.storyList, android.R.layout.simple_list_item_2,
@@ -132,7 +143,9 @@ public class MainActivity extends Activity {
     private boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnected();
+        Boolean status = netInfo != null && netInfo.isConnected();
+        Util.LogMessage("MainActivity","Online Status: "+ status);
+        return status;
     }
 
     private Boolean CheckUpdates() {
@@ -141,7 +154,9 @@ public class MainActivity extends Activity {
         diff = diff / 60;//mins
         diff = diff / 60;//hours
 
-        return diff >= 1;
+        Boolean b = diff >= 1;
+        Util.LogMessage("MainActivity","Check Updates: "+ b);
+        return b;
     }
 
     private class UpdateListViewTask extends AsyncTask<String, Integer, Boolean> {
@@ -149,7 +164,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            Util.LogMessage(Log.INFO,"UpdateAsync","Started");
+            Util.LogMessage("UpdateAsync","Pre Execute");
 
             this.dialog.setMessage(getString(R.string.dialog_fetching_articles));
             this.dialog.show();
@@ -157,7 +172,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     cancel(true);
-                    Util.LogMessage(Log.INFO,"UpdateAsync","Cancelled");
+                    Util.LogMessage("UpdateAsync","Cancelled");
                     Handler handler = new Handler(getApplicationContext().getMainLooper());
                     handler.post(new Runnable() {
                         @Override
@@ -173,7 +188,7 @@ public class MainActivity extends Activity {
         @Override
         protected Boolean doInBackground(String... feeds) {
             if (isOnline()) {
-
+                Util.LogMessage("UpdateAsync","Execute");
                 ArrayList<RssItem> rssItems = new ArrayList<>();
 
                 getFeeds(rssItems, feeds);
@@ -181,6 +196,7 @@ public class MainActivity extends Activity {
 
                 return true;
             } else {
+                Util.LogMessage("UpdateAsync","No Internet");
                 Handler handler = new Handler(getApplicationContext().getMainLooper());
                 handler.post(new Runnable() {
                     @Override
@@ -194,6 +210,7 @@ public class MainActivity extends Activity {
         }
 
         private void processFeeds(ArrayList<RssItem> rssItems) {
+            Util.LogMessage("UpdateAsync","Process Feeds");
             Collections.sort(rssItems);// sorts into reverse date order
             Collections.reverse(rssItems);// flip to correct order
             Lists.RssItems = rssItems;
@@ -221,6 +238,7 @@ public class MainActivity extends Activity {
         }
 
         private void getFeeds(ArrayList<RssItem> rssItems, String[] feeds) {
+            Util.LogMessage("UpdateAsync","Get Feeds");
             ArrayList<RssItem> feedItems;
             for (String s : feeds) {
                 if (isCancelled())
@@ -241,13 +259,14 @@ public class MainActivity extends Activity {
                     if (!(e instanceof SocketTimeoutException)) { //Don't log or try again if timeout exception
                         Util.LogException("load feed", s, e);
                     } else {
-                        Util.LogMessage(Log.INFO, "SocketTimeout", "Feed: " + s);
+                        Util.LogMessage("SocketTimeout", "Feed: " + s);
                     }
                 }
             }
         }
 
         private void processDuplicates(ArrayList<RssItem> rssItems, ArrayList<RssItem> feedItems) {
+            Util.LogMessage("UpdateAsync","Process Duplicates");
             for (RssItem y : feedItems) {
                 if(isCancelled())
                     break;
@@ -269,16 +288,17 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            Util.LogMessage("UpdateAsync","Post Execute");
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
 
-            if (result) {
+            if (result && !isCancelled()) {
                 UpdateView();
                 StorageManager.SaveLists(MainActivity.this);
             }
 
-            Util.LogMessage(Log.INFO,"UpdateAsync","Finished with result: " + result);
+            Util.LogMessage("UpdateAsync","Finished with result: " + result);
         }
     }
 }

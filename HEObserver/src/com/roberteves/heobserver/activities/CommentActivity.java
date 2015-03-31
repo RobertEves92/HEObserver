@@ -7,6 +7,7 @@ import android.widget.SimpleAdapter;
 
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Comment;
+import com.roberteves.heobserver.core.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class CommentActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Util.LogMessage("CommentActivity","Activity Started");
         setContentView(R.layout.activity_scroll_list);
         ListView lv = (ListView) findViewById(R.id.listView);
 
@@ -42,5 +44,11 @@ public class CommentActivity extends Activity {
 
         //Set ListView from Adapter
         lv.setAdapter(simpleAdpt);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Util.LogMessage("CommentActivity","Activity Ended");
     }
 }
