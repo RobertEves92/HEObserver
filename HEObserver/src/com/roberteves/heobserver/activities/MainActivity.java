@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 
     private void updateList() {
         Util.LogMessage("MainActivity","Update List");
-        UpdateListViewTask updateListViewTask = new UpdateListViewTask();
+        UpdateListViewTask2 updateListViewTask = new UpdateListViewTask2();
         updateListViewTask.execute(getFeeds());
     }
 
