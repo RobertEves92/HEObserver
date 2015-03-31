@@ -368,6 +368,7 @@ public class MainActivity extends Activity {
                 }
                 //endregion
                 //region Remove Duplicates
+                Util.LogMessage("UpdateAsync","Remove ~Duplicates");
                 ArrayList<RssItem> items = new ArrayList<>();
                 for(RssItem x : rssItems)
                 {
@@ -415,7 +416,34 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(Boolean result)
         {
+            Util.LogMessage("UpdateAsync","Post Execute");
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
 
+            if(result && !isCancelled())
+            {
+                //region Generate and Save Lists
+                for (RssItem item : Lists.RssItems) {
+                    //If item has unsupported media, don't add
+                    if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
+                        HashMap<String, String> story = new HashMap<>();
+                        story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
+                        story.put("date",Date.FormatDate(item.getPubDate(),"dd/MM/yyyy HH:mm"));
+                        Lists.storyList.add(story);
+                        rssItems.add(item);
+                    }
+                }
+
+                //Update with new lists (filtered results)
+                Lists.RssItems = rssItems;
+
+                //Save Lists
+                StorageManager.SaveLists(MainActivity.this);
+                //endregion
+
+                UpdateView();
+            }
         }
     }
 }
