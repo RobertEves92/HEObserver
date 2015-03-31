@@ -337,7 +337,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(String... feeds) {
-            if (isOnline()) {
+            if (Util.isInternetAvailable(MainActivity.this)) {
                 Util.LogMessage("UpdateAsync", "Execute");
                 //region Get Feed Items
                 Util.LogMessage("UpdateAsync", "Get Feed Items");
