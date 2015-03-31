@@ -394,10 +394,7 @@ public class MainActivity extends Activity {
                 rssItems = items;
                 //endregion
 
-                if(isCancelled())
-                    return false;
-                else
-                    return true;
+                return !isCancelled();
             }
             else {
                 Util.LogMessage("UpdateAsync","No Internet");
