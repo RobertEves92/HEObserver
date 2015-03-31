@@ -370,7 +370,7 @@ public class MainActivity extends Activity {
                 }
                 //endregion
                 //region Remove Duplicates
-                Util.LogMessage("UpdateAsync","Remove ~Duplicates");
+                Util.LogMessage("UpdateAsync","Remove Duplicates");
                 ArrayList<RssItem> items = new ArrayList<>();
                 for(RssItem x : rssItems)
                 {
