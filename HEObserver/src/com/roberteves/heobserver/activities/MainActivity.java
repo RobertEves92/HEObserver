@@ -305,6 +305,7 @@ public class MainActivity extends Activity {
     private class UpdateListViewTask2 extends AsyncTask<String,Void,Boolean>
     {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+        private ArrayList<RssItem> rssItems;
 
 
         @Override
@@ -335,7 +336,43 @@ public class MainActivity extends Activity {
         {
             if(isOnline())
             {
+                Util.LogMessage("UpdateAsync","Execute");
+                //region Get Feed Items
+                Util.LogMessage("UpdateAsync","Get Feed Items");
+                for(String s : feeds)
+                {
+                    if(isCancelled())
+                        break;
 
+                    String source;
+                    try{
+                        source = Util.getWebSource(s);
+                        try{
+                            rssItems.addAll(RssReader.read(source).getRssItems());
+                        }
+                        catch(Exception e)
+                        {
+                            rssItems.addAll(RssReader.read(source.replaceAll("'","`")).getRssItems());
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        if(!(e instanceof SocketTimeoutException)){
+                            Util.LogException("load feed",s,e);
+                        }
+                        else
+                        {
+                            Util.LogMessage("SocketTimeout","Feed: "+s);
+                        }
+                    }
+                }
+                //endregion
+                //region Remove Duplicates
+
+                //endregion
+                //region Process Feeds
+
+                //endregion
             }
             else {
                 Util.LogMessage("UpdateAsync","No Internet");
