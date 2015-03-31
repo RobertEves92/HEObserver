@@ -35,6 +35,8 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
 import nl.matshofman.saxrssreader.RssItem;
@@ -421,19 +423,22 @@ public class MainActivity extends Activity {
             if(result && !isCancelled())
             {
                 //region Generate and Save Lists
-                for (RssItem item : Lists.RssItems) {
+                ArrayList<RssItem> supportedRssItems = new ArrayList<>();
+                List<Map<String, String>> supportedStoryList = new ArrayList<>();
+                for (RssItem item : rssItems) {
                     //If item has unsupported media, don't add
                     if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
                         HashMap<String, String> story = new HashMap<>();
                         story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
                         story.put("date",Date.FormatDate(item.getPubDate(),"dd/MM/yyyy HH:mm"));
-                        Lists.storyList.add(story);
-                        rssItems.add(item);
+                        supportedStoryList.add(story);
+                        supportedRssItems.add(item);
                     }
                 }
 
                 //Update with new lists (filtered results)
-                Lists.RssItems = rssItems;
+                Lists.RssItems = supportedRssItems;
+                Lists.storyList = supportedStoryList;
 
                 //Save Lists
                 StorageManager.SaveLists(MainActivity.this);
