@@ -45,7 +45,10 @@ public class Util {
                 HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
                 urlc.setRequestProperty("User-Agent", "test");
                 urlc.setRequestProperty("Connection", "close");
-                urlc.setConnectTimeout(1000); // mTimeout is in seconds
+
+                urlc.setConnectTimeout(1000); //timeout if cant connect within 1s
+                urlc.setReadTimeout(1000); //timeout if cant read within 1s
+
                 urlc.connect();
                 if (urlc.getResponseCode() == 200) {
                     LogMessage("Internet","Connected");
