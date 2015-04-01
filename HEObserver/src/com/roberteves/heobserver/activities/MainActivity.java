@@ -142,14 +142,6 @@ public class MainActivity extends Activity {
         });
     }
 
-    private boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        Boolean status = netInfo != null && netInfo.isConnected();
-        Util.LogMessage("MainActivity", "Online Status: " + status);
-        return status;
-    }
-
     private Boolean CheckUpdates() {
         long diff = Date.GetTimeDifference(new java.util.Date(), StorageManager.LastUpdated(this));
         diff = diff / 1000;//seconds
