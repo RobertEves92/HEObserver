@@ -122,16 +122,32 @@ public class ArticleActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(String... params) {
-            Util.LogMessage("DownloadArticleAsync","Execute");
-            try {
-                article = new Article(link);
-                return true;
-            } catch (Exception e) {
-                if (!(e instanceof SocketTimeoutException)) { //Don't log if timeout exception
-                    Util.LogException("load article", link, e);
-                } else {
-                    Util.LogMessage("SocketTimeout", "Article: " + link);
+            Util.LogMessage("DownloadArticleAsync", "Execute");
+            if (Util.isInternetAvailable(ArticleActivity.this)) {
+                try {
+                    article = new Article(link);
+                    
+                    return true;
+                } catch (Exception e) {
+                    if (!(e instanceof SocketTimeoutException)) { //Don't log if timeout exception
+                        Util.LogException("load article", link, e);
+                    } else {
+                        Util.LogMessage("SocketTimeout", "Article: " + link);
+                    }
+
+                    return false;
                 }
+            } else {
+                Util.LogMessage("DownloadArticleAsync", "No Internet");
+                Handler handler = new Handler(getApplicationContext().getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), R.string.error_no_internet,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 return false;
             }
         }

@@ -1,5 +1,8 @@
 package com.roberteves.heobserver.core;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -18,6 +21,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
 public class Util {
@@ -27,6 +32,42 @@ public class Util {
         StrictMode.setThreadPolicy(policy);
     }
 
+    public static Boolean isInternetAvailable(Context context)
+    {
+        ConnectivityManager cm = (ConnectivityManager)context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnected()) {
+            LogMessage("Network","Connected");
+            try {
+                URL url = new URL("http://www.google.com/");
+                HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
+                urlc.setRequestProperty("User-Agent", "test");
+                urlc.setRequestProperty("Connection", "close");
+
+                urlc.setConnectTimeout(1000); //timeout if cant connect within 1s
+                urlc.setReadTimeout(1000); //timeout if cant read within 1s
+
+                urlc.connect();
+                if (urlc.getResponseCode() == 200) {
+                    LogMessage("Internet","Connected");
+                    return true;
+                } else {
+                    LogMessage("Internet","Not Connected");
+                    return false;
+                }
+            } catch (IOException e) {
+                LogMessage("Internet","Error");
+                return false;
+            }
+        }
+        else
+        {
+            LogMessage("Network", "Not Connected");
+            return false;
+        }
+    }
     public static String getWebSource(String Url) throws IOException {
         int timeout = 5; //timeout in seconds
         HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client

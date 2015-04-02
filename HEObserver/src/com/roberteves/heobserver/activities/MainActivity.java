@@ -2,11 +2,8 @@ package com.roberteves.heobserver.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -140,14 +137,6 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-    }
-
-    private boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        Boolean status = netInfo != null && netInfo.isConnected();
-        Util.LogMessage("MainActivity", "Online Status: " + status);
-        return status;
     }
 
     private Boolean CheckUpdates() {
@@ -337,7 +326,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(String... feeds) {
-            if (isOnline()) {
+            if (Util.isInternetAvailable(MainActivity.this)) {
                 Util.LogMessage("UpdateAsync", "Execute");
                 //region Get Feed Items
                 Util.LogMessage("UpdateAsync", "Get Feed Items");
