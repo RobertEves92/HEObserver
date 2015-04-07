@@ -45,14 +45,22 @@ public class Article implements Serializable {
         b = b.replaceAll(regexExcessWhitespace, " ");
         setBody(b);
 
-        String date = selectStringFromRegex(source, regexDate).substring(0, 10);
-        String time = selectStringFromRegex(source, regexTime).substring(0, 5);
 
+        String date = selectStringFromRegex(source, regexDate);
+        String time = selectStringFromRegex(source, regexTime);
         try {
-            date = Date.FormatDate(Date.ParseDate(date, "yyyy-MM-dd"), "dd/MM/yyyy");
-            setPublishedDate(date + " " + time);
-        } catch (Exception e) {
-            Util.LogException("parse article date", date + " " + time, e);
+            date = date.substring(0, 10);
+            time = time.substring(0, 5);
+
+            try {
+                date = Date.FormatDate(Date.ParseDate(date, "yyyy-MM-dd"), "dd/MM/yyyy");
+                setPublishedDate(date + " " + time);
+            } catch (Exception e) {
+                Util.LogException("parse article date", date + " " + time, e);
+                setPublishedDate("");
+            }
+        }catch(Exception ee) {
+            Util.LogException("get date/time substring", date + " " + time + " " + link, ee);
             setPublishedDate("");
         }
 
