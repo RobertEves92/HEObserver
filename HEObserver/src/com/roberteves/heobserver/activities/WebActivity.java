@@ -23,9 +23,9 @@ public class WebActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
         Util.LogMessage("WebActivity","Activity Started");
         Util.setupThreadPolicy();
-        Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
 
         setContentView(R.layout.activity_web);
         webView = (WebView) findViewById(R.id.webView);
