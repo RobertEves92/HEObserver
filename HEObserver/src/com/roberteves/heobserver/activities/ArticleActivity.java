@@ -5,13 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
@@ -155,15 +153,7 @@ public class ArticleActivity extends Activity {
             if (result) {
                 DisplayArticle();
             } else {
-                Handler handler = new Handler(getApplicationContext().getMainLooper());
-                handler.post(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), toastMessage,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                Util.DisplayToast(getApplicationContext(),toastMessage);
                 activity.finish();
             }
         }

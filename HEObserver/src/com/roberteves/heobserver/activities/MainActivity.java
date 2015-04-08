@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.BuildConfig;
@@ -312,14 +310,7 @@ public class MainActivity extends Activity {
                 public void onCancel(DialogInterface dialog) {
                     cancel(true);
                     Util.LogMessage("UpdateAsync", "Cancelled");
-                    Handler handler = new Handler(getApplicationContext().getMainLooper());
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "Update Cancelled",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    Util.DisplayToast(getApplicationContext(),"Update Cancelled");
                 }
             });
         }
@@ -379,14 +370,7 @@ public class MainActivity extends Activity {
                 return !isCancelled();
             } else {
                 Util.LogMessage("UpdateAsync", "No Internet");
-                Handler handler = new Handler(getApplicationContext().getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), R.string.error_no_internet,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                Util.DisplayToast(getApplicationContext(),getString(R.string.error_no_internet));
                 return false;
             }
         }

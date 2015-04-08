@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.BuildConfig;
@@ -40,9 +39,7 @@ public class WebActivity extends Activity {
                 Article article = new Article(dataString);
                 if (!article.isReadable()) // load in web view
                 {
-                    Toast.makeText(getApplicationContext(),
-                            R.string.error_not_supported,
-                            Toast.LENGTH_SHORT).show();
+                    Util.DisplayToast(getApplicationContext(),getString(R.string.error_not_supported));
                     loadWebView();
                 } else { // load in article activity
                     Intent i = new Intent(WebActivity.this,
@@ -53,15 +50,11 @@ public class WebActivity extends Activity {
                 }
             } catch (IOException e) {
                 Util.LogException("load article from link", dataString, e);
-                Toast.makeText(getApplicationContext(),
-                        R.string.error_retrieve_article_source,
-                        Toast.LENGTH_SHORT).show();
+                Util.DisplayToast(getApplicationContext(),getString(R.string.error_retrieve_article_source));
                 loadWebView();
             }
         } else {
-            Toast.makeText(getApplicationContext(),
-                    R.string.error_not_supported,
-                    Toast.LENGTH_SHORT).show();
+            Util.DisplayToast(getApplicationContext(),getString(R.string.error_not_supported));
             loadWebView();
         }
     }
