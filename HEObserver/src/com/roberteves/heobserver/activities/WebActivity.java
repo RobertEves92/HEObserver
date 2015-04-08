@@ -28,34 +28,38 @@ public class WebActivity extends Activity {
 
         setContentView(R.layout.activity_web);
         webView = (WebView) findViewById(R.id.webView);
+        if (Util.isInternetAvailable(getApplicationContext())) {
+            Intent intent = getIntent();
+            dataString = formatDataString(intent.getDataString());
 
-        Intent intent = getIntent();
-        dataString = formatDataString(intent.getDataString());
+            if (dataString
+                    .matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html") && !dataString.toUpperCase().contains("UNDEFINED-HEADLINE")) {
+                // is article - open in article activity
+                try {
+                    Article article = new Article(dataString);
+                    if (!article.isReadable()) // load in web view
+                    {
+                        Util.DisplayToast(getApplicationContext(), getString(R.string.error_not_supported));
+                        loadWebView();
+                    } else { // load in article activity
+                        Intent i = new Intent(WebActivity.this,
+                                ArticleActivity.class);
 
-        if (dataString
-                .matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html") && !dataString.toUpperCase().contains("UNDEFINED-HEADLINE")) {
-            // is article - open in article activity
-            try {
-                Article article = new Article(dataString);
-                if (!article.isReadable()) // load in web view
-                {
-                    Util.DisplayToast(getApplicationContext(),getString(R.string.error_not_supported));
+                        i.putExtra("article", article);
+                        startActivity(i);
+                    }
+                } catch (IOException e) {
+                    Util.LogException("load article from link", dataString, e);
+                    Util.DisplayToast(getApplicationContext(), getString(R.string.error_retrieve_article_source));
                     loadWebView();
-                } else { // load in article activity
-                    Intent i = new Intent(WebActivity.this,
-                            ArticleActivity.class);
-
-                    i.putExtra("article", article);
-                    startActivity(i);
                 }
-            } catch (IOException e) {
-                Util.LogException("load article from link", dataString, e);
-                Util.DisplayToast(getApplicationContext(),getString(R.string.error_retrieve_article_source));
+            } else {
+                Util.DisplayToast(getApplicationContext(), getString(R.string.error_not_supported));
                 loadWebView();
             }
         } else {
-            Util.DisplayToast(getApplicationContext(),getString(R.string.error_not_supported));
-            loadWebView();
+            Util.DisplayToast(getApplicationContext(), getString(R.string.error_no_internet));
+            this.finish();
         }
     }
 
