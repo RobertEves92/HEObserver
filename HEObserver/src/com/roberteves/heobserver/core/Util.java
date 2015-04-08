@@ -42,7 +42,7 @@ public class Util {
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (activeNetwork != null && activeNetwork.isConnected()) {
-            LogMessage("Network","Connected");
+            LogMessage("Network","Connected to " + activeNetwork.getTypeName() + ": " + activeNetwork.getExtraInfo() + " " + activeNetwork.getSubtypeName());
             try {
                 URL url = new URL("http://www.google.com/");
                 HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
@@ -57,11 +57,11 @@ public class Util {
                     LogMessage("Internet","Connected");
                     return true;
                 } else {
-                    LogMessage("Internet","Not Connected");
+                    LogMessage("Internet","Not Connected (" + urlc.getResponseCode() + ")");
                     return false;
                 }
             } catch (IOException e) {
-                LogMessage("Internet","Error");
+                LogException("Internet","Check Internet Access",e);
                 return false;
             }
         }
