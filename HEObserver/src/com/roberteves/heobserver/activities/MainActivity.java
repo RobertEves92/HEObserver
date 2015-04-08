@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
     private void updateList() {
         Util.LogMessage("MainActivity", "Update List");
         if(Util.isInternetAvailable(this)) {
-            UpdateListViewTask2 updateListViewTask = new UpdateListViewTask2();
+            UpdateListViewTask updateListViewTask = new UpdateListViewTask();
             updateListViewTask.execute(getFeeds());
         }
         else
@@ -155,7 +155,7 @@ public class MainActivity extends Activity {
         return b;
     }
 
-    private class UpdateListViewTask2 extends AsyncTask<String, Void, Boolean> {
+    private class UpdateListViewTask extends AsyncTask<String, Void, Boolean> {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
         private ArrayList<RssItem> rssItems = new ArrayList<>();
 
