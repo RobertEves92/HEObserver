@@ -29,7 +29,7 @@ import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
 public class Util {
-    public static void setupThreadPolicy() {
+    public static void enableNetworkOnMainThread() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitNetwork().build();
         StrictMode.setThreadPolicy(policy);
