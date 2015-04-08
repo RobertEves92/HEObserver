@@ -111,6 +111,7 @@ public class ArticleActivity extends Activity {
 
     private class DownloadArticleTask extends AsyncTask<String, Void, Boolean> {
         private final ProgressDialog dialog = new ProgressDialog(ArticleActivity.this);
+        private String toastMessage;
 
         @Override
         protected void onPreExecute() {
@@ -134,27 +135,19 @@ public class ArticleActivity extends Activity {
                     } else {
                         Util.LogMessage("SocketTimeout", "Article: " + link);
                     }
-
+                    toastMessage = getString(R.string.error_load_article);
                     return false;
                 }
             } else {
                 Util.LogMessage("DownloadArticleAsync", "No Internet");
-                Handler handler = new Handler(getApplicationContext().getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), R.string.error_no_internet,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-
+                toastMessage = getString(R.string.error_no_internet);
                 return false;
             }
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            Util.LogMessage("DownloadArticleAsync","Post Execute");
+            Util.LogMessage("DownloadArticleAsync", "Post Execute");
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
@@ -164,9 +157,10 @@ public class ArticleActivity extends Activity {
             } else {
                 Handler handler = new Handler(getApplicationContext().getMainLooper());
                 handler.post(new Runnable() {
+
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(), "Failed to load article",
+                        Toast.makeText(getApplicationContext(), toastMessage,
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
