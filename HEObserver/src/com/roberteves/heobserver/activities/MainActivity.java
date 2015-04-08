@@ -171,7 +171,7 @@ public class MainActivity extends Activity {
                 public void onCancel(DialogInterface dialog) {
                     cancel(true);
                     Util.LogMessage("UpdateAsync", "Cancelled");
-                    Util.DisplayToast(getApplicationContext(),"Update Cancelled");
+                    Util.DisplayToast(MainActivity.this,"Update Cancelled");
                 }
             });
         }
@@ -231,7 +231,7 @@ public class MainActivity extends Activity {
                 return !isCancelled();
             } else {
                 Util.LogMessage("UpdateAsync", "No Internet");
-                Util.DisplayToast(getApplicationContext(),getString(R.string.error_no_internet));
+                Util.DisplayToast(MainActivity.this,getString(R.string.error_no_internet));
                 return false;
             }
         }

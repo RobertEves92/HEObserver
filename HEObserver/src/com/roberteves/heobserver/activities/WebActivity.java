@@ -39,7 +39,7 @@ public class WebActivity extends Activity {
                     Article article = new Article(dataString);
                     if (!article.isReadable()) // load in web view
                     {
-                        Util.DisplayToast(getApplicationContext(), getString(R.string.error_not_supported));
+                        Util.DisplayToast(this, getString(R.string.error_not_supported));
                         loadWebView();
                     } else { // load in article activity
                         Intent i = new Intent(WebActivity.this,
@@ -50,15 +50,15 @@ public class WebActivity extends Activity {
                     }
                 } catch (IOException e) {
                     Util.LogException("load article from link", dataString, e);
-                    Util.DisplayToast(getApplicationContext(), getString(R.string.error_retrieve_article_source));
+                    Util.DisplayToast(this, getString(R.string.error_retrieve_article_source));
                     loadWebView();
                 }
             } else {
-                Util.DisplayToast(getApplicationContext(), getString(R.string.error_not_supported));
+                Util.DisplayToast(this, getString(R.string.error_not_supported));
                 loadWebView();
             }
         } else {
-            Util.DisplayToast(getApplicationContext(), getString(R.string.error_no_internet));
+            Util.DisplayToast(this, getString(R.string.error_no_internet));
             this.finish();
         }
     }

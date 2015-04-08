@@ -153,7 +153,7 @@ public class ArticleActivity extends Activity {
             if (result) {
                 DisplayArticle();
             } else {
-                Util.DisplayToast(getApplicationContext(),toastMessage);
+                Util.DisplayToast(ArticleActivity.this,toastMessage);
                 activity.finish();
             }
         }
