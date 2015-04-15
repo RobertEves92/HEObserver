@@ -54,7 +54,11 @@ public class ArticleActivity extends Activity {
         if (article != null) {
             DisplayArticle();
         } else {
-            new DownloadArticleTask().execute(link);
+            if (Util.isNetworkAvailable(this)) {
+                new DownloadArticleTask().execute(link);
+            } else {
+                Util.DisplayToast(this, getString(R.string.error_no_internet));
+            }
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -122,7 +126,7 @@ public class ArticleActivity extends Activity {
         @Override
         protected Boolean doInBackground(String... params) {
             Util.LogMessage("DownloadArticleAsync", "Execute");
-            if (Util.isInternetAvailable(ArticleActivity.this)) {
+            if (Util.isInternetAvailable()) {
                 try {
                     article = new Article(link);
                     

@@ -35,42 +35,44 @@ public class Util {
         StrictMode.setThreadPolicy(policy);
     }
 
-    public static Boolean isInternetAvailable(Context context)
-    {
-        ConnectivityManager cm = (ConnectivityManager)context
+    public static Boolean isNetworkAvailable(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) {
-            LogMessage("Network","Connected to " + activeNetwork.getTypeName() + ": " + activeNetwork.getExtraInfo() + " " + activeNetwork.getSubtypeName());
-            try {
-                URL url = new URL("http://www.google.com/");
-                HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
-                urlc.setRequestProperty("User-Agent", "test");
-                urlc.setRequestProperty("Connection", "close");
-
-                urlc.setConnectTimeout(1000); //timeout if cant connect within 1s
-                urlc.setReadTimeout(1000); //timeout if cant read within 1s
-
-                urlc.connect();
-                if (urlc.getResponseCode() == 200) {
-                    LogMessage("Internet","Connected");
-                    return true;
-                } else {
-                    LogMessage("Internet","Not Connected (" + urlc.getResponseCode() + ")");
-                    return false;
-                }
-            } catch (IOException e) {
-                LogException("Internet","Check Internet Access",e);
-                return false;
-            }
-        }
-        else
-        {
+        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+            LogMessage("Network", "Connected to " + activeNetwork.getTypeName() + ": " + activeNetwork.getExtraInfo() + " " + activeNetwork.getSubtypeName());
+            return true;
+        } else {
             LogMessage("Network", "Not Connected");
             return false;
         }
     }
+
+    public static Boolean isInternetAvailable() {
+        try {
+            URL url = new URL("http://www.google.com/");
+            HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+            urlc.setRequestProperty("User-Agent", "test");
+            urlc.setRequestProperty("Connection", "close");
+
+            urlc.setConnectTimeout(1000); //timeout if cant connect within 1s
+            urlc.setReadTimeout(1000); //timeout if cant read within 1s
+
+            urlc.connect();
+            if (urlc.getResponseCode() == 200) {
+                LogMessage("Internet", "Connected");
+                return true;
+            } else {
+                LogMessage("Internet", "Not Connected (" + urlc.getResponseCode() + ")");
+                return false;
+            }
+        } catch (IOException e) {
+            LogException("Internet", "Check Internet Access Error", e);
+            return false;
+        }
+    }
+
     public static String getWebSource(String Url) throws IOException {
         int timeout = 5; //timeout in seconds
         HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
