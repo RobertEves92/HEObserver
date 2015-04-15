@@ -239,9 +239,6 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(Boolean result) {
             Util.LogMessage("UpdateAsync", "Post Execute");
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
 
             if (result && !isCancelled()) {
                 //region Generate and Save Lists
@@ -269,6 +266,10 @@ public class MainActivity extends Activity {
                 //endregion
 
                 UpdateView();
+
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         }
     }
