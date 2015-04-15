@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 
     private void updateList() {
         Util.LogMessage("MainActivity", "Update List");
-        if(Util.isInternetAvailable(this)) {
+        if(Util.isNetworkAvailable(this)) {
             UpdateListViewTask updateListViewTask = new UpdateListViewTask();
             updateListViewTask.execute(getFeeds());
         }
@@ -178,7 +178,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(String... feeds) {
-            if (Util.isInternetAvailable(MainActivity.this)) {
+            if (Util.isInternetAvailable()) {
                 Util.LogMessage("UpdateAsync", "Execute");
                 //region Get Feed Items
                 Util.LogMessage("UpdateAsync", "Get Feed Items");
