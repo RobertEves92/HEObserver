@@ -19,6 +19,6 @@
         android:icon="@drawable/ic_action_web_site"
         android:showAsAction="ifRoom"
         android:title="@string/menu_webview"
-        android:visible="false"/>
+        android:visible="true"/>
 
 </menu>
