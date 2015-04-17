@@ -111,11 +111,8 @@ public class ArticleActivity extends Activity {
     }
 
     private void DisplayArticle() {
-        //dataString
-        //.matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html") && !dataString.toUpperCase().contains("UNDEFINED-HEADLINE"))
-        //article.isreadable
-        Util.LogMessage("ArticleActivity","Display Article");
-        if(article.isReadable() && article.getLink().matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html") && !article.getLink().toUpperCase().contains("UNDEFINED-HEADLINE")) {
+        Util.LogMessage("ArticleActivity", "Display Article");
+        if (article.isReadable() && article.getLink().matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html") && !article.getLink().toUpperCase().contains("UNDEFINED-HEADLINE")) {
             TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
             TextView txtBody = (TextView) findViewById(R.id.txtBody);
             TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
