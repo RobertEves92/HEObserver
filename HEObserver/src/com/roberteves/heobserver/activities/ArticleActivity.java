@@ -22,12 +22,14 @@ public class ArticleActivity extends Activity {
     private static MenuItem comments;
     private static String link;
     private static Activity activity;
+    private static Boolean closeOnResume;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Util.LogMessage("ArticleActivity","Activity Started");
+        Util.LogMessage("ArticleActivity", "Activity Started");
         activity = this;
+        closeOnResume = false;
         setContentView(R.layout.activity_article);
 
         if (getIntent().getSerializableExtra("article") != null) {
@@ -46,6 +48,14 @@ public class ArticleActivity extends Activity {
         Util.LogMessage("ArticleActivity","Activity Ended");
         link = null;
         article = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(closeOnResume) {
+            finish(); // close when resumed
+        }
     }
 
     @Override
@@ -120,6 +130,7 @@ public class ArticleActivity extends Activity {
         }
         else
         {
+            closeOnResume = true;
             Intent intent = new Intent(ArticleActivity.this,WebActivity.class);
             intent.putExtra("link",article.getLink());
             startActivity(intent);
