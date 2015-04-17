@@ -1,10 +1,17 @@
 ## Change Log
-### Current Version: V2.2.1
-- Fixed bug that caused crashes when an update was requested without internet access
+### Current Version: V2.3
+- Moved all internet handling functions to async threads for greater efficiency
+- Implemented saving of article list and updates after 1hr.
+- Fixed several bugs and crashes
+- Enabled update cancellations
+- Added "Whats New" popup on launch after app update
+- Added "Open In Browser" Button
+
 
 #### Previous Updates: 
-##### v2.2
+##### v2.2.*
 - Improved filtering of non-compatible articles
+- Fixed bug that caused crashes when an update was requested without internet access
 
 ##### v2.1
 - Improved crash logging
