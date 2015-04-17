@@ -2,14 +2,8 @@ package com.roberteves.heobserver.core;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,12 +30,12 @@ public class Article implements Serializable {
     private ArrayList<Comment> comments;
 
     public Article(String link) throws IOException {
-        source = Util.getWebSource(link, false);
+        source = Util.getWebSource(link);
         // Set Title
         String t = selectStringFromRegex(source, regexTitle);
         t = t.replaceAll(regexTitleStart, "");
         t = t.replaceAll(regexTitleEnd, "");
-        setTitle(t);
+        setTitle(HtmlEscape.unescapeHtml(t));
 
         // Set Body
         String b = selectStringFromRegex(source, regexArticle);
@@ -51,10 +45,24 @@ public class Article implements Serializable {
         b = b.replaceAll(regexExcessWhitespace, " ");
         setBody(b);
 
-        String date = selectStringFromRegex(source, regexDate).substring(0, 10);
-        String time = selectStringFromRegex(source, regexTime).substring(0, 8);
 
-        setPublishedDate(processPubDate(date + time));
+        String date = selectStringFromRegex(source, regexDate);
+        String time = selectStringFromRegex(source, regexTime);
+        try {
+            date = date.substring(0, 10);
+            time = time.substring(0, 5);
+
+            try {
+                date = Date.FormatDate(Date.ParseDate(date, "yyyy-MM-dd"), "dd/MM/yyyy");
+                setPublishedDate(date + " " + time);
+            } catch (Exception e) {
+                Util.LogException("parse article date", date + " " + time, e);
+                setPublishedDate("");
+            }
+        } catch (Exception ee) {
+            Util.LogException("get date/time substring", date + " " + time + " " + link, ee);
+            setPublishedDate("");
+        }
 
         // Set Link
         setLink(link);
@@ -85,13 +93,6 @@ public class Article implements Serializable {
         return listMatches;
     }
 
-    public static String processPubDate(Date pubDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(pubDate);
-        return sdf.format(calendar.getTime());
-    }
-
     public static boolean checkTitle(String title) {
         for (String s : mediaTags) {
             if (title.toUpperCase().contains(s.toUpperCase())) {
@@ -108,17 +109,6 @@ public class Article implements Serializable {
             }
         }
         return false;
-    }
-
-    private String processPubDate(String date) {
-        try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.getDefault());
-            Date d = df.parse(date);
-            return processPubDate(d);
-        } catch (Exception e) {
-            Util.LogException("process article pub date", "link: " + getLink() + "; date: " + date, e);
-            return "";
-        }
     }
 
     public void processComments() {

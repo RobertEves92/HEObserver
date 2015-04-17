@@ -2,13 +2,10 @@ package com.roberteves.heobserver.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,22 +13,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
+import com.roberteves.heobserver.core.Date;
 import com.roberteves.heobserver.core.Lists;
 import com.roberteves.heobserver.core.SettingsManager;
+import com.roberteves.heobserver.core.StorageManager;
 import com.roberteves.heobserver.core.Util;
 import com.roberteves.heobserver.feeds.Feed;
 import com.roberteves.heobserver.feeds.FeedManager;
 
-import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
 import nl.matshofman.saxrssreader.RssItem;
@@ -40,18 +40,42 @@ import unbescape.html.HtmlEscape;
 
 public class MainActivity extends Activity {
     private static ListView lv;
+    private static SettingsManager settingsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build()); //dont log in debug mode
         //Fabric.with(this, new Crashlytics()); //do log in debug mode
-        Util.setupThreadPolicy();
+
+        settingsManager = new SettingsManager(this);
+
+        Util.LogMessage("MainActivity", "Activity Started");
         setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
 
-        updateList();
+        //Display saved feeds if available or update and display if not or 1hr since last update
+        if (StorageManager.LoadLists(MainActivity.this)) {
+            UpdateView();
+            if (CheckUpdates()) {
+                updateList();
+            }
+        } else {
+            updateList();
+        }
+
+        try {
+            if (settingsManager.getVersion() != this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode) {
+                settingsManager.setVersion(this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode);
+                Intent i = new Intent(MainActivity.this, MarkdownActivity.class);
+                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/CHANGELOG.md");
+                i.putExtra("title", "Whats New");
+                startActivity(i);
+            }
+        } catch (Exception e) {
+            Util.LogException("get version", "none", e);
+        }
     }
 
     @Override
@@ -64,6 +88,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Util.LogMessage("MainActivity", "Option Selected: " + item.getTitle());
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_bar_refresh:
@@ -76,15 +101,26 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Util.LogMessage("MainActivity", "Activity Ended");
+    }
+
     private void updateList() {
-        UpdateListViewTask updateListViewTask = new UpdateListViewTask();
-        updateListViewTask.execute(getFeeds());
+        Util.LogMessage("MainActivity", "Update List");
+        if (Util.isNetworkAvailable(this)) {
+            UpdateListViewTask updateListViewTask = new UpdateListViewTask();
+            updateListViewTask.execute(getFeeds());
+        } else {
+            Util.DisplayToast(this, getString(R.string.error_no_internet));
+        }
     }
 
     private String[] getFeeds() {
+        Util.LogMessage("MainActivity", "Get Feeds");
         FeedManager.LoadFeeds(this);
         ArrayList<String> feeds = new ArrayList<>();
-        SettingsManager settingsManager = new SettingsManager(this);
 
         for (Feed f : Lists.FeedList) {
             //Only add the feed if the setting is enabled
@@ -97,6 +133,7 @@ public class MainActivity extends Activity {
     }
 
     private void UpdateView() {
+        Util.LogMessage("MainActivity", "Update View");
         //Create ListView Adapter
         SimpleAdapter simpleAdpt = new SimpleAdapter(this,
                 Lists.storyList, android.R.layout.simple_list_item_2,
@@ -111,145 +148,139 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                if (isOnline()) {
-                    Article article;
-                    try {
-                        //Load article
-                        article = new Article(Lists.RssItems.get(position).getLink());
-
-                        Intent i = new Intent(MainActivity.this,
-                                ArticleActivity.class);
-
-                        i.putExtra("article", article);
-                        startActivity(i);
-                    } catch (IOException e) {
-                        Util.LogException("load article", Lists.RssItems.get(position).getLink(), e);
-                        Toast.makeText(getApplicationContext(),
-                                R.string.error_retrieve_article_source,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.error_no_internet,
-                            Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(MainActivity.this, ArticleActivity.class);
+                intent.putExtra("link", Lists.RssItems.get(position).getLink());
+                startActivity(intent);
             }
         });
     }
 
-    private boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnected();
+    private Boolean CheckUpdates() {
+        long diff = Date.GetTimeDifference(new java.util.Date(), StorageManager.LastUpdated(this));
+        diff = diff / 1000;//seconds
+        diff = diff / 60;//mins
+        diff = diff / 60;//hours
+
+        Boolean b = diff >= 1;
+        Util.LogMessage("MainActivity", "Check Updates: " + b);
+        return b;
     }
 
-    private class UpdateListViewTask extends AsyncTask<String, Integer, Boolean> {
+    private class UpdateListViewTask extends AsyncTask<String, Void, Boolean> {
         private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
-        private int completedFeeds = 0;
+        private ArrayList<RssItem> rssItems = new ArrayList<>();
+
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage(getString(R.string.fetching_articles));
-            this.dialog.setCancelable(false);
-            this.dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            Util.LogMessage("UpdateAsync", "Pre Execute");
+
+            this.dialog.setMessage(getString(R.string.dialog_fetching_articles));
             this.dialog.show();
+            this.dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    cancel(true);
+                    Util.LogMessage("UpdateAsync", "Cancelled");
+                    Util.DisplayToast(MainActivity.this, "Update Cancelled");
+                }
+            });
         }
 
         @Override
         protected Boolean doInBackground(String... feeds) {
-            if (isOnline()) {
+            if (Util.isInternetAvailable()) {
+                Util.LogMessage("UpdateAsync", "Execute");
+                //region Get Feed Items
+                Util.LogMessage("UpdateAsync", "Get Feed Items");
+                for (String s : feeds) {
+                    if (isCancelled())
+                        return false;
 
-                ArrayList<RssItem> rssItems = new ArrayList<>();
-
-                getFeeds(rssItems, feeds);
-                processFeeds(rssItems);
-
-                return true;
-            } else {
-                Handler handler = new Handler(getApplicationContext().getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), R.string.error_no_internet,
-                                Toast.LENGTH_SHORT).show();
+                    String source;
+                    try {
+                        source = Util.getWebSource(s);
+                        try {
+                            rssItems.addAll(RssReader.read(source).getRssItems());
+                        } catch (Exception e) {
+                            rssItems.addAll(RssReader.read(source.replaceAll("'", "`")).getRssItems());
+                        }
+                    } catch (Exception e) {
+                        if (!(e instanceof SocketTimeoutException)) {
+                            Util.LogException("load feed", s, e);
+                        } else {
+                            Util.LogMessage("SocketTimeout", "Feed: " + s);
+                        }
                     }
-                });
+                }
+                //endregion
+                //region Remove Duplicates
+                Util.LogMessage("UpdateAsync", "Remove Duplicates");
+                ArrayList<RssItem> items = new ArrayList<>();
+                for (RssItem x : rssItems) {
+                    if (isCancelled())
+                        return false;
+
+                    Boolean exists = false;
+
+                    for (RssItem y : items) {
+                        if (isCancelled())
+                            return false;
+
+                        if (x.getLink().equalsIgnoreCase(y.getLink())) {
+                            exists = true;
+                            break;
+                        }
+                    }
+
+                    if (!exists)
+                        items.add(x);
+                }
+                rssItems = items;
+                //endregion
+
+                return !isCancelled();
+            } else {
+                Util.LogMessage("UpdateAsync", "No Internet");
+                Util.DisplayToast(MainActivity.this, getString(R.string.error_no_internet));
                 return false;
             }
         }
 
-        private void processFeeds(ArrayList<RssItem> rssItems) {
-            Collections.sort(rssItems);// sorts into reverse date order
-            Collections.reverse(rssItems);// flip to correct order
-            Lists.RssItems = rssItems;
-
-            // Add Story Items to HashMap Array
-            Lists.storyList = new ArrayList<>();
-            rssItems = new ArrayList<>();
-
-            for (RssItem item : Lists.RssItems) {
-                //If item has unsupported media, don't add
-                if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
-                    HashMap<String, String> story = new HashMap<>();
-                    story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
-                    story.put("date", Article.processPubDate(item.getPubDate()));
-                    Lists.storyList.add(story);
-                    rssItems.add(item);
-                }
-            }
-
-            //Update with new lists (filtered results)
-            Lists.RssItems = rssItems;
-        }
-
-        private void getFeeds(ArrayList<RssItem> rssItems, String[] feeds) {
-            ArrayList<RssItem> feedItems;
-            for (String s : feeds) {
-                try {
-                    feedItems = RssReader.read(Util.getWebSource(s, false)).getRssItems();
-                    processDuplicates(rssItems, feedItems);
-                } catch (Exception e) {
-                    Util.LogException("load feed without processing", s, e);
-
-                    //Try with processing if it doesnt work
-                    try {
-                        feedItems = RssReader.read(Util.getWebSource(s, true)).getRssItems();
-                        processDuplicates(rssItems, feedItems);
-                    } catch (Exception ee) {
-                        Util.LogException("load feed with processing", s, ee);
-                    }
-                } finally {
-                    completedFeeds++;
-                    publishProgress((100 / feeds.length) * completedFeeds);
-                }
-            }
-        }
-
-        private void processDuplicates(ArrayList<RssItem> rssItems, ArrayList<RssItem> feedItems) {
-            for (RssItem y : feedItems) {
-                Boolean exists = false;
-                for (RssItem z : rssItems) {
-                    if (z.getTitle().equalsIgnoreCase(y.getTitle())) {
-                        exists = true;
-                    }
-                }
-
-                if (!exists)
-                    rssItems.add(y);
-            }
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-            this.dialog.setProgress(progress[0]);
-        }
-
         @Override
         protected void onPostExecute(Boolean result) {
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
+            Util.LogMessage("UpdateAsync", "Post Execute");
 
-            if (result) {
+            if (result && !isCancelled()) {
+                //region Generate and Save Lists
+                ArrayList<RssItem> supportedRssItems = new ArrayList<>();
+                List<Map<String, String>> supportedStoryList = new ArrayList<>();
+                Collections.sort(rssItems);
+                Collections.reverse(rssItems);
+                for (RssItem item : rssItems) {
+                    //If item has unsupported media, don't add
+                    if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
+                        HashMap<String, String> story = new HashMap<>();
+                        story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
+                        story.put("date", Date.FormatDate(item.getPubDate(), "dd/MM/yyyy HH:mm"));
+                        supportedStoryList.add(story);
+                        supportedRssItems.add(item);
+                    }
+                }
+
+                //Update with new lists (filtered results)
+                Lists.RssItems = supportedRssItems;
+                Lists.storyList = supportedStoryList;
+
+                //Save Lists
+                StorageManager.SaveLists(MainActivity.this);
+                //endregion
+
                 UpdateView();
+
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         }
     }

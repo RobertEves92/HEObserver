@@ -8,14 +8,13 @@ import com.roberteves.heobserver.feeds.Category;
 
 public class SettingsManager {
     private final static String PREFS_NAME = "HEOPrefs";
-    private final static String KEY_FEED_NEWS = "feed_news";
-    private final static String KEY_FEED_LOCALNEWS = "feed_localnews";
     private final static String KEY_FEED_SPORT = "feed_sport";
     private final static String KEY_FEED_LIFESTYLE = "feed_lifestyle";
     private final static String KEY_FEED_RETAIL = "feed_retail";
     private final static String KEY_FEED_WEATHER = "feed_weather";
     private final static String KEY_FEED_FAMILY = "feed_family";
     private final static String KEY_FEED_MISC = "feed_misc";
+    private final static String KEY_VERSION = "version";
 
     private static SharedPreferences settings;
     private static SharedPreferences.Editor editor;
@@ -29,10 +28,8 @@ public class SettingsManager {
     public Boolean isEnabled(Category category) {
         switch (category) {
             default:
-            case News:
-                return true;
             case LocalNews:
-                return getFeedLocalNews();
+                return true;
             case Sport:
                 return getFeedSport();
             case Lifestyle:
@@ -46,22 +43,6 @@ public class SettingsManager {
             case Misc:
                 return getFeedMisc();
         }
-    }
-
-    public Boolean getFeedNews() {
-        return settings.getBoolean(KEY_FEED_NEWS, true);
-    }
-
-    public void setFeedNews() {
-        editor.putBoolean(KEY_FEED_NEWS, true).commit();
-    }
-
-    public Boolean getFeedLocalNews() {
-        return settings.getBoolean(KEY_FEED_LOCALNEWS, false);
-    }
-
-    public void setFeedLocalNews(Boolean b) {
-        editor.putBoolean(KEY_FEED_LOCALNEWS, b).commit();
     }
 
     public Boolean getFeedSport() {
@@ -112,9 +93,15 @@ public class SettingsManager {
         editor.putBoolean(KEY_FEED_MISC, b).commit();
     }
 
+    public int getVersion() {
+        return settings.getInt(KEY_VERSION, 0);
+    }
+
+    public void setVersion(int verson) {
+        editor.putInt(KEY_VERSION, verson).commit();
+    }
+
     public void resetSettings() {
-        setFeedNews();
-        setFeedLocalNews(false);
         setFeedSport(false);
         setFeedLifestyle(false);
         setFeedRetail(false);

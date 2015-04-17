@@ -18,7 +18,7 @@ public class FeedManager {
         BufferedReader in = new BufferedReader(new InputStreamReader(activity.getApplicationContext()
                 .getResources().openRawResource(R.raw.feeds)));
         String line;
-        Category c = Category.News;
+        Category c = Category.LocalNews;
         try {
             while ((line = in.readLine()) != null) {
                 if (line.startsWith("#")) {
