@@ -40,12 +40,15 @@ import unbescape.html.HtmlEscape;
 
 public class MainActivity extends Activity {
     private static ListView lv;
+    private static SettingsManager settingsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build()); //dont log in debug mode
         //Fabric.with(this, new Crashlytics()); //do log in debug mode
+
+        settingsManager = new SettingsManager(this);
 
         Util.LogMessage("MainActivity", "Activity Started");
         setTitle(getString(R.string.app_name_long));
@@ -108,7 +111,6 @@ public class MainActivity extends Activity {
         Util.LogMessage("MainActivity", "Get Feeds");
         FeedManager.LoadFeeds(this);
         ArrayList<String> feeds = new ArrayList<>();
-        SettingsManager settingsManager = new SettingsManager(this);
 
         for (Feed f : Lists.FeedList) {
             //Only add the feed if the setting is enabled
