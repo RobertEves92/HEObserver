@@ -46,6 +46,7 @@
     <!-- Menus -->
     <string name="menu_settings">Settings</string>
     <string name="menu_comments">Comments</string>
+    <string name="menu_webview">Open In Web View</string>
 
     <!-- Dialogs -->
     <string name="dialog_fetching_articles">Fetching articles…</string>

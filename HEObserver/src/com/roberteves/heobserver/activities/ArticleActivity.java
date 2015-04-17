@@ -105,6 +105,11 @@ public class ArticleActivity extends Activity {
                 i.putExtra("comments", article.getComments());
                 startActivity(i);
                 return true;
+            case R.id.action_bar_webview:
+                Intent intent = new Intent(ArticleActivity.this,WebActivity.class);
+                intent.putExtra("link",article.getLink());
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

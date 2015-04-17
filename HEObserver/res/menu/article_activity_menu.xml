@@ -14,4 +14,11 @@
         android:title="@string/menu_comments"
         android:visible="false"/>
 
+    <item
+        android:id="@+id/action_bar_webview"
+        android:icon="@drawable/ic_action_web_site"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_webview"
+        android:visible="true"/>
+
 </menu>
