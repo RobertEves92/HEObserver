@@ -40,12 +40,15 @@ import unbescape.html.HtmlEscape;
 
 public class MainActivity extends Activity {
     private static ListView lv;
+    private static SettingsManager settingsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build()); //dont log in debug mode
         //Fabric.with(this, new Crashlytics()); //do log in debug mode
+
+        settingsManager = new SettingsManager(this);
 
         Util.LogMessage("MainActivity", "Activity Started");
         setTitle(getString(R.string.app_name_long));
@@ -60,6 +63,18 @@ public class MainActivity extends Activity {
             }
         } else {
             updateList();
+        }
+
+        try {
+            if (settingsManager.getVersion() != this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode) {
+                settingsManager.setVersion(this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode);
+                Intent i = new Intent(MainActivity.this, MarkdownActivity.class);
+                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/CHANGELOG.md");
+                i.putExtra("title", "Whats New");
+                startActivity(i);
+            }
+        } catch (Exception e) {
+            Util.LogException("get version", "none", e);
         }
     }
 
@@ -108,7 +123,6 @@ public class MainActivity extends Activity {
         Util.LogMessage("MainActivity", "Get Feeds");
         FeedManager.LoadFeeds(this);
         ArrayList<String> feeds = new ArrayList<>();
-        SettingsManager settingsManager = new SettingsManager(this);
 
         for (Feed f : Lists.FeedList) {
             //Only add the feed if the setting is enabled
