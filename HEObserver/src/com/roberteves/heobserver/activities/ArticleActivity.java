@@ -34,6 +34,9 @@ public class ArticleActivity extends Activity {
             article = (Article) getIntent().getSerializableExtra("article");
         } else if (link == null) {
             link = getIntent().getStringExtra("link");
+            if(link == null){
+                link = getIntent().getDataString();
+            }
         }
     }
 
@@ -58,6 +61,7 @@ public class ArticleActivity extends Activity {
                 new DownloadArticleTask().execute(link);
             } else {
                 Util.DisplayToast(this, getString(R.string.error_no_internet));
+                activity.finish();
             }
         }
         return super.onCreateOptionsMenu(menu);
@@ -92,23 +96,34 @@ public class ArticleActivity extends Activity {
     }
 
     private void DisplayArticle() {
+        //dataString
+        //.matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html") && !dataString.toUpperCase().contains("UNDEFINED-HEADLINE"))
+        //article.isreadable
         Util.LogMessage("ArticleActivity","Display Article");
-        TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
-        TextView txtBody = (TextView) findViewById(R.id.txtBody);
-        TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
+        if(article.isReadable() && article.getLink().matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html") && !article.getLink().toUpperCase().contains("UNDEFINED-HEADLINE")) {
+            TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
+            TextView txtBody = (TextView) findViewById(R.id.txtBody);
+            TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
 
-        txtTitle.setText(article != null ? article.getTitle() : null);
-        txtBody.setText(Html.fromHtml(article.getBody()));
+            txtTitle.setText(article != null ? article.getTitle() : null);
+            txtBody.setText(Html.fromHtml(article.getBody()));
 
-        if (article.getPublishedDate() != null) {
-            txtPubDate.setText(getString(R.string.published) + article.getPublishedDate());
-        } else {
-            txtPubDate.setText("");
+            if (article.getPublishedDate() != null) {
+                txtPubDate.setText(getString(R.string.published) + article.getPublishedDate());
+            } else {
+                txtPubDate.setText("");
+            }
+
+            article.processComments();
+
+            comments.setVisible(article.hasComments());
         }
-
-        article.processComments();
-
-        comments.setVisible(article.hasComments());
+        else
+        {
+            Intent intent = new Intent(ArticleActivity.this,WebActivity.class);
+            intent.putExtra("link",article.getLink());
+            startActivity(intent);
+        }
     }
 
     private class DownloadArticleTask extends AsyncTask<String, Void, Boolean> {
