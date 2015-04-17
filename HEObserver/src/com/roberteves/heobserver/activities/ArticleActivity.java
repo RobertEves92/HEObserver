@@ -11,11 +11,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Util;
 
 import java.net.SocketTimeoutException;
+
+import io.fabric.sdk.android.Fabric;
 
 public class ArticleActivity extends Activity {
     private static Article article;
@@ -27,6 +31,7 @@ public class ArticleActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
         Util.LogMessage("ArticleActivity", "Activity Started");
         activity = this;
         closeOnResume = false;

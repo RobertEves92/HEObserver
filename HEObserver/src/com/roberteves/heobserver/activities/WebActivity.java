@@ -5,15 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-import com.crashlytics.android.Crashlytics;
-import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
-import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Util;
-
-import java.io.IOException;
-
-import io.fabric.sdk.android.Fabric;
 
 public class WebActivity extends Activity {
     private static WebView webView;
@@ -22,7 +15,6 @@ public class WebActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build());
         Util.LogMessage("WebActivity", "Activity Started");
         Util.enableNetworkOnMainThread();
 
