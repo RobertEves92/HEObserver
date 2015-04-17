@@ -32,32 +32,7 @@ public class WebActivity extends Activity {
             if (Util.isInternetAvailable()) {
                 Intent intent = getIntent();
                 dataString = formatDataString(intent.getDataString());
-
-                if (dataString
-                        .matches("http://((www.)?)hertsandessexobserver.co.uk/.*story.html") && !dataString.toUpperCase().contains("UNDEFINED-HEADLINE")) {
-                    // is article - open in article activity
-                    try {
-                        Article article = new Article(dataString);
-                        if (!article.isReadable()) // load in web view
-                        {
-                            Util.DisplayToast(this, getString(R.string.error_not_supported));
-                            loadWebView();
-                        } else { // load in article activity
-                            Intent i = new Intent(WebActivity.this,
-                                    ArticleActivity.class);
-
-                            i.putExtra("article", article);
-                            startActivity(i);
-                        }
-                    } catch (IOException e) {
-                        Util.LogException("load article from link", dataString, e);
-                        Util.DisplayToast(this, getString(R.string.error_retrieve_article_source));
-                        loadWebView();
-                    }
-                } else {
-                    Util.DisplayToast(this, getString(R.string.error_not_supported));
-                    loadWebView();
-                }
+                loadWebView();
             } else {
                 Util.DisplayToast(this, getString(R.string.error_no_internet));
                 this.finish();
