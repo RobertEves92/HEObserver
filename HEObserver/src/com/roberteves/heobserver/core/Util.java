@@ -29,12 +29,6 @@ import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
 public class Util {
-    public static void enableNetworkOnMainThread() {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                .permitNetwork().build();
-        StrictMode.setThreadPolicy(policy);
-    }
-
     public static Boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);

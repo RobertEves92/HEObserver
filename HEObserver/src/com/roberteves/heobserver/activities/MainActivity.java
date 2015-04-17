@@ -48,7 +48,6 @@ public class MainActivity extends Activity {
         //Fabric.with(this, new Crashlytics()); //do log in debug mode
 
         Util.LogMessage("MainActivity", "Activity Started");
-        Util.enableNetworkOnMainThread();
         setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
