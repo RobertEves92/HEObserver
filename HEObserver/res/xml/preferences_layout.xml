@@ -4,10 +4,10 @@
     android:layout_height="match_parent">
     <PreferenceCategory android:title="@string/preference_category_feeds">
         <CheckBoxPreference
+            android:enabled="false"
             android:key="feed_localnews"
             android:summary="@string/preference_summary_localnews"
-            android:title="@string/preference_title_localnews"
-            android:enabled="false"/>
+            android:title="@string/preference_title_localnews" />
         <CheckBoxPreference
             android:key="feed_sport"
             android:summary="@string/preference_summary_sports"

@@ -25,7 +25,7 @@ public class SettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Util.LogMessage("SettingsActivity","Activity Started");
+        Util.LogMessage("SettingsActivity", "Activity Started");
         super.onCreate(savedInstanceState);
         settingsManager = new SettingsManager(this);
         addPreferencesFromResource(R.xml.preferences_layout);
@@ -159,6 +159,6 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Util.LogMessage("SettingsActivity","Activity Ended");
+        Util.LogMessage("SettingsActivity", "Activity Ended");
     }
 }

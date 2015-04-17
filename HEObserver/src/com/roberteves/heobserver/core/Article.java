@@ -59,7 +59,7 @@ public class Article implements Serializable {
                 Util.LogException("parse article date", date + " " + time, e);
                 setPublishedDate("");
             }
-        }catch(Exception ee) {
+        } catch (Exception ee) {
             Util.LogException("get date/time substring", date + " " + time + " " + link, ee);
             setPublishedDate("");
         }

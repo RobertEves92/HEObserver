@@ -93,9 +93,13 @@ public class SettingsManager {
         editor.putBoolean(KEY_FEED_MISC, b).commit();
     }
 
-    public int getVersion(){return settings.getInt(KEY_VERSION,0);}
+    public int getVersion() {
+        return settings.getInt(KEY_VERSION, 0);
+    }
 
-    public void setVersion(int verson){editor.putInt(KEY_VERSION,verson).commit();}
+    public void setVersion(int verson) {
+        editor.putInt(KEY_VERSION, verson).commit();
+    }
 
     public void resetSettings() {
         setFeedSport(false);

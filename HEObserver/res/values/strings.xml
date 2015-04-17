@@ -9,7 +9,6 @@
     <string name="action_share_via">Share via</string>
 
     <!-- Errors -->
-    <string name="error_retrieve_article_source">Error retrieving article from source</string>
     <string name="error_no_internet">No internet connection available</string>
     <string name="error_not_supported">Article not supported, opening in web view</string>
     <string name="error_load_article">Failed to load article</string>

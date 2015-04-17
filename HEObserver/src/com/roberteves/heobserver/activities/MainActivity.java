@@ -109,13 +109,11 @@ public class MainActivity extends Activity {
 
     private void updateList() {
         Util.LogMessage("MainActivity", "Update List");
-        if(Util.isNetworkAvailable(this)) {
+        if (Util.isNetworkAvailable(this)) {
             UpdateListViewTask updateListViewTask = new UpdateListViewTask();
             updateListViewTask.execute(getFeeds());
-        }
-        else
-        {
-            Util.DisplayToast(this,getString(R.string.error_no_internet));
+        } else {
+            Util.DisplayToast(this, getString(R.string.error_no_internet));
         }
     }
 
@@ -184,7 +182,7 @@ public class MainActivity extends Activity {
                 public void onCancel(DialogInterface dialog) {
                     cancel(true);
                     Util.LogMessage("UpdateAsync", "Cancelled");
-                    Util.DisplayToast(MainActivity.this,"Update Cancelled");
+                    Util.DisplayToast(MainActivity.this, "Update Cancelled");
                 }
             });
         }
@@ -244,7 +242,7 @@ public class MainActivity extends Activity {
                 return !isCancelled();
             } else {
                 Util.LogMessage("UpdateAsync", "No Internet");
-                Util.DisplayToast(MainActivity.this,getString(R.string.error_no_internet));
+                Util.DisplayToast(MainActivity.this, getString(R.string.error_no_internet));
                 return false;
             }
         }
