@@ -20,7 +20,7 @@ public class CommentActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Util.LogMessage("CommentActivity","Activity Started");
+        Util.LogMessage("CommentActivity", "Activity Started");
         setContentView(R.layout.activity_scroll_list);
         ListView lv = (ListView) findViewById(R.id.listView);
 
@@ -49,6 +49,6 @@ public class CommentActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Util.LogMessage("CommentActivity","Activity Ended");
+        Util.LogMessage("CommentActivity", "Activity Ended");
     }
 }

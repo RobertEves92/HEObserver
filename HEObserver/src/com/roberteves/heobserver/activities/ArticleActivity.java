@@ -41,7 +41,7 @@ public class ArticleActivity extends Activity {
             article = (Article) getIntent().getSerializableExtra("article");
         } else if (link == null) {
             link = getIntent().getStringExtra("link");
-            if(link == null){
+            if (link == null) {
                 link = getIntent().getDataString();
             }
         }
@@ -50,7 +50,7 @@ public class ArticleActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Util.LogMessage("ArticleActivity","Activity Ended");
+        Util.LogMessage("ArticleActivity", "Activity Ended");
         link = null;
         article = null;
     }
@@ -58,7 +58,7 @@ public class ArticleActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        if(closeOnResume) {
+        if (closeOnResume) {
             finish(); // close when resumed
         }
     }
@@ -84,7 +84,7 @@ public class ArticleActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Util.LogMessage("ArticleActivity","Option Selected: " + item.getTitle());
+        Util.LogMessage("ArticleActivity", "Option Selected: " + item.getTitle());
         switch (item.getItemId()) {
             case R.id.action_bar_share:
                 Intent share = new Intent(android.content.Intent.ACTION_SEND);
@@ -106,8 +106,8 @@ public class ArticleActivity extends Activity {
                 startActivity(i);
                 return true;
             case R.id.action_bar_webview:
-                Intent intent = new Intent(ArticleActivity.this,WebActivity.class);
-                intent.putExtra("link",article.getLink());
+                Intent intent = new Intent(ArticleActivity.this, WebActivity.class);
+                intent.putExtra("link", article.getLink());
                 startActivity(intent);
                 return true;
             default:
@@ -134,13 +134,11 @@ public class ArticleActivity extends Activity {
             article.processComments();
 
             comments.setVisible(article.hasComments());
-        }
-        else
-        {
-            Util.DisplayToast(getApplicationContext(),getString(R.string.error_not_supported));
+        } else {
+            Util.DisplayToast(getApplicationContext(), getString(R.string.error_not_supported));
             closeOnResume = true;
-            Intent intent = new Intent(ArticleActivity.this,WebActivity.class);
-            intent.putExtra("link",article.getLink());
+            Intent intent = new Intent(ArticleActivity.this, WebActivity.class);
+            intent.putExtra("link", article.getLink());
             startActivity(intent);
         }
     }
@@ -151,7 +149,7 @@ public class ArticleActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            Util.LogMessage("DownloadArticleAsync","Pre Execute");
+            Util.LogMessage("DownloadArticleAsync", "Pre Execute");
             this.dialog.setMessage(getString(R.string.dialog_fetching_article));
             this.dialog.setCancelable(false);
             this.dialog.show();
@@ -163,7 +161,7 @@ public class ArticleActivity extends Activity {
             if (Util.isInternetAvailable()) {
                 try {
                     article = new Article(link);
-                    
+
                     return true;
                 } catch (Exception e) {
                     if (!(e instanceof SocketTimeoutException)) { //Don't log if timeout exception
@@ -191,7 +189,7 @@ public class ArticleActivity extends Activity {
             if (result) {
                 DisplayArticle();
             } else {
-                Util.DisplayToast(ArticleActivity.this,toastMessage);
+                Util.DisplayToast(ArticleActivity.this, toastMessage);
                 activity.finish();
             }
         }

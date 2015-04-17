@@ -101,7 +101,7 @@ public class Util {
     }
 
     public static void LogException(String action, String data, Exception e) {
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             //only log in logcat if in debug
             Log.w("Fabric", "Caught Exception: Action: " + action + "; Data: " + data + "; Exception: " + e.toString());
         }
@@ -119,7 +119,7 @@ public class Util {
         Crashlytics.log("[" + tag + "] " + message);
     }
 
-    public static void DisplayToast(Context context,String message) {
+    public static void DisplayToast(Context context, String message) {
         Handler handler = new Handler(context.getApplicationContext().getMainLooper());
         @SuppressLint("ShowToast")
         final Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
