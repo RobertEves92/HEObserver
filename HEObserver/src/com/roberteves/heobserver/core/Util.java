@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
