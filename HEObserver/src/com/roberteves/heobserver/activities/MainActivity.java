@@ -64,6 +64,18 @@ public class MainActivity extends Activity {
         } else {
             updateList();
         }
+
+        try {
+            if (settingsManager.getVersion() != this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode) {
+                settingsManager.setVersion(this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode);
+                Intent i = new Intent(MainActivity.this, MarkdownActivity.class);
+                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/CHANGELOG.md");
+                i.putExtra("title", "Whats New");
+                startActivity(i);
+            }
+        } catch (Exception e) {
+            Util.LogException("get version", "none", e);
+        }
     }
 
     @Override
