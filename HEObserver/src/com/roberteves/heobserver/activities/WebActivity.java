@@ -31,7 +31,7 @@ public class WebActivity extends Activity {
         if (Util.isNetworkAvailable(this)) {
             if (Util.isInternetAvailable()) {
                 Intent intent = getIntent();
-                dataString = formatDataString(intent.getDataString());
+                dataString = formatDataString(intent.getStringExtra("link"));
                 loadWebView();
             } else {
                 Util.DisplayToast(this, getString(R.string.error_no_internet));
