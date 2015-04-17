@@ -130,6 +130,7 @@ public class ArticleActivity extends Activity {
         }
         else
         {
+            Util.DisplayToast(getApplicationContext(),getString(R.string.error_not_supported));
             closeOnResume = true;
             Intent intent = new Intent(ArticleActivity.this,WebActivity.class);
             intent.putExtra("link",article.getLink());
