@@ -26,7 +26,6 @@ import com.roberteves.heobserver.core.Util;
 import com.roberteves.heobserver.feeds.Feed;
 import com.roberteves.heobserver.feeds.FeedManager;
 
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

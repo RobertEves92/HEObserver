@@ -17,8 +17,6 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Util;
 
-import java.net.SocketTimeoutException;
-
 import io.fabric.sdk.android.Fabric;
 
 public class ArticleActivity extends Activity {

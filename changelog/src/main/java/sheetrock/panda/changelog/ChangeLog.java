@@ -216,8 +216,7 @@ public class ChangeLog {
         // read changelog.txt file
         sb = new StringBuffer();
         try {
-            InputStream ins = context.getResources().openRawResource(
-                    R.raw.changelog);
+            InputStream ins = context.getResources().openRawResource(R.raw.changelog);
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
 
             String line = null;
