@@ -48,20 +48,26 @@ public class Article implements Serializable {
 
         String date = selectStringFromRegex(source, regexDate);
         String time = selectStringFromRegex(source, regexTime);
-        try {
-            date = date.substring(0, 10);
-            time = time.substring(0, 5);
-
+        if(date.length() == 0 || time.length() == 0){
+            Util.LogMessage("Article","Date or time blank");
+            setPublishedDate("");
+        }
+        else {
             try {
-                date = Date.FormatDate(Date.ParseDate(date, "yyyy-MM-dd"), "dd/MM/yyyy");
-                setPublishedDate(date + " " + time);
-            } catch (Exception e) {
-                Util.LogException("parse article date", date + " " + time, e);
+                date = date.substring(0, 10);
+                time = time.substring(0, 5);
+
+                try {
+                    date = Date.FormatDate(Date.ParseDate(date, "yyyy-MM-dd"), "dd/MM/yyyy");
+                    setPublishedDate(date + " " + time);
+                } catch (Exception e) {
+                    Util.LogException("parse article date", "date: '" + date + "'; time: '" + time + "'", e);
+                    setPublishedDate("");
+                }
+            } catch (Exception ee) {
+                Util.LogException("get date/time substring", "date: '" + date + "'; time: '" + time + "'; link: " + link, ee);
                 setPublishedDate("");
             }
-        } catch (Exception ee) {
-            Util.LogException("get date/time substring", date + " " + time + " " + link, ee);
-            setPublishedDate("");
         }
 
         // Set Link
