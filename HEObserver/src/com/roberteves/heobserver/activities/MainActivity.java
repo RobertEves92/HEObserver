@@ -51,7 +51,6 @@ public class MainActivity extends Activity {
         settingsManager = new SettingsManager(this);
 
         Util.LogMessage("MainActivity", "Activity Started");
-        setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
 

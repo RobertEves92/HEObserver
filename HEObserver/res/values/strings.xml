@@ -1,7 +1,6 @@
 <resources>
     <!-- App Name -->
     <string name="app_name">H&amp;EObserver</string>
-    <string name="app_name_long">Herts and Essex Observer</string>
 
     <!-- Action Bar -->
     <string name="action_refresh">Refresh</string>
