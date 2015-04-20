@@ -36,6 +36,7 @@ import java.util.Map;
 import io.fabric.sdk.android.Fabric;
 import nl.matshofman.saxrssreader.RssItem;
 import nl.matshofman.saxrssreader.RssReader;
+import sheetrock.panda.changelog.ChangeLog;
 import unbescape.html.HtmlEscape;
 
 public class MainActivity extends Activity {
@@ -64,17 +65,12 @@ public class MainActivity extends Activity {
             updateList();
         }
 
-        try {
-            if (settingsManager.getVersion() != this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode) {
-                settingsManager.setVersion(this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode);
-                Intent i = new Intent(MainActivity.this, MarkdownActivity.class);
-                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/CHANGELOG.md");
-                i.putExtra("title", "Whats New");
-                startActivity(i);
-            }
-        } catch (Exception e) {
-            Util.LogException("get version", "none", e);
-        }
+        // Display changelog / whats new if appropriate
+        ChangeLog cl = new ChangeLog(this);
+        if(cl.firstRunEver())
+            cl.getFullLogDialog().show();
+        else if(cl.firstRun())
+            cl.getLogDialog().show();
     }
 
     @Override

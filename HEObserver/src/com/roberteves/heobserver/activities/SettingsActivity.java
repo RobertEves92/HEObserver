@@ -12,6 +12,8 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.SettingsManager;
 import com.roberteves.heobserver.core.Util;
 
+import sheetrock.panda.changelog.ChangeLog;
+
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {
     private CheckBoxPreference localnews;
@@ -139,10 +141,8 @@ public class SettingsActivity extends PreferenceActivity {
         changelog.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
-                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/CHANGELOG.md");
-                i.putExtra("title", "Whats New");
-                startActivity(i);
+                ChangeLog cl = new ChangeLog(SettingsActivity.this);
+                cl.getFullLogDialog().show();
                 return true;
             }
         });

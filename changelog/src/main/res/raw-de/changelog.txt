@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <style type='text/css'>
+      a            { color:#a0a0e0 }
+      div.title    { 
+          color:#C0F0C0; 
+          font-size:1.2em; 
+          font-weight:bold; 
+          margin-top:1em; 
+          margin-bottom:0.5em; 
+          text-align:center }
+      div.subtitle { 
+          color:#C0F0C0; 
+          font-size:0.8em; 
+          margin-bottom:1em; 
+          text-align:center }
+      div.freetext { 
+          color:#F0F0F0;
+          text-align:center }
+      div.list     { color:#C0C0F0 }
+    </style>
+  </head>
+  <body>
+$ 2.2.2
+  % Version 2.2.2
+  _ 2013-06-19
+  ! Alle sind glücklich!
+    * Probleme mit Hintergrund des WebView scheinen gelöst zu sein. Siehe <a href="http://code.google.com/p/android-change-log/issues/detail?id=17">issue 17</a>
+$ 2.2.1
+  % Version 2.2.1
+  _ 2012-12-02
+    * Bei erstem Start der App (mit eingebautem ChangeLog) wird immer das komplette Log angezeigt - nie der What's New Dialog (issue 16).
+$ 2.2
+  % Version 2.2 (The Doctor)
+  _ 2012-11-26
+    * drehen des Phones schließt den Dialog in der Demo App nicht mehr
+    * schreiben der Version in die Shared Preferences jetzt bei klick auf OK-button
+$ 2.1.1
+  % Version 2.1.1 (Neelix)
+  _ 2011-09-15
+    * jetzt funktionieren auch verrückte Zeichen: ÆæØøÅå Smørebrød
+    * und sogar noch verrücktere: 將賦予他們的傳教工作標示為
+$ 2.0.8
+  % Version 2.0.8 (Kirk)
+  _ 2011-07-12
+    * <span style="font-family:monospace">cl.isFirstRunEver()</span> hinzugef&uuml;gt
+    * Versionsname wird jetzt aus Manifest geholt
+$ 2.0
+  % Version 2.0
+  _ 2011-06-19
+  ! Komplett &uuml;berarbeitete Version und cooler denn je!
+    # <a href="http://www.friendface.co.uk/">Friendface</a>-Integration
+    # Jetzt mit Change Log
+    # Milliarden Fehlerfixes!
+$ 1.0
+  % Version 1.0
+  _ 2011-06-01
+  ! <b>Schaukelstuhl-Tongenerator</b> endlich ver&ouml;ffentlicht!
+    * bitte registrieren
+    * bitte spenden
+$ 0.1
+  % Version 0.1
+  _ (beta, kaputt)
+$ END_OF_CHANGE_LOG
+  </body>
+</html>

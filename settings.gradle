@@ -1,2 +1,2 @@
-include ':HEObserver', ':unbescape', ':android-rss-reader-library'
+include ':HEObserver', ':unbescape', ':android-rss-reader-library', ':changelog'
 include ':appcompat_v7'

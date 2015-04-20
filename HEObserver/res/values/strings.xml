@@ -39,7 +39,7 @@
     <string name="preference_category_about">About</string>
     <string name="preference_title_about">About the App</string>
     <string name="preference_title_license">License</string>
-    <string name="preference_title_changelog">What\'s New</string>
+    <string name="preference_title_changelog">Change Log</string>
 
     <!-- Menus -->
     <string name="menu_settings">Settings</string>
