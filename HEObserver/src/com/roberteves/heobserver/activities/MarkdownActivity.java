@@ -16,7 +16,7 @@ public class MarkdownActivity extends Activity {
         MarkdownView markdownView = new MarkdownView(this);
         setContentView(markdownView);
         setTitle(getIntent().getStringExtra("title"));
-        markdownView.loadMarkdownFile(getIntent().getStringExtra("url"));
+        markdownView.loadMarkdown(getIntent().getStringExtra("text"));
     }
 
     @Override
