@@ -65,7 +65,7 @@ public class WebActivity extends Activity {
                 dataString = formatDataString(intent.getStringExtra("link"));
                 loadWebView();
             } else {
-                Util.DisplayToast(activity.getApplicationContext(), getString(R.string.error_no_internet));
+                Util.DisplayToast(WebActivity.this, getString(R.string.error_no_internet));
                 activity.finish();
             }
         }
