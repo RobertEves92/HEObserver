@@ -164,11 +164,7 @@ public class ArticleActivity extends Activity {
 
                     return true;
                 } catch (Exception e) {
-                    if (!(e instanceof SocketTimeoutException)) { //Don't log if timeout exception
-                        Util.LogException("load article", link, e);
-                    } else {
-                        Util.LogMessage("SocketTimeout", "Article: " + link);
-                    }
+                    Util.LogException("load article", link, e);
                     toastMessage = getString(R.string.error_load_article);
                     return false;
                 }

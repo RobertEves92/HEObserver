@@ -60,7 +60,7 @@ public class Util {
                 LogMessage("Internet", "Not Connected (" + urlc.getResponseCode() + ")");
                 return false;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             LogException("Internet", "Check Internet Access Error", e);
             return false;
         }
