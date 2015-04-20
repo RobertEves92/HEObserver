@@ -21,46 +21,65 @@
     </style>
   </head>
   <body>
-$ 2.2.2
-  % Version 2.2.2
-  _ 2013-06-19
-  ! Everyone is happy!
-    * Problems with WebView Background seem to be solved. See <a href="http://code.google.com/p/android-change-log/issues/detail?id=17">issue 17</a>
-$ 2.2.1
-  % Version 2.2.1
-  _ 2012-12-02
-    * On first start of the app (with ChangeLog integrated) full log is shown always - never What's New (issue 16).
-$ 2.2
-  % Version 2.2 (The Doctor)
-  _ 2012-11-26
-    * screen rotation in demo app doesn't close dialog anymore
-    * moved writing of the version to the shared preferences to clicking the OK-button
-$ 2.1.1
-  % Version 2.1.1 (Neelix)
-  _ 2011-09-15
-    * now works with strange symbols: ÆæØøÅå Smørebrød
-    * and even stranger symbols, too: 將賦予他們的傳教工作標示為
-$ 2.0.8
-  % Version 2.0.8 (Kirk)
-  _ 2011-07-12
-    * <span style="font-family:monospace">cl.isFirstRunEver()</span> added
-    * getting version name from manifest now
-$ 2.0
-  % Version 2.0
-  _ 2011-06-19
-  ! completely overdone and cooler than ever!
-    # <a href="http://www.friendface.co.uk/">Friendface</a> integration
-    # now with Change Log
-    # Billions of bug fixes!
-$ 1.0
+$ 2.4
+  % Version 2.4
+  _ DATE
+    * Implemented offline changelog
+    * Improved error handling and crash reporting
+$ 2.3
+  % Version 2.3
+  _ 17/04/15
+  * Moved all internet handling functions to async threads for greater efficiency
+  * Implemented saving of article list and updates after 1hr.
+  * Fixed several bugs and crashes
+  * Enabled update cancellations
+  * Added "Whats New" popup on launch after app update
+  * Added "Open In Browser" Button
+$2.2.*
+  % Version 2.2.*
+  _ 11/03/15
+  * Improved filtering of non-compatible articles
+  * Fixed bug that caused crashes when an update was requested without internet access
+$2.1
+  % Version 2.1
+  _ 02/03/15
+  * Improved crash logging
+$2.0.*
+  % Version 2.0.*
+  _ 28/02/15
+  * Added Preferences to select only feeds users want to view
+  * Added comment loading (for articles with comments)
+  * Changed all action bar buttons to display icons
+  * Fixed several bugs and crashes when loading lots of data
+$1.3.*
+  % Version 1.3.*
+  _ 10/02/15
+  * Fixed Timeout crash issue when loading article list
+  * Added date to articles loaded from a web link
+  * Reduced app size by removed old unused resources
+  * Fixed blank article view bug when no internet available
+  * Fixed issue loading feeds with bad formatting
+  * Added new feeds
+$1.2
+  % Version 1.2
+  _ 05/02/15
+  * Published date added to articles list
+  * Optimised layout for most tablets
+  * Fixed loading bug (caused by new mobile site format)
+  * Fixed blank article view bug when no internet available
+$1.1
+  % Version 1.1
+  _ 31/01/15
+  * Launch articles from web link
+  * Internet availability checks   * fixes crash on launch
+  * Additional news feeds   * more articles available
+  * Share button on article
+$1.0
   % Version 1.0
-  _ 2011-06-01
-  ! Finally! <b>Rocking Chair Sound Generator</b> released!
-    * please register
-    * please donate
-$ 0.1
-  % Version 0.1
-  _ (beta, not working)
+  _ 27/01/15
+  ! Initial Release
+  ! <p />
+  _ Changelog generated with <a href="http://petoria.de/android-change-log/">Android Change Log</a>!
 $ END_OF_CHANGE_LOG
   </body>
 </html>
