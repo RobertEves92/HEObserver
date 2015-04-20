@@ -1,10 +1,9 @@
 package com.roberteves.heobserver.core;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -126,16 +125,15 @@ public class Util {
         Crashlytics.log("[" + tag + "] " + message);
     }
 
-    public static void DisplayToast(Context context, String message) {
-        Handler handler = new Handler(context.getApplicationContext().getMainLooper());
-        @SuppressLint("ShowToast")
-        final Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
-        handler.post(new Runnable() {
-
-            @Override
+    public static void DisplayToast(final Activity activity, final String message) {
+        new Thread() {
             public void run() {
-                toast.show();
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        });
+        }.start();
     }
 }
