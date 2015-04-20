@@ -243,31 +243,38 @@ public class MainActivity extends Activity {
             Util.LogMessage("UpdateAsync", "Post Execute");
 
             if (result && !isCancelled()) {
-                //region Generate and Save Lists
-                ArrayList<RssItem> supportedRssItems = new ArrayList<>();
-                List<Map<String, String>> supportedStoryList = new ArrayList<>();
-                Collections.sort(rssItems);
-                Collections.reverse(rssItems);
-                for (RssItem item : rssItems) {
-                    //If item has unsupported media, don't add
-                    if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
-                        HashMap<String, String> story = new HashMap<>();
-                        story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
-                        story.put("date", Date.FormatDate(item.getPubDate(), "dd/MM/yyyy HH:mm"));
-                        supportedStoryList.add(story);
-                        supportedRssItems.add(item);
+                if(rssItems.size() > 0) {
+                    //region Generate and Save Lists
+                    ArrayList<RssItem> supportedRssItems = new ArrayList<>();
+                    List<Map<String, String>> supportedStoryList = new ArrayList<>();
+                    Collections.sort(rssItems);
+                    Collections.reverse(rssItems);
+                    for (RssItem item : rssItems) {
+                        //If item has unsupported media, don't add
+                        if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
+                            HashMap<String, String> story = new HashMap<>();
+                            story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
+                            story.put("date", Date.FormatDate(item.getPubDate(), "dd/MM/yyyy HH:mm"));
+                            supportedStoryList.add(story);
+                            supportedRssItems.add(item);
+                        }
                     }
+
+                    //Update with new lists (filtered results)
+                    Lists.RssItems = supportedRssItems;
+                    Lists.storyList = supportedStoryList;
+
+                    //Save Lists
+                    StorageManager.SaveLists(MainActivity.this);
+                    //endregion
+
+                    UpdateView();
                 }
-
-                //Update with new lists (filtered results)
-                Lists.RssItems = supportedRssItems;
-                Lists.storyList = supportedStoryList;
-
-                //Save Lists
-                StorageManager.SaveLists(MainActivity.this);
-                //endregion
-
-                UpdateView();
+                else
+                {
+                    Util.LogMessage("UpdateAsync", "No Items");
+                    Util.DisplayToast(MainActivity.this, getString(R.string.error_no_items));
+                }
             }
 
             if (dialog.isShowing()) {

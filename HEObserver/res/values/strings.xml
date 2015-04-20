@@ -53,5 +53,6 @@
     <!-- Misc -->
     <string name="published">"Published: "</string>
     <string name="loading">Loading</string>
+    <string name="error_no_items">Could not retreive any news items</string>
 
 </resources>
