@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <style type='text/css'>
+      a            { color:#a0a0e0 }
+      div.title    { 
+          color:#C0F0C0; 
+          font-size:1.2em; 
+          font-weight:bold; 
+          margin-top:1em; 
+          margin-bottom:0.5em; 
+          text-align:center }
+      div.subtitle { 
+          color:#C0F0C0; 
+          font-size:0.8em; 
+          margin-bottom:1em; 
+          text-align:center }
+      div.freetext { 
+          color:#F0F0F0;
+          text-align:center }
+      div.list     { color:#C0C0F0 }
+    </style>
+  </head>
+  <body>
+$ 2.4
+  % Version 2.4
+  _ 20/04/15
+    * Implemented offline Change Log, Readme, and License
+    * Improved error handling and crash reporting
+    * Fixed a bug causing the article loading to fail
+$ 2.3
+  % Version 2.3
+  _ 17/04/15
+  * Moved all internet handling functions to async threads for greater efficiency
+  * Implemented saving of article list and updates after 1hr.
+  * Fixed several bugs and crashes
+  * Enabled update cancellations
+  * Added "Whats New" popup on launch after app update
+  * Added "Open In Browser" Button
+$2.2.*
+  % Version 2.2.*
+  _ 11/03/15
+  * Improved filtering of non-compatible articles
+  * Fixed bug that caused crashes when an update was requested without internet access
+$2.1
+  % Version 2.1
+  _ 02/03/15
+  * Improved crash logging
+$2.0.*
+  % Version 2.0.*
+  _ 28/02/15
+  * Added Preferences to select only feeds users want to view
+  * Added comment loading (for articles with comments)
+  * Changed all action bar buttons to display icons
+  * Fixed several bugs and crashes when loading lots of data
+$1.3.*
+  % Version 1.3.*
+  _ 10/02/15
+  * Fixed Timeout crash issue when loading article list
+  * Added date to articles loaded from a web link
+  * Reduced app size by removed old unused resources
+  * Fixed blank article view bug when no internet available
+  * Fixed issue loading feeds with bad formatting
+  * Added new feeds
+$1.2
+  % Version 1.2
+  _ 05/02/15
+  * Published date added to articles list
+  * Optimised layout for most tablets
+  * Fixed loading bug (caused by new mobile site format)
+  * Fixed blank article view bug when no internet available
+$1.1
+  % Version 1.1
+  _ 31/01/15
+  * Launch articles from web link
+  * Internet availability checks   * fixes crash on launch
+  * Additional news feeds   * more articles available
+  * Share button on article
+$1.0
+  % Version 1.0
+  _ 27/01/15
+  ! Initial Release
+  ! <p />
+  _ Changelog generated with <a href="http://petoria.de/android-change-log/">Android Change Log</a>!
+$ END_OF_CHANGE_LOG
+  </body>
+</html>

@@ -12,6 +12,11 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.SettingsManager;
 import com.roberteves.heobserver.core.Util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+
+import sheetrock.panda.changelog.ChangeLog;
+
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {
     private CheckBoxPreference localnews;
@@ -117,32 +122,66 @@ public class SettingsActivity extends PreferenceActivity {
         about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
-                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/README.md");
-                i.putExtra("title", "About");
-                startActivity(i);
-                return true;
+                InputStream inputStream = getApplicationContext().getResources().openRawResource(R.raw.readme);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                int i;
+                try {
+                    i = inputStream.read();
+                    while (i != -1) {
+                        byteArrayOutputStream.write(i);
+                        i = inputStream.read();
+                    }
+                    inputStream.close();
+
+                    Intent intent = new Intent(SettingsActivity.this, MarkdownActivity.class);
+                    intent.putExtra("text", byteArrayOutputStream.toString());
+                    intent.putExtra("title", "About");
+                    startActivity(intent);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Util.LogException("Read Raw File", "readme", e);
+                    Util.DisplayToast(SettingsActivity.this, "Failed to load file");
+                    return false;
+                }
             }
         });
         Preference license = getPreferenceManager().findPreference("license");
         license.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
-                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/LICENSE.md");
-                i.putExtra("title", "License");
-                startActivity(i);
-                return true;
+                InputStream inputStream = getApplicationContext().getResources().openRawResource(R.raw.license);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                int i;
+                try {
+                    i = inputStream.read();
+                    while (i != -1) {
+                        byteArrayOutputStream.write(i);
+                        i = inputStream.read();
+                    }
+                    inputStream.close();
+
+                    Intent intent = new Intent(SettingsActivity.this, MarkdownActivity.class);
+                    intent.putExtra("text", byteArrayOutputStream.toString());
+                    intent.putExtra("title", "License");
+                    startActivity(intent);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Util.LogException("Read Raw File", "license", e);
+                    Util.DisplayToast(SettingsActivity.this, "Failed to load file");
+                    return false;
+                }
             }
         });
         Preference changelog = getPreferenceManager().findPreference("changelog");
         changelog.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Intent i = new Intent(SettingsActivity.this, MarkdownActivity.class);
-                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/CHANGELOG.md");
-                i.putExtra("title", "Whats New");
-                startActivity(i);
+                ChangeLog cl = new ChangeLog(SettingsActivity.this);
+                cl.getFullLogDialog().show();
                 return true;
             }
         });

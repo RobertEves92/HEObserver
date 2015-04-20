@@ -17,8 +17,6 @@ import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
 import com.roberteves.heobserver.core.Util;
 
-import java.net.SocketTimeoutException;
-
 import io.fabric.sdk.android.Fabric;
 
 public class ArticleActivity extends Activity {
@@ -135,7 +133,7 @@ public class ArticleActivity extends Activity {
 
             comments.setVisible(article.hasComments());
         } else {
-            Util.DisplayToast(getApplicationContext(), getString(R.string.error_not_supported));
+            Util.DisplayToast(ArticleActivity.this, getString(R.string.error_not_supported));
             closeOnResume = true;
             Intent intent = new Intent(ArticleActivity.this, WebActivity.class);
             intent.putExtra("link", article.getLink());
@@ -164,11 +162,7 @@ public class ArticleActivity extends Activity {
 
                     return true;
                 } catch (Exception e) {
-                    if (!(e instanceof SocketTimeoutException)) { //Don't log if timeout exception
-                        Util.LogException("load article", link, e);
-                    } else {
-                        Util.LogMessage("SocketTimeout", "Article: " + link);
-                    }
+                    Util.LogException("load article", link, e);
                     toastMessage = getString(R.string.error_load_article);
                     return false;
                 }

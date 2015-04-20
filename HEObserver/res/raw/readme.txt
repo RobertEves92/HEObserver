@@ -1,5 +1,5 @@
 # HEObserver
-######Last Updated: 28/02/2015
+######Last Updated: 20/04/2015
 Android app to get news from the Herts and Essex Observer without adverts
 
 ## Contact
@@ -13,6 +13,11 @@ The HEObserver app also uses some Open Source Libraries:
 * Android RSS Reader Library: [Mats Hofman](https://github.com/matshofman/Android-RSS-Reader-Library)  - Apache License, Version 2.0
 * Unbescape Library: [The Unbescape Open Source Project](https://github.com/unbescape/unbescape)  - Apache License, Version 2.0
 * MarkdownView Library: [Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView)  - Apache License, Version 2.0
+* Android Change Log: [koem](http://petoria.de/android-change-log) - Apache License, Version 2.0
+
+Propriatory Software Used:
+
+* Crashlytics for Android: [Crashlytics](https://try.crashlytics.com/)
 
 ## Contributing
 

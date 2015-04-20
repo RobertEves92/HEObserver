@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/HEObserver/HEObserver.iml" filepath="$PROJECT_DIR$/HEObserver/HEObserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-rss-reader-library/android-rss-reader-library.iml" filepath="$PROJECT_DIR$/android-rss-reader-library/android-rss-reader-library.iml" />
       <module fileurl="file://$PROJECT_DIR$/appcompat_v7/appcompat_v7.iml" filepath="$PROJECT_DIR$/appcompat_v7/appcompat_v7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/changelog/changelog.iml" filepath="$PROJECT_DIR$/changelog/changelog.iml" />
       <module fileurl="file://$PROJECT_DIR$/source.iml" filepath="$PROJECT_DIR$/source.iml" />
       <module fileurl="file://$PROJECT_DIR$/unbescape/unbescape.iml" filepath="$PROJECT_DIR$/unbescape/unbescape.iml" />
     </modules>

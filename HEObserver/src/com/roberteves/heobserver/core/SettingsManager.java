@@ -14,7 +14,6 @@ public class SettingsManager {
     private final static String KEY_FEED_WEATHER = "feed_weather";
     private final static String KEY_FEED_FAMILY = "feed_family";
     private final static String KEY_FEED_MISC = "feed_misc";
-    private final static String KEY_VERSION = "version";
 
     private static SharedPreferences settings;
     private static SharedPreferences.Editor editor;
@@ -91,14 +90,6 @@ public class SettingsManager {
 
     public void setFeedMisc(Boolean b) {
         editor.putBoolean(KEY_FEED_MISC, b).commit();
-    }
-
-    public int getVersion() {
-        return settings.getInt(KEY_VERSION, 0);
-    }
-
-    public void setVersion(int verson) {
-        editor.putInt(KEY_VERSION, verson).commit();
     }
 
     public void resetSettings() {

@@ -26,7 +26,6 @@ import com.roberteves.heobserver.core.Util;
 import com.roberteves.heobserver.feeds.Feed;
 import com.roberteves.heobserver.feeds.FeedManager;
 
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,6 +35,7 @@ import java.util.Map;
 import io.fabric.sdk.android.Fabric;
 import nl.matshofman.saxrssreader.RssItem;
 import nl.matshofman.saxrssreader.RssReader;
+import sheetrock.panda.changelog.ChangeLog;
 import unbescape.html.HtmlEscape;
 
 public class MainActivity extends Activity {
@@ -51,7 +51,6 @@ public class MainActivity extends Activity {
         settingsManager = new SettingsManager(this);
 
         Util.LogMessage("MainActivity", "Activity Started");
-        setTitle(getString(R.string.app_name_long));
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
 
@@ -65,17 +64,12 @@ public class MainActivity extends Activity {
             updateList();
         }
 
-        try {
-            if (settingsManager.getVersion() != this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode) {
-                settingsManager.setVersion(this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode);
-                Intent i = new Intent(MainActivity.this, MarkdownActivity.class);
-                i.putExtra("url", "https://raw.githubusercontent.com/RobertEves92/HEObserver/master/CHANGELOG.md");
-                i.putExtra("title", "Whats New");
-                startActivity(i);
-            }
-        } catch (Exception e) {
-            Util.LogException("get version", "none", e);
-        }
+        // Display changelog / whats new if appropriate
+        ChangeLog cl = new ChangeLog(this);
+        if(cl.firstRunEver())
+            cl.getFullLogDialog().show();
+        else if(cl.firstRun())
+            cl.getLogDialog().show();
     }
 
     @Override
@@ -206,11 +200,7 @@ public class MainActivity extends Activity {
                             rssItems.addAll(RssReader.read(source.replaceAll("'", "`")).getRssItems());
                         }
                     } catch (Exception e) {
-                        if (!(e instanceof SocketTimeoutException)) {
-                            Util.LogException("load feed", s, e);
-                        } else {
-                            Util.LogMessage("SocketTimeout", "Feed: " + s);
-                        }
+                        Util.LogException("load feed", s, e);
                     }
                 }
                 //endregion
@@ -252,36 +242,44 @@ public class MainActivity extends Activity {
             Util.LogMessage("UpdateAsync", "Post Execute");
 
             if (result && !isCancelled()) {
-                //region Generate and Save Lists
-                ArrayList<RssItem> supportedRssItems = new ArrayList<>();
-                List<Map<String, String>> supportedStoryList = new ArrayList<>();
-                Collections.sort(rssItems);
-                Collections.reverse(rssItems);
-                for (RssItem item : rssItems) {
-                    //If item has unsupported media, don't add
-                    if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
-                        HashMap<String, String> story = new HashMap<>();
-                        story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
-                        story.put("date", Date.FormatDate(item.getPubDate(), "dd/MM/yyyy HH:mm"));
-                        supportedStoryList.add(story);
-                        supportedRssItems.add(item);
+                if(rssItems.size() > 0) {
+                    //region Generate and Save Lists
+                    ArrayList<RssItem> supportedRssItems = new ArrayList<>();
+                    List<Map<String, String>> supportedStoryList = new ArrayList<>();
+                    Collections.sort(rssItems);
+                    Collections.reverse(rssItems);
+                    for (RssItem item : rssItems) {
+                        //If item has unsupported media, don't add
+                        if (!Article.checkLink(item.getLink()) && !Article.checkTitle(item.getTitle())) {
+                            HashMap<String, String> story = new HashMap<>();
+                            story.put("title", HtmlEscape.unescapeHtml(item.getTitle()));
+                            story.put("date", Date.FormatDate(item.getPubDate(), "dd/MM/yyyy HH:mm"));
+                            supportedStoryList.add(story);
+                            supportedRssItems.add(item);
+                        }
                     }
+
+                    //Update with new lists (filtered results)
+                    Lists.RssItems = supportedRssItems;
+                    Lists.storyList = supportedStoryList;
+
+                    //Save Lists
+                    StorageManager.SaveLists(MainActivity.this);
+                    //endregion
+
+                    UpdateView();
                 }
-
-                //Update with new lists (filtered results)
-                Lists.RssItems = supportedRssItems;
-                Lists.storyList = supportedStoryList;
-
-                //Save Lists
-                StorageManager.SaveLists(MainActivity.this);
-                //endregion
-
-                UpdateView();
-
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
+                else
+                {
+                    Util.LogMessage("UpdateAsync", "No Items");
+                    Util.DisplayToast(MainActivity.this, getString(R.string.error_no_items));
                 }
             }
+
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
         }
     }
 }
