@@ -23,9 +23,10 @@
   <body>
 $ 2.4
   % Version 2.4
-  _ DATE
-    * Implemented offline changelog
+  _ 20/04/15
+    * Implemented offline Change Log, Readme, and License
     * Improved error handling and crash reporting
+    * Fixed a bug causing the article loading to fail
 $ 2.3
   % Version 2.3
   _ 17/04/15
