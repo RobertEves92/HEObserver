@@ -135,7 +135,7 @@ public class ArticleActivity extends Activity {
 
             comments.setVisible(article.hasComments());
         } else {
-            Util.DisplayToast(getApplicationContext(), getString(R.string.error_not_supported));
+            Util.DisplayToast(ArticleActivity.this, getString(R.string.error_not_supported));
             closeOnResume = true;
             Intent intent = new Intent(ArticleActivity.this, WebActivity.class);
             intent.putExtra("link", article.getLink());

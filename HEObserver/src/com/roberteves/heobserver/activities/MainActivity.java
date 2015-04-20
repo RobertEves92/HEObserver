@@ -273,11 +273,12 @@ public class MainActivity extends Activity {
                 //endregion
 
                 UpdateView();
-
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
-                }
             }
+
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
         }
     }
 }
