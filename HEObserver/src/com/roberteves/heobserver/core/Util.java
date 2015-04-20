@@ -24,7 +24,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.zip.GZIPInputStream;
 
 public class Util {
@@ -106,9 +108,14 @@ public class Util {
             Log.w("Fabric", "Caught Exception: Action: " + action + "; Data: " + data + "; Exception: " + e.toString());
         }
 
-        Crashlytics.setString("action", action);
-        Crashlytics.setString("data", data);
-        Crashlytics.logException(e);
+        if(e instanceof SocketTimeoutException || e instanceof UnknownHostException){
+            LogMessage("Exception",e.toString());
+        }
+        else {
+            Crashlytics.setString("action", action);
+            Crashlytics.setString("data", data);
+            Crashlytics.logException(e);
+        }
     }
 
     public static void LogMessage(String tag, String message) {
