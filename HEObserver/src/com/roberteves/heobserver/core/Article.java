@@ -61,11 +61,11 @@ public class Article implements Serializable {
                     date = Date.FormatDate(Date.ParseDate(date, "yyyy-MM-dd"), "dd/MM/yyyy");
                     setPublishedDate(date + " " + time);
                 } catch (Exception e) {
-                    Util.LogException("parse article date", date + " " + time, e);
+                    Util.LogException("parse article date", "date: '" + date + "'; time: '" + time + "'", e);
                     setPublishedDate("");
                 }
             } catch (Exception ee) {
-                Util.LogException("get date/time substring", date + " " + time + " " + link, ee);
+                Util.LogException("get date/time substring", "date: '" + date + "'; time: '" + time + "'; link: " + link, ee);
                 setPublishedDate("");
             }
         }
