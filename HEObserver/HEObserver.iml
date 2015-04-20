@@ -91,6 +91,7 @@
     <orderEntry type="library" exported="" name="beta-1.1.2" level="project" />
     <orderEntry type="module" module-name="android-rss-reader-library" exported="" />
     <orderEntry type="module" module-name="unbescape" exported="" />
+    <orderEntry type="module" module-name="changelog" exported="" />
     <orderEntry type="module" module-name="appcompat_v7" exported="" />
   </component>
 </module>
