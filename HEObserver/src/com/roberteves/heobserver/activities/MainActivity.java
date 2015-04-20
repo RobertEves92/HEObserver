@@ -206,11 +206,7 @@ public class MainActivity extends Activity {
                             rssItems.addAll(RssReader.read(source.replaceAll("'", "`")).getRssItems());
                         }
                     } catch (Exception e) {
-                        if (!(e instanceof SocketTimeoutException)) {
-                            Util.LogException("load feed", s, e);
-                        } else {
-                            Util.LogMessage("SocketTimeout", "Feed: " + s);
-                        }
+                        Util.LogException("load feed", s, e);
                     }
                 }
                 //endregion
