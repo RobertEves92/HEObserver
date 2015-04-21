@@ -142,12 +142,14 @@ public class ArticleActivity extends Activity {
     }
 
     private class DownloadArticleTask extends AsyncTask<String, Void, Boolean> {
-        private final ProgressDialog dialog = new ProgressDialog(ArticleActivity.this);
+        private ProgressDialog dialog;
         private String toastMessage;
 
         @Override
         protected void onPreExecute() {
+
             Util.LogMessage("DownloadArticleAsync", "Pre Execute");
+            this.dialog = new ProgressDialog(ArticleActivity.this);
             this.dialog.setMessage(getString(R.string.dialog_fetching_article));
             this.dialog.setCancelable(false);
             this.dialog.show();
@@ -176,15 +178,16 @@ public class ArticleActivity extends Activity {
         @Override
         protected void onPostExecute(Boolean result) {
             Util.LogMessage("DownloadArticleAsync", "Post Execute");
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-
             if (result) {
                 DisplayArticle();
             } else {
                 Util.DisplayToast(ArticleActivity.this, toastMessage);
                 activity.finish();
+            }
+
+            if ((dialog != null) && dialog.isShowing() && ArticleActivity.this.isFinishing()) {
+                dialog.dismiss();
+                dialog = null;
             }
         }
     }
