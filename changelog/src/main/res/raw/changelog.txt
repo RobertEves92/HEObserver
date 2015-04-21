@@ -21,6 +21,10 @@
     </style>
   </head>
   <body>
+$ 2.4.1
+  % Hotfix 2.4.1
+  _21/04/15
+    * Fixed a bug causing app to crash when downloading articles
 $ 2.4
   % Version 2.4
   _ 20/04/15
