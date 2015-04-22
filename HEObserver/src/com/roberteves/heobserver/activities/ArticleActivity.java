@@ -25,6 +25,7 @@ public class ArticleActivity extends Activity {
     private static String link;
     private static Activity activity;
     private static Boolean closeOnResume;
+    private static ProgressDialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class ArticleActivity extends Activity {
 
     @Override
     public void onDestroy() {
+        dismissProgressDialog();
         super.onDestroy();
         Util.LogMessage("ArticleActivity", "Activity Ended");
         link = null;
@@ -141,18 +143,26 @@ public class ArticleActivity extends Activity {
         }
     }
 
+    private void dismissProgressDialog() {
+        if ((dialog != null) && dialog.isShowing()) {
+            dialog.dismiss();
+            dialog = null;
+        }
+    }
+
     private class DownloadArticleTask extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog dialog;
         private String toastMessage;
 
         @Override
         protected void onPreExecute() {
 
             Util.LogMessage("DownloadArticleAsync", "Pre Execute");
-            this.dialog = new ProgressDialog(ArticleActivity.this);
-            this.dialog.setMessage(getString(R.string.dialog_fetching_article));
-            this.dialog.setCancelable(false);
-            this.dialog.show();
+            if (dialog == null) {
+                dialog = new ProgressDialog(ArticleActivity.this);
+                dialog.setMessage(getString(R.string.dialog_fetching_article));
+                dialog.setCancelable(false);
+            }
+            dialog.show();
         }
 
         @Override
@@ -185,10 +195,8 @@ public class ArticleActivity extends Activity {
                 activity.finish();
             }
 
-            if ((dialog != null) && dialog.isShowing() && ArticleActivity.this.isFinishing()) {
-                dialog.dismiss();
-                dialog = null;
-            }
+            if (!ArticleActivity.this.isDestroyed())
+                dismissProgressDialog();
         }
     }
 }
