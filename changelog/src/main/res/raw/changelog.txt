@@ -21,6 +21,10 @@
     </style>
   </head>
   <body>
+$ 2.4.2
+  % Hotfix 2.4.2
+  _22/04/15
+    * Fixed a bug causing a dialog box to remain open
 $ 2.4.1
   % Hotfix 2.4.1
   _21/04/15
