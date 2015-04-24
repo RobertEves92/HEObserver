@@ -24,6 +24,7 @@
 $ 2.5
   % Version 2.5
   _DATE
+    * Improved article compatability checking
     * Improvements to error handling and crash reporting
     * Edited app name
 $ 2.4.2
