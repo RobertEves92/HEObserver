@@ -24,6 +24,7 @@
 $ 2.5
   % Version 2.5
   _DATE
+    * Improvements to error handling and crash reporting
     * Edited app name
 $ 2.4.2
   % Hotfix 2.4.2
@@ -37,7 +38,7 @@ $ 2.4
   % Version 2.4
   _ 20/04/15
     * Implemented offline Change Log, Readme, and License
-    * Improved error handling and crash reporting
+    * Improvements to error handling and crash reporting
     * Fixed a bug causing the article loading to fail
 $ 2.3
   % Version 2.3
@@ -56,7 +57,7 @@ $2.2.*
 $2.1
   % Version 2.1
   _ 02/03/15
-  * Improved crash logging
+  * Improvements to error handling and crash reporting
 $2.0.*
   % Version 2.0.*
   _ 28/02/15

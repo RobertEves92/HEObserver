@@ -107,7 +107,7 @@ public class Util {
             Log.w("Fabric", "Caught Exception: Action: " + action + "; Data: " + data + "; Exception: " + e.toString());
         }
 
-        if(e instanceof SocketTimeoutException || e instanceof UnknownHostException){
+        if(e instanceof SocketTimeoutException || e instanceof UnknownHostException || e.getMessage().contains("junk after document element")){
             LogMessage("Exception",e.toString());
         }
         else {
