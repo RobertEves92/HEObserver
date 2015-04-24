@@ -1,6 +1,6 @@
 <resources>
     <!-- App Name -->
-    <string name="app_name">H&amp;EObserver</string>
+    <string name="app_name">H&amp;E Observer</string>
 
     <!-- Action Bar -->
     <string name="action_refresh">Refresh</string>
