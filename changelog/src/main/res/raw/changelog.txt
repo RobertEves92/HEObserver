@@ -24,6 +24,7 @@
 $ 2.5
   % Version 2.5
   _DATE
+    * Improved action bar layouts
     * Improved article compatability checking
     * Improvements to error handling and crash reporting
     * Edited app name
