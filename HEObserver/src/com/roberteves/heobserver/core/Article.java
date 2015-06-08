@@ -14,7 +14,7 @@ public class Article implements Serializable {
     private static final String[] mediaTags = new String[]{"PHOTOS:", "PHOTO:",
             "VIDEO:", "VIDEOS:", "PICTURES:", "POLL:", " - SLIDESHOW", "PICTURE GALLERY:", "PHOTO GALLERY:"};
     private static final String[] urlTags = new String[]{"UNDEFINED-HEADLINE", "PICTURES.HTML"};
-    private static final String regexArticleBody = "<p>.*</p>";
+    private static final String regexArticleBody = "(<p>|<ul>)(.*)(</p>|</ul>)";
     private static final String regexArticleRelated = "<div.*?</div>";
     private static final String regexXmlComment = "<!--.*?-->";
     private static final String regexExcessWhitespace = "\\s+";
@@ -26,6 +26,9 @@ public class Article implements Serializable {
     private static final String regexTime = "\\d{2}\\:\\d{2}\\:\\d{2}";
     private static final String regexLinkOpen = "<a.*?>";
     private static final String regexLinkClose = "</a.*?>";
+    private static final String regexBulletList = "<ul>|</ul>";
+    private static final String regexBulletStart = "<li>";
+    private static final String regexBulletEnd = "</li>";
     private String title, body, publishedDate, link, source;
     private ArrayList<Comment> comments;
 
@@ -43,6 +46,9 @@ public class Article implements Serializable {
         b = b.replaceAll(regexArticleRelated, "");
         b = b.replaceAll(regexXmlComment, "");
         b = b.replaceAll(regexExcessWhitespace, " ");
+        b = b.replaceAll(regexBulletList, "");
+        b = b.replaceAll(regexBulletStart, "- ");
+        b = b.replaceAll(regexBulletEnd, "<br />");
         setBody(b);
 
 
