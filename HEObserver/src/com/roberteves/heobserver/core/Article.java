@@ -29,6 +29,7 @@ public class Article implements Serializable {
     private static final String regexBulletList = "<ul>|</ul>";
     private static final String regexBulletStart = "<li>";
     private static final String regexBulletEnd = "</li>";
+    private static final String regexImage = "<img[^>]+src=\"([^\">]+)(\" style=\"[^\"]+)?(\" rel=\"[^\"]+)?\">";
     private String title, body, publishedDate, link, source;
     private ArrayList<Comment> comments;
 
@@ -49,6 +50,7 @@ public class Article implements Serializable {
         b = b.replaceAll(regexBulletList, "");
         b = b.replaceAll(regexBulletStart, "- ");
         b = b.replaceAll(regexBulletEnd, "<br />");
+        b=b.replaceAll(regexImage,"");
         setBody(b);
 
 
