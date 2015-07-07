@@ -143,15 +143,15 @@ public class ArticleActivity extends Activity {
 
         if (article.hasImages()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(ArticleActivity.this);
-            builder.setTitle("Open In Browser?");
-            builder.setMessage("This article contains one or more images. Would you like to open it in your browser?");
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            builder.setTitle(getString(R.string.dialog_open_in_browser_title));
+            builder.setMessage(getString(R.string.dialog_open_in_browser_message));
+            builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     openInBrowser();
                 }
             });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 
