@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,7 +30,10 @@ public class Article implements Serializable {
     private static final String regexBulletList = "<ul>|</ul>";
     private static final String regexBulletStart = "<li>";
     private static final String regexBulletEnd = "</li>";
+    private static final String regexImage = "<img[^>]+\">";
     private String title, body, publishedDate, link, source;
+
+    private Boolean images = false;
     private ArrayList<Comment> comments;
 
     public Article(String link) throws IOException {
@@ -51,6 +55,12 @@ public class Article implements Serializable {
         b = b.replaceAll(regexBulletEnd, "<br />");
         setBody(b);
 
+        //detect and remove multiple images
+        if(!selectStringFromRegex(b, regexImage).contentEquals("")) {
+            b = b.replaceAll(regexImage, "");
+            setBody(b);
+            setImages(true);
+        }
 
         String date = selectStringFromRegex(source, regexDate);
         String time = selectStringFromRegex(source, regexTime);
@@ -203,5 +213,13 @@ public class Article implements Serializable {
 
     public ArrayList<Comment> getComments() {
         return comments;
+    }
+
+    public Boolean hasImages() {
+        return images;
+    }
+
+    public void setImages(Boolean images) {
+        this.images = images;
     }
 }
