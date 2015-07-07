@@ -30,7 +30,7 @@ public class Article implements Serializable {
     private static final String regexBulletList = "<ul>|</ul>";
     private static final String regexBulletStart = "<li>";
     private static final String regexBulletEnd = "</li>";
-    private static final String regexImage = "<img[^>]+src=\"([^\">]+)(\" style=\"[^\"]+)?(\" rel=\"[^\"]+)?\">";
+    private static final String regexImage = "<img[^>]+\">";
     private String title, body, publishedDate, link, source;
 
     private Boolean images = false;
