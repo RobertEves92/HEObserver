@@ -24,6 +24,7 @@
 $ 2.5
   % Version 2.5
   _DATE
+    * Improved Image handling
     * Updated article formatting to allow bullet points
     * Improved action bar layouts
     * Improved article compatibility checking
