@@ -1,7 +1,9 @@
 package com.roberteves.heobserver.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -136,11 +138,36 @@ public class ArticleActivity extends Activity {
             comments.setVisible(article.hasComments());
         } else {
             Util.DisplayToast(ArticleActivity.this, getString(R.string.error_not_supported));
-            closeOnResume = true;
-            Intent intent = new Intent(ArticleActivity.this, WebActivity.class);
-            intent.putExtra("link", article.getLink());
-            startActivity(intent);
+            openInBrowser();
         }
+
+        if (article.hasImages()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ArticleActivity.this);
+            builder.setTitle("Open In Browser?");
+            builder.setMessage("This article contains one or more images. Would you like to open it in your browser?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    openInBrowser();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    }
+
+    private void openInBrowser() {
+        closeOnResume = true;
+        Intent intent = new Intent(ArticleActivity.this, WebActivity.class);
+        intent.putExtra("link", article.getLink());
+        startActivity(intent);
     }
 
     private void dismissProgressDialog() {
