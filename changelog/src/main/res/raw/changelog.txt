@@ -24,6 +24,7 @@
 $ 2.5
   % Version 2.5
   _DATE
+    * Added compatibility for mobile web links
     * Improved timeout handling
     * Improved Image handling
     * Updated article formatting to allow bullet points
