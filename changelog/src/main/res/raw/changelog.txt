@@ -23,7 +23,7 @@
   <body>
 $ 2.5
   % Version 2.5
-  _DATE
+  _01/08/15
     * Added compatibility for mobile web links
     * Improved timeout handling
     * Improved Image handling
