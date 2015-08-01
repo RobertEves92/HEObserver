@@ -29,6 +29,8 @@ import java.net.UnknownHostException;
 import java.util.zip.GZIPInputStream;
 
 public class Util {
+    public static final int timeout = 5000;
+
     public static Boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -45,13 +47,13 @@ public class Util {
 
     public static Boolean isInternetAvailable() {
         try {
-            URL url = new URL("http://www.google.com/");
+            URL url = new URL("http://www.hertsandessexobserver.co.uk/");
             HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
             urlc.setRequestProperty("User-Agent", "test");
             urlc.setRequestProperty("Connection", "close");
 
-            urlc.setConnectTimeout(1000); //timeout if cant connect within 1s
-            urlc.setReadTimeout(1000); //timeout if cant read within 1s
+            urlc.setConnectTimeout(timeout); //timeout if cant connect within 1s
+            urlc.setReadTimeout(timeout); //timeout if cant read within 1s
 
             urlc.connect();
             if (urlc.getResponseCode() == 200) {
@@ -68,11 +70,10 @@ public class Util {
     }
 
     public static String getWebSource(String Url) throws IOException {
-        int timeout = 5; //timeout in seconds
         HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
 
-        HttpConnectionParams.setConnectionTimeout(httpclient.getParams(), timeout * 1000); //Connection Timeout
-        HttpConnectionParams.setSoTimeout(httpclient.getParams(), timeout * 1000); //Socket Timeout
+        HttpConnectionParams.setConnectionTimeout(httpclient.getParams(), timeout); //Connection Timeout
+        HttpConnectionParams.setSoTimeout(httpclient.getParams(), timeout); //Socket Timeout
 
         HttpGet httpget = new HttpGet(Url); // Set the action you want to do
         HttpResponse response = httpclient.execute(httpget); // Execute it
@@ -107,7 +108,7 @@ public class Util {
             Log.w("Fabric", "Caught Exception: Action: " + action + "; Data: " + data + "; Exception: " + e.toString());
         }
 
-        if(e instanceof SocketTimeoutException || e instanceof UnknownHostException){
+        if(e instanceof SocketTimeoutException || e instanceof UnknownHostException || e.getMessage().contains("junk after document element")){
             LogMessage("Exception",e.toString());
         }
         else {

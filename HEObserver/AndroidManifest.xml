@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.roberteves.heobserver"
-    android:versionCode="20"
-    android:versionName="2.4.2">
+    android:versionCode="21"
+    android:versionName="2.5">
 
     <uses-sdk
         android:minSdkVersion="17"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="22" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -39,6 +39,9 @@
                     android:scheme="http" />
                 <data
                     android:host="www.hertsandessexobserver.co.uk"
+                    android:scheme="http" />
+                <data
+                    android:host="m.hertsandessexobserver.co.uk"
                     android:scheme="http" />
             </intent-filter>
         </activity>

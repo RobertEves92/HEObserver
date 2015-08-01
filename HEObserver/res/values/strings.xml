@@ -1,6 +1,6 @@
 <resources>
     <!-- App Name -->
-    <string name="app_name">H&amp;EObserver</string>
+    <string name="app_name">H&amp;E Observer</string>
 
     <!-- Action Bar -->
     <string name="action_refresh">Refresh</string>
@@ -49,10 +49,14 @@
     <!-- Dialogs -->
     <string name="dialog_fetching_articles">Fetching articles…</string>
     <string name="dialog_fetching_article">Fetching Article…</string>
+    <string name="dialog_open_in_browser_title">Open In Browser?</string>
+    <string name="dialog_open_in_browser_message">This article contains one or more images. Would you like to open it in your browser?</string>
 
     <!-- Misc -->
     <string name="published">"Published: "</string>
     <string name="loading">Loading</string>
     <string name="error_no_items">Could not retrieve any news items</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>
