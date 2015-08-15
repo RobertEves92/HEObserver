@@ -40,9 +40,9 @@
                 <data
                     android:host="www.hertsandessexobserver.co.uk"
                     android:scheme="http" />
-                <data
+                <!--<data
                     android:host="m.hertsandessexobserver.co.uk"
-                    android:scheme="http" />
+                    android:scheme="http" />-->
             </intent-filter>
         </activity>
         <activity
