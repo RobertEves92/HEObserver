@@ -21,6 +21,10 @@
     </style>
   </head>
   <body>
+$ 2.5.1
+  % Hotfix 2.5.1
+  _date
+    * Disabled mobile link support due to redirection loop
 $ 2.5
   % Version 2.5
   _01/08/15
