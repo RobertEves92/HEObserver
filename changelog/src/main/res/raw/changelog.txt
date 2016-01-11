@@ -21,6 +21,10 @@
     </style>
   </head>
   <body>
+$ 2.6
+  % Version 2.6
+  _UNKNOWN DATE
+    * Improved in app web view
 $ 2.5.2
   % Hotfix 2.5.2
   _15/08/15
