@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Window;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Util;
@@ -19,8 +22,22 @@ public class WebActivity extends Activity {
         super.onCreate(savedInstanceState);
         Util.LogMessage("WebActivity", "Activity Started");
         activity = this;
+        getWindow().requestFeature(Window.FEATURE_PROGRESS);
+
         setContentView(R.layout.activity_web);
+
         webView = (WebView) findViewById(R.id.webView);
+        webView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                activity.setProgress(progress * 1000);
+            }
+        });
+        webView.setWebViewClient(new WebViewClient() {
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                Util.LogMessage("WebViewClient", description);
+            }
+        });
+
         if (Util.isNetworkAvailable(this)) {
             WebViewTask webViewTask = new WebViewTask();
             webViewTask.execute();
@@ -28,12 +45,6 @@ public class WebActivity extends Activity {
             Util.DisplayToast(this, getString(R.string.error_no_internet));
             this.finish();
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        finish(); // close when resumed
     }
 
     @Override
