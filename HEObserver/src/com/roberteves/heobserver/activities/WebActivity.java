@@ -27,7 +27,6 @@ public class WebActivity extends Activity {
         setContentView(R.layout.activity_web);
 
         webView = (WebView) findViewById(R.id.webView);
-        webView.getSettings().setBuiltInZoomControls(true);
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 activity.setProgress(progress * 1000);
