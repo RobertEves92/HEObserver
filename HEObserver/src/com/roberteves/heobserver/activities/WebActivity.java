@@ -48,12 +48,6 @@ public class WebActivity extends Activity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        finish(); // close when resumed
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         Util.LogMessage("WebActivity", "Activity Ended");
