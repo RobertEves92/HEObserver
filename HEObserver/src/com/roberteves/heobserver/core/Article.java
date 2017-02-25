@@ -141,10 +141,9 @@ public class Article implements Serializable {
     public void processComments() {
         try {
             List<String> authors, comments;
-            authors = selectStringListFromRegex(source, "<span class=\"author\">.*<\\/span>");
-            comments = selectStringListFromRegex(source, "<div class=\"comment-text\">([^]]*?)<\\/div>");
-
-            authors.remove(0);
+            String commentsSection = selectStringFromRegex(source,"<section class=\"section section__comments\">.*<\\/section>");
+            authors = selectStringListFromRegex(commentsSection, "<span itemprop=\"name\">\\s*.*?<\\/span>");
+            comments = selectStringListFromRegex(commentsSection, "<p class=\"discussion-thread-comments-quotation\">\\s*.*?<\\/p>");
 
             this.comments = new ArrayList<>();
 
@@ -154,13 +153,13 @@ public class Article implements Serializable {
 
             for (Comment c : this.comments) {
                 //Format author name
-                c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?>", ""));
-                c.setAuthor(c.getAuthor().replaceAll("</a></span>", ""));
+                c.setAuthor(c.getAuthor().replaceAll("<span itemprop=\"name\">", ""));
+                c.setAuthor(c.getAuthor().replaceAll("<\\/span>", ""));
                 c.setAuthor(HtmlEscape.unescapeHtml(c.getAuthor()));
 
                 //Format comment body
-                c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">", ""));
-                c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>", ""));
+                c.setContent(c.getContent().replaceAll("<p class=\"discussion-thread-comments-quotation\">", ""));
+                c.setContent(c.getContent().replaceAll("<\\/p>", ""));
                 c.setContent(HtmlEscape.unescapeHtml(c.getContent()));
                 c.setContent(c.getContent().replaceAll(regexLinkOpen, ""));
                 c.setContent(c.getContent().replaceAll(regexLinkClose, ""));
