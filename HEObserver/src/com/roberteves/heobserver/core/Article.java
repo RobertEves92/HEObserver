@@ -31,6 +31,8 @@ public class Article implements Serializable {
     private static final String regexBulletStart = "<li>";
     private static final String regexBulletEnd = "</li>";
     private static final String regexImage = "<img[^>]+\">";
+    private static final String regexScript = "(<script)([\\s\\S]*?)<\\/script>";
+    private static final String regexStyle = "(<style)([\\s\\S]*?)<\\/style>";
     private String title, body, publishedDate, link, source;
 
     private Boolean images = false;
@@ -54,6 +56,8 @@ public class Article implements Serializable {
         b = b.replaceAll(regexBulletList, "");
         b = b.replaceAll(regexBulletStart, "- ");
         b = b.replaceAll(regexBulletEnd, "<br />");
+        b = b.replaceAll(regexScript,"");
+        b = b.replaceAll(regexStyle,"");
         setBody(b);
 
         //detect and remove multiple images
