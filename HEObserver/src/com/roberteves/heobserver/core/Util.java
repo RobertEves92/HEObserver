@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.zip.GZIPInputStream;
 
@@ -71,30 +72,22 @@ public class Util {
     }
 
     public static String getWebSource(String Url) throws IOException {
-        HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
-        HttpGet httpget = new HttpGet(Url); // Set the action you want to do
-        HttpResponse response = httpclient.execute(httpget); // Executeit
+        // Build and set timeout values for the request.
+        URLConnection connection = (new URL(Url)).openConnection();
+        connection.setConnectTimeout(timeout);
+        connection.setReadTimeout(timeout);
+        connection.connect();
 
-        if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
-        {
-            HttpEntity entity = response.getEntity();
-            InputStream is = entity.getContent(); // Create an InputStream with the response
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) // Read line by line
-                sb.append(line + "\n");
-
-            String resString = sb.toString(); // Result is here
-
-            is.close(); // Close the stream
-
-            return resString;
+        // Read and store the result line by line then return the entire string.
+        InputStream in = connection.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        StringBuilder html = new StringBuilder();
+        for (String line; (line = reader.readLine()) != null; ) {
+            html.append(line);
         }
-        else
-        {
-            throw new IOException("HTTP RESPONSE: "+ response.getStatusLine().getStatusCode() + " " + response.getStatusLine().getReasonPhrase());
-        }
+        in.close();
+
+        return html.toString();
     }
 
     public static void LogException(String action, String data, Exception e) {
@@ -103,10 +96,9 @@ public class Util {
             Log.w("Fabric", "Caught Exception: Action: " + action + "; Data: " + data + "; Exception: " + e.toString());
         }
 
-        if(e instanceof SocketTimeoutException || e instanceof UnknownHostException || e.getMessage().contains("junk after document element")){
-            LogMessage("Exception",e.toString());
-        }
-        else {
+        if (e instanceof SocketTimeoutException || e instanceof UnknownHostException || e.getMessage().contains("junk after document element")) {
+            LogMessage("Exception", e.toString());
+        } else {
             Crashlytics.setString("action", action);
             Crashlytics.setString("data", data);
             Crashlytics.logException(e);
