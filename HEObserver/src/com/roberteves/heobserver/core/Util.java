@@ -10,15 +10,6 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.BuildConfig;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,10 +19,9 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
-import java.util.zip.GZIPInputStream;
 
 public class Util {
-    public static final int timeout = 5000;
+    private static final int timeout = 5000;
 
     public static Boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
