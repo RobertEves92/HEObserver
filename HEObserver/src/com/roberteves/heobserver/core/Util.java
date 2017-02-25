@@ -13,6 +13,7 @@ import com.roberteves.heobserver.BuildConfig;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -73,19 +74,27 @@ public class Util {
         HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
         HttpGet httpget = new HttpGet(Url); // Set the action you want to do
         HttpResponse response = httpclient.execute(httpget); // Executeit
-        HttpEntity entity = response.getEntity();
-        InputStream is = entity.getContent(); // Create an InputStream with the response
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-        StringBuilder sb = new StringBuilder();
-        String line = null;
-        while ((line = reader.readLine()) != null) // Read line by line
-            sb.append(line + "\n");
 
-        String resString = sb.toString(); // Result is here
+        if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
+        {
+            HttpEntity entity = response.getEntity();
+            InputStream is = entity.getContent(); // Create an InputStream with the response
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) // Read line by line
+                sb.append(line + "\n");
 
-        is.close(); // Close the stream
+            String resString = sb.toString(); // Result is here
 
-        return resString;
+            is.close(); // Close the stream
+
+            return resString;
+        }
+        else
+        {
+            throw new IOException("HTTP RESPONSE: "+ response.getStatusLine().getStatusCode() + " " + response.getStatusLine().getReasonPhrase());
+        }
     }
 
     public static void LogException(String action, String data, Exception e) {
