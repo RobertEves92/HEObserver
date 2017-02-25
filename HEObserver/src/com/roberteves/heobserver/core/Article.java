@@ -141,8 +141,9 @@ public class Article implements Serializable {
     public void processComments() {
         try {
             List<String> authors, comments;
-            authors = selectStringListFromRegex(source, "<span class=\"author\">.*<\\/span>");
-            comments = selectStringListFromRegex(source, "<div class=\"comment-text\">([^]]*?)<\\/div>");
+            String commentsSection = selectStringFromRegex(source,"<section class=\"section section__comments\">.*<\\/section>");
+            authors = selectStringListFromRegex(commentsSection, "<span itemprop=\"name\">.*<\\/span>");
+            comments = selectStringListFromRegex(commentsSection, "<div class=\"comment-text\">([^]]*?)<\\/div>");
 
             authors.remove(0);
 
