@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
@@ -76,6 +78,7 @@ public class ArticleActivity extends Activity {
         } else {
             if (Util.isNetworkAvailable(this)) {
                 new DownloadArticleTask().execute(link);
+                Answers.getInstance().logCustom(new CustomEvent("Article Opened"));
             } else {
                 Util.DisplayToast(this, getString(R.string.error_no_internet));
                 activity.finish();
