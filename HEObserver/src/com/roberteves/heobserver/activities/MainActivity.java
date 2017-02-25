@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
@@ -51,6 +53,8 @@ public class MainActivity extends Activity {
         settingsManager = new SettingsManager(this);
 
         Util.LogMessage("MainActivity", "Activity Started");
+        Answers.getInstance().logCustom(new CustomEvent("App Opened"));
+
         setContentView(R.layout.activity_scroll_list);
         lv = (ListView) findViewById(R.id.listView);
 
