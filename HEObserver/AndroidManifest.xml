@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.roberteves.heobserver"
-    android:versionCode="23"
-    android:versionName="2.5.2">
+    android:versionCode="26"
+    android:versionName="2.6">
 
     <uses-sdk
         android:minSdkVersion="17"
@@ -27,7 +27,8 @@
         </activity>
         <activity
             android:name="com.roberteves.heobserver.activities.ArticleActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:parentActivityName="com.roberteves.heobserver.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -40,14 +41,15 @@
                 <data
                     android:host="www.hertsandessexobserver.co.uk"
                     android:scheme="http" />
-                <!--<data
+                <data
                     android:host="m.hertsandessexobserver.co.uk"
-                    android:scheme="http" />-->
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.roberteves.heobserver.activities.WebActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:parentActivityName="com.roberteves.heobserver.activities.ArticleActivity" />
         <activity
             android:name="com.roberteves.heobserver.activities.MarkdownActivity"
             android:label="@string/title_activity_about" />

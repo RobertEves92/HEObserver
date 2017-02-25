@@ -10,14 +10,6 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.roberteves.heobserver.BuildConfig;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,11 +17,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.UnknownHostException;
-import java.util.zip.GZIPInputStream;
 
 public class Util {
-    public static final int timeout = 5000;
+    private static final int timeout = 5000;
 
     public static Boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
@@ -70,36 +62,22 @@ public class Util {
     }
 
     public static String getWebSource(String Url) throws IOException {
-        HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
+        // Build and set timeout values for the request.
+        URLConnection connection = (new URL(Url)).openConnection();
+        connection.setConnectTimeout(timeout);
+        connection.setReadTimeout(timeout);
+        connection.connect();
 
-        HttpConnectionParams.setConnectionTimeout(httpclient.getParams(), timeout); //Connection Timeout
-        HttpConnectionParams.setSoTimeout(httpclient.getParams(), timeout); //Socket Timeout
-
-        HttpGet httpget = new HttpGet(Url); // Set the action you want to do
-        HttpResponse response = httpclient.execute(httpget); // Execute it
-        HttpEntity entity = response.getEntity();
-
-        InputStream is = entity.getContent();
-        Header contentEncoding = response.getFirstHeader("Content-Encoding");
-
-        BufferedReader reader;
-        if ((contentEncoding != null) && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
-            InputStream gzipIs = new GZIPInputStream(is);
-            reader = new BufferedReader(new InputStreamReader(gzipIs), 8);
-        } else {
-            reader = new BufferedReader(new InputStreamReader(is), 8);
+        // Read and store the result line by line then return the entire string.
+        InputStream in = connection.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        StringBuilder html = new StringBuilder();
+        for (String line; (line = reader.readLine()) != null; ) {
+            html.append(line);
         }
+        in.close();
 
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) // Read line by line
-            sb.append(line).append("\n");
-
-        String resString = sb.toString(); // Result is here
-
-        is.close(); // Close the stream
-
-        return resString;
+        return html.toString();
     }
 
     public static void LogException(String action, String data, Exception e) {
@@ -108,10 +86,9 @@ public class Util {
             Log.w("Fabric", "Caught Exception: Action: " + action + "; Data: " + data + "; Exception: " + e.toString());
         }
 
-        if(e instanceof SocketTimeoutException || e instanceof UnknownHostException || e.getMessage().contains("junk after document element")){
-            LogMessage("Exception",e.toString());
-        }
-        else {
+        if (e instanceof SocketTimeoutException || e instanceof UnknownHostException || e.getMessage().contains("junk after document element")) {
+            LogMessage("Exception", e.toString());
+        } else {
             Crashlytics.setString("action", action);
             Crashlytics.setString("data", data);
             Crashlytics.logException(e);

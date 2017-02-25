@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +30,8 @@ public class Article implements Serializable {
     private static final String regexBulletStart = "<li>";
     private static final String regexBulletEnd = "</li>";
     private static final String regexImage = "<img[^>]+\">";
+    private static final String regexScript = "(<script)([\\s\\S]*?)<\\/script>";
+    private static final String regexStyle = "(<style)([\\s\\S]*?)<\\/style>";
     private String title, body, publishedDate, link, source;
 
     private Boolean images = false;
@@ -54,6 +55,8 @@ public class Article implements Serializable {
         b = b.replaceAll(regexBulletList, "");
         b = b.replaceAll(regexBulletStart, "- ");
         b = b.replaceAll(regexBulletEnd, "<br />");
+        b = b.replaceAll(regexScript,"");
+        b = b.replaceAll(regexStyle,"");
         setBody(b);
 
         //detect and remove multiple images
@@ -137,10 +140,9 @@ public class Article implements Serializable {
     public void processComments() {
         try {
             List<String> authors, comments;
-            authors = selectStringListFromRegex(source, "<span class=\"author\">.*<\\/span>");
-            comments = selectStringListFromRegex(source, "<div class=\"comment-text\">([^]]*?)<\\/div>");
-
-            authors.remove(0);
+            String commentsSection = selectStringFromRegex(source,"<section class=\"section section__comments\">.*<\\/section>");
+            authors = selectStringListFromRegex(commentsSection, "<span itemprop=\"name\">\\s*.*?<\\/span>");
+            comments = selectStringListFromRegex(commentsSection, "<p class=\"discussion-thread-comments-quotation\">\\s*.*?<\\/p>");
 
             this.comments = new ArrayList<>();
 
@@ -150,13 +152,13 @@ public class Article implements Serializable {
 
             for (Comment c : this.comments) {
                 //Format author name
-                c.setAuthor(c.getAuthor().replaceAll("<span class=\"author\"><a class=\"\" target=\"\" h.*?>", ""));
-                c.setAuthor(c.getAuthor().replaceAll("</a></span>", ""));
+                c.setAuthor(c.getAuthor().replaceAll("<span itemprop=\"name\">", ""));
+                c.setAuthor(c.getAuthor().replaceAll("<\\/span>", ""));
                 c.setAuthor(HtmlEscape.unescapeHtml(c.getAuthor()));
 
                 //Format comment body
-                c.setContent(c.getContent().replaceAll("<div class=\"comment-text\">\n\t\t\t<p class=\"discussion-thread-comments-quotation\">", ""));
-                c.setContent(c.getContent().replaceAll("</p>\n\t\t\t</div>", ""));
+                c.setContent(c.getContent().replaceAll("<p class=\"discussion-thread-comments-quotation\">", ""));
+                c.setContent(c.getContent().replaceAll("<\\/p>", ""));
                 c.setContent(HtmlEscape.unescapeHtml(c.getContent()));
                 c.setContent(c.getContent().replaceAll(regexLinkOpen, ""));
                 c.setContent(c.getContent().replaceAll(regexLinkClose, ""));
@@ -180,7 +182,7 @@ public class Article implements Serializable {
         return title;
     }
 
-    void setTitle(String title) {
+    private void setTitle(String title) {
         this.title = title;
     }
 
@@ -188,7 +190,7 @@ public class Article implements Serializable {
         return body;
     }
 
-    void setBody(String body) {
+    private void setBody(String body) {
         this.body = body;
     }
 
@@ -196,7 +198,7 @@ public class Article implements Serializable {
         return publishedDate;
     }
 
-    void setPublishedDate(String publishedDate) {
+    private void setPublishedDate(String publishedDate) {
         this.publishedDate = publishedDate;
     }
 
@@ -204,7 +206,7 @@ public class Article implements Serializable {
         return link;
     }
 
-    void setLink(String link) {
+    private void setLink(String link) {
         this.link = link;
     }
 
@@ -220,7 +222,7 @@ public class Article implements Serializable {
         return images;
     }
 
-    public void setImages(Boolean images) {
+    private void setImages(Boolean images) {
         this.images = images;
     }
 }
