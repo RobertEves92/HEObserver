@@ -70,36 +70,7 @@ public class Util {
     }
 
     public static String getWebSource(String Url) throws IOException {
-        HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
 
-        HttpConnectionParams.setConnectionTimeout(httpclient.getParams(), timeout); //Connection Timeout
-        HttpConnectionParams.setSoTimeout(httpclient.getParams(), timeout); //Socket Timeout
-
-        HttpGet httpget = new HttpGet(Url); // Set the action you want to do
-        HttpResponse response = httpclient.execute(httpget); // Execute it
-        HttpEntity entity = response.getEntity();
-
-        InputStream is = entity.getContent();
-        Header contentEncoding = response.getFirstHeader("Content-Encoding");
-
-        BufferedReader reader;
-        if ((contentEncoding != null) && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
-            InputStream gzipIs = new GZIPInputStream(is);
-            reader = new BufferedReader(new InputStreamReader(gzipIs), 8);
-        } else {
-            reader = new BufferedReader(new InputStreamReader(is), 8);
-        }
-
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) // Read line by line
-            sb.append(line).append("\n");
-
-        String resString = sb.toString(); // Result is here
-
-        is.close(); // Close the stream
-
-        return resString;
     }
 
     public static void LogException(String action, String data, Exception e) {
