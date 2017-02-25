@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -183,7 +182,7 @@ public class Article implements Serializable {
         return title;
     }
 
-    void setTitle(String title) {
+    private void setTitle(String title) {
         this.title = title;
     }
 
@@ -191,7 +190,7 @@ public class Article implements Serializable {
         return body;
     }
 
-    void setBody(String body) {
+    private void setBody(String body) {
         this.body = body;
     }
 
@@ -199,7 +198,7 @@ public class Article implements Serializable {
         return publishedDate;
     }
 
-    void setPublishedDate(String publishedDate) {
+    private void setPublishedDate(String publishedDate) {
         this.publishedDate = publishedDate;
     }
 
@@ -207,7 +206,7 @@ public class Article implements Serializable {
         return link;
     }
 
-    void setLink(String link) {
+    private void setLink(String link) {
         this.link = link;
     }
 
@@ -223,7 +222,7 @@ public class Article implements Serializable {
         return images;
     }
 
-    public void setImages(Boolean images) {
+    private void setImages(Boolean images) {
         this.images = images;
     }
 }
