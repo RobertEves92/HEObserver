@@ -121,7 +121,7 @@ public class ArticleActivity extends Activity {
 
     private void DisplayArticle() {
         Util.LogMessage("ArticleActivity", "Display Article");
-        if (article.isReadable() && article.getLink().matches("((http://)?)((m.)?)((www.)?)hertsandessexobserver.co.uk/.*story.html") && !article.getLink().toUpperCase().contains("UNDEFINED-HEADLINE")) {
+        if (articleSupported()) {
             TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
             TextView txtBody = (TextView) findViewById(R.id.txtBody);
             TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
@@ -168,6 +168,10 @@ public class ArticleActivity extends Activity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+    }
+
+    private boolean articleSupported() {
+        return article.isReadable() && (article.getLink().matches("((http://)?)((m.)?)((www.)?)hertsandessexobserver.co.uk/.*story.html") || article.getLink().matches("((http://)?)((m.)?)((www.)?)hertfordshiremercury.co.uk/.*story.html")) && !article.getLink().toUpperCase().contains("UNDEFINED-HEADLINE");
     }
 
     private void openInBrowser() {
