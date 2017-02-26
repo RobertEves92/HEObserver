@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.roberteves.heobserver"
-    android:versionCode="26"
-    android:versionName="2.6">
+    android:versionCode="27"
+    android:versionName="2.6.1">
 
     <uses-sdk
         android:minSdkVersion="17"
