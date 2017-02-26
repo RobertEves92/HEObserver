@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.crashlytics.android.answers.CustomEvent;
 import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
@@ -78,7 +79,6 @@ public class ArticleActivity extends Activity {
         } else {
             if (Util.isNetworkAvailable(this)) {
                 new DownloadArticleTask().execute(link);
-                Answers.getInstance().logCustom(new CustomEvent("Article Opened"));
             } else {
                 Util.DisplayToast(this, getString(R.string.error_no_internet));
                 activity.finish();
@@ -139,6 +139,11 @@ public class ArticleActivity extends Activity {
             article.processComments();
 
             comments.setVisible(article.hasComments());
+
+            Answers.getInstance().logContentView(new ContentViewEvent()
+                    .putContentName(article.getTitle())
+                    .putContentType("Article")
+                    .putContentId("Article"));
         } else {
             Util.DisplayToast(ArticleActivity.this, getString(R.string.error_not_supported));
             openInBrowser();
