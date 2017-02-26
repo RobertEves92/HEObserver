@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
+import com.crashlytics.android.answers.CustomEvent;
 import com.roberteves.heobserver.BuildConfig;
 import com.roberteves.heobserver.R;
 import com.roberteves.heobserver.core.Article;
@@ -136,6 +139,11 @@ public class ArticleActivity extends Activity {
             article.processComments();
 
             comments.setVisible(article.hasComments());
+
+            Answers.getInstance().logContentView(new ContentViewEvent()
+                    .putContentName(article.getTitle())
+                    .putContentType("Article")
+                    .putContentId("Article"));
         } else {
             Util.DisplayToast(ArticleActivity.this, getString(R.string.error_not_supported));
             openInBrowser();
