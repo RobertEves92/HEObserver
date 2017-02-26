@@ -21,6 +21,10 @@
     </style>
   </head>
   <body>
+$2.6.1
+  % Version 2.6.1
+  _26/02/2017
+    * Further improvements to error handling
 $ 2.6
   % Version 2.6
   _25/02/2017
