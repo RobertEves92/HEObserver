@@ -147,27 +147,6 @@ public class ArticleActivity extends Activity {
             Util.DisplayToast(ArticleActivity.this, getString(R.string.error_not_supported));
             openInBrowser();
         }
-
-        if (article.hasImages()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ArticleActivity.this);
-            builder.setTitle(getString(R.string.dialog_open_in_browser_title));
-            builder.setMessage(getString(R.string.dialog_open_in_browser_message));
-            builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    openInBrowser();
-                }
-            });
-            builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
     }
 
     private boolean articleSupported() {
