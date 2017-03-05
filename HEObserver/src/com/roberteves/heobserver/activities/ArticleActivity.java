@@ -171,7 +171,7 @@ public class ArticleActivity extends Activity {
     }
 
     private boolean articleSupported() {
-        return article.isReadable() && (article.getLink().matches("((http://)?)((m.)?)((www.)?)hertsandessexobserver.co.uk/.*story.html") || article.getLink().matches("((http://)?)((m.)?)((www.)?)hertfordshiremercury.co.uk/.*story.html")) && !article.getLink().toUpperCase().contains("UNDEFINED-HEADLINE");
+        return article.isReadable() && (article.getLink().matches("((http://)?)((m.)?)((www.)?)hertsandessexobserver.co.uk/.*story.html") || article.getLink().matches("((http://)?)((m.)?)((www.)?)hertfordshiremercury.co.uk/.*story.html") || article.getLink().matches("((http://)?)((m.)?)((www.)?)essexlive.news/.*story.html")) && !article.getLink().toUpperCase().contains("UNDEFINED-HEADLINE");
     }
 
     private void openInBrowser() {
