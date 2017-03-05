@@ -33,8 +33,7 @@ public class Article implements Serializable {
     private static final String regexScript = "(<script)([\\s\\S]*?)<\\/script>";
     private static final String regexStyle = "(<style)([\\s\\S]*?)<\\/style>";
     private String title, body, publishedDate, link, source;
-
-    private Boolean images = false;
+    
     private ArrayList<Comment> comments;
 
     public Article(String link) throws IOException {
@@ -63,7 +62,6 @@ public class Article implements Serializable {
         if(!selectStringFromRegex(b, regexImage).contentEquals("")) {
             b = b.replaceAll(regexImage, "");
             setBody(b);
-            setImages(true);
         }
 
         String date = selectStringFromRegex(source, regexDate);
@@ -216,13 +214,5 @@ public class Article implements Serializable {
 
     public ArrayList<Comment> getComments() {
         return comments;
-    }
-
-    public Boolean hasImages() {
-        return images;
-    }
-
-    private void setImages(Boolean images) {
-        this.images = images;
     }
 }
