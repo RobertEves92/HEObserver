@@ -54,7 +54,7 @@
 
     <!-- Misc -->
     <string name="published">"Published: "</string>
-    <string name="loading">Loading…</string>
+    <string name="loading">Loading</string>
     <string name="error_no_items">Could not retrieve any news items</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
