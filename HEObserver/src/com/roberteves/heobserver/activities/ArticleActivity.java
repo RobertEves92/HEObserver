@@ -11,6 +11,7 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -125,6 +126,8 @@ public class ArticleActivity extends Activity {
             TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
             TextView txtBody = (TextView) findViewById(R.id.txtBody);
             TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
+            TextView txtImageText = (TextView) findViewById(R.id.txtImageText);
+            ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
             txtTitle.setText(article != null ? article.getTitle() : null);
             txtBody.setText(Html.fromHtml(article.getBody()));
