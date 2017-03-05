@@ -35,6 +35,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" />
                 <data android:scheme="https" />
+                <data android:pathPattern=".*"/>
                 <data android:host="hertsandessexobserver.co.uk" />
                 <data android:host="www.hertsandessexobserver.co.uk" />
                 <data android:host="m.hertsandessexobserver.co.uk" />
@@ -45,6 +46,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" />
                 <data android:scheme="https" />
+                <data android:pathPattern=".*"/>
                 <data android:host="hertfordshiremercury.co.uk" />
                 <data android:host="www.hertfordshiremercury.co.uk" />
                 <data android:host="m.hertfordshiremercury.co.uk" />
@@ -55,6 +57,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" />
                 <data android:scheme="https" />
+                <data android:pathPattern=".*"/>
                 <data android:host="essexlive.news" />
                 <data android:host="www.essexlive.news" />
                 <data android:host="m.essexlive.news" />
