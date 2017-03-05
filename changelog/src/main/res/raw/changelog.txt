@@ -21,6 +21,10 @@
     </style>
   </head>
   <body>
+$2.7
+  % Version 2.7
+  _UNRELEASED
+    * Allowed Hertfordshire Mercury and Essex Live web links to be opened by app
 $2.6.2
   % Hotfix 2.6.2
   _26/02/2017
