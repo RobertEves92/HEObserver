@@ -1,9 +1,7 @@
 package com.roberteves.heobserver.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +9,7 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -125,6 +124,8 @@ public class ArticleActivity extends Activity {
             TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
             TextView txtBody = (TextView) findViewById(R.id.txtBody);
             TextView txtPubDate = (TextView) findViewById(R.id.txtPubDate);
+            TextView txtImageText = (TextView) findViewById(R.id.txtImageText);
+            ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
             txtTitle.setText(article != null ? article.getTitle() : null);
             txtBody.setText(Html.fromHtml(article.getBody()));
@@ -139,6 +140,11 @@ public class ArticleActivity extends Activity {
 
             comments.setVisible(article.hasComments());
 
+            if(article.getImage() != null) {
+                imageView.setImageBitmap(article.getImage());
+                txtImageText.setText(article.getImageText());
+            }
+
             Answers.getInstance().logContentView(new ContentViewEvent()
                     .putContentName(article.getTitle())
                     .putContentType("Article")
@@ -147,31 +153,10 @@ public class ArticleActivity extends Activity {
             Util.DisplayToast(ArticleActivity.this, getString(R.string.error_not_supported));
             openInBrowser();
         }
-
-        if (article.hasImages()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ArticleActivity.this);
-            builder.setTitle(getString(R.string.dialog_open_in_browser_title));
-            builder.setMessage(getString(R.string.dialog_open_in_browser_message));
-            builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    openInBrowser();
-                }
-            });
-            builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
     }
 
     private boolean articleSupported() {
-        return article.isReadable() && (article.getLink().matches("((http://)?)((m.)?)((www.)?)hertsandessexobserver.co.uk/.*story.html") || article.getLink().matches("((http://)?)((m.)?)((www.)?)hertfordshiremercury.co.uk/.*story.html")) && !article.getLink().toUpperCase().contains("UNDEFINED-HEADLINE");
+        return article.isReadable() && (article.getLink().matches("((http://)?)((m.)?)((www.)?)hertsandessexobserver.co.uk/.*story.html") || article.getLink().matches("((http://)?)((m.)?)((www.)?)hertfordshiremercury.co.uk/.*story.html") || article.getLink().matches("((http://)?)((m.)?)((www.)?)essexlive.news/.*story.html")) && !article.getLink().toUpperCase().contains("UNDEFINED-HEADLINE");
     }
 
     private void openInBrowser() {

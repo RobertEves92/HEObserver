@@ -1,7 +1,11 @@
 package com.roberteves.heobserver.core;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -29,17 +33,20 @@ public class Article implements Serializable {
     private static final String regexBulletList = "<ul>|</ul>";
     private static final String regexBulletStart = "<li>";
     private static final String regexBulletEnd = "</li>";
-    private static final String regexImage = "<img[^>]+\">";
-    private static final String regexScript = "(<script)([\\s\\S]*?)<\\/script>";
+    private static final String regexImage = "<img([\\w\\W]+?)\\/>";
+    private static final String regexScript = "";
     private static final String regexStyle = "(<style)([\\s\\S]*?)<\\/style>";
-    private String title, body, publishedDate, link, source;
+    private static final String regexBody = "<body([\\s\\S]*?)<\\/body>";
+    private static final String regexStartOfBody = "<body([\\s\\S]*?)<div class=\"single-image image-wrap\">";
+    private String title, body, publishedDate, link, source, imageText;
+    private Bitmap articleImage;
 
-    private Boolean images = false;
     private ArrayList<Comment> comments;
 
     public Article(String link) throws IOException {
 
-        source = Util.getWebSource(link.replace("m.",""));
+        source = Util.getWebSource(link.replace("m.", ""));
+
         // Set Title
         String t = selectStringFromRegex(source, regexTitle);
         t = t.replaceAll(regexTitleStart, "");
@@ -55,24 +62,42 @@ public class Article implements Serializable {
         b = b.replaceAll(regexBulletList, "");
         b = b.replaceAll(regexBulletStart, "- ");
         b = b.replaceAll(regexBulletEnd, "<br />");
-        b = b.replaceAll(regexScript,"");
-        b = b.replaceAll(regexStyle,"");
+        b = b.replaceAll(regexScript, "");
+        b = b.replaceAll(regexStyle, "");
         setBody(b);
 
-        //detect and remove multiple images
-        if(!selectStringFromRegex(b, regexImage).contentEquals("")) {
+        //remove any images in the article body
+        if (!selectStringFromRegex(b, regexImage).contentEquals("")) {
             b = b.replaceAll(regexImage, "");
             setBody(b);
-            setImages(true);
+        }
+
+        //find the main image for the article if it has one
+        String image = selectStringFromRegex(source, regexBody);
+        image = image.replaceAll(regexStartOfBody, "");
+        image = selectSingleStringFromRegex(image, regexImage);
+        image = selectStringFromRegex(image, "src=\"([\\s\\S]*?)\"");
+        image = image.replaceAll("src=", "");
+        image = image.replaceAll("\"", "");
+
+        //filter logos
+        if(!image.startsWith("http://www.hertfordshiremercury.co.uk/images/localworld/ugc-images/276464/site/")) {
+            URL url = new URL(image);
+            articleImage = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+            imageText = selectStringFromRegex(source, "<p class=\"caption\">\\s*.*?<\\/p>");
+            imageText = imageText.replaceAll("<p class=\"caption\">", "");
+            imageText = imageText.replaceAll("<\\/p>", "");
+            imageText = imageText.replaceAll("\\s+", " ");
+            imageText = imageText.trim();
         }
 
         String date = selectStringFromRegex(source, regexDate);
         String time = selectStringFromRegex(source, regexTime);
-        if(date.length() == 0 || time.length() == 0){
-            Util.LogMessage("Article","Date or time blank");
+        if (date.length() == 0 || time.length() == 0) {
+            Util.LogMessage("Article", "Date or time blank");
             setPublishedDate("");
-        }
-        else {
+        } else {
             try {
                 date = date.substring(0, 10);
                 time = time.substring(0, 5);
@@ -108,6 +133,14 @@ public class Article implements Serializable {
         return t;
     }
 
+
+    private static String selectSingleStringFromRegex(String text, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        matcher.find();
+        return matcher.group();
+    }
+
     private static List<String> selectStringListFromRegex(String text, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
@@ -140,7 +173,7 @@ public class Article implements Serializable {
     public void processComments() {
         try {
             List<String> authors, comments;
-            String commentsSection = selectStringFromRegex(source,"<section class=\"section section__comments\">.*<\\/section>");
+            String commentsSection = selectStringFromRegex(source, "<section class=\"section section__comments\">.*<\\/section>");
             authors = selectStringListFromRegex(commentsSection, "<span itemprop=\"name\">\\s*.*?<\\/span>");
             comments = selectStringListFromRegex(commentsSection, "<p class=\"discussion-thread-comments-quotation\">\\s*.*?<\\/p>");
 
@@ -218,11 +251,11 @@ public class Article implements Serializable {
         return comments;
     }
 
-    public Boolean hasImages() {
-        return images;
+    public Bitmap getImage() {
+        return articleImage;
     }
 
-    private void setImages(Boolean images) {
-        this.images = images;
+    public String getImageText() {
+        return imageText;
     }
 }

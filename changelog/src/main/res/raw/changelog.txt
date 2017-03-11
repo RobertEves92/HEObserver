@@ -21,11 +21,16 @@
     </style>
   </head>
   <body>
+$2.7
+  % Version 2.7
+  _11/03/2017
+    * Added article pictures to the article view and removed dialog popup
+    * Allowed Hertfordshire Mercury and Essex Live web links to be opened by app
 $2.6.2
   % Hotfix 2.6.2
   _26/02/2017
     * Allowed articles from Hertfordshire Mercury to be loaded
-    ! Article links seem to now be mirrored to the mercury site causing the app to want to load all articles in the web view. Any links from the Herts and Essex Obersver website that redirect to pages on the Hertfordshire Mercury site should load correctly.
+    ! Article links seem to now be mirrored to the mercury site causing the app to want to load all articles in the web view. Any links from the Herts and Essex Observer website that redirect to pages on the Hertfordshire Mercury site should load correctly.
 $2.6.1
   % Version 2.6.1
   _26/02/2017
