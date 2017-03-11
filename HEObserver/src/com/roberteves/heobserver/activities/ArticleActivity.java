@@ -1,9 +1,7 @@
 package com.roberteves.heobserver.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -141,6 +139,11 @@ public class ArticleActivity extends Activity {
             article.processComments();
 
             comments.setVisible(article.hasComments());
+
+            if(article.getImage() != null) {
+                imageView.setImageBitmap(article.getImage());
+                txtImageText.setText(article.getImageText());
+            }
 
             Answers.getInstance().logContentView(new ContentViewEvent()
                     .putContentName(article.getTitle())
