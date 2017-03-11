@@ -23,7 +23,8 @@
   <body>
 $2.7
   % Version 2.7
-  _UNRELEASED
+  _11/03/2017
+    * Added article pictures to the article view and removed dialog popup
     * Allowed Hertfordshire Mercury and Essex Live web links to be opened by app
 $2.6.2
   % Hotfix 2.6.2
